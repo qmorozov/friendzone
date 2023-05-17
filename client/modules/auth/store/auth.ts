@@ -14,7 +14,6 @@ export interface IAuthState {
     uuid: string;
     phone: string;
     email: string;
-    country: string;
     lastName: string;
     images: string[];
     hobbies: string[];
@@ -39,7 +38,6 @@ const initialState: IAuthState = {
     email: '',
     images: [],
     hobbies: [],
-    country: '',
     lastName: '',
     likesCount: 0,
     location: {
