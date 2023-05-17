@@ -8,4 +8,7 @@ npm run build
 
 # style lint
 npm run lint
+
+# storybook
+npm run storybook
 ```
