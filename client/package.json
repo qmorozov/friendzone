@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "next": "13.4.2",
+    "next-translate": "^2.0.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sass-loader": "^12.6.0"
@@ -18,12 +19,13 @@
     "@types/react": "18.2.6",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.2",
-    "normalize.css": "^8.0.1",
-    "sass": "^1.62.1",
-    "typescript": "5.0.4",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-next": "^0.0.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.8.1"
+    "next-translate-plugin": "^2.0.5",
+    "normalize.css": "^8.0.1",
+    "prettier": "^2.8.1",
+    "sass": "^1.62.1",
+    "typescript": "5.0.4"
   }
 }
