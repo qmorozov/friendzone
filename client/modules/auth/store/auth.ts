@@ -1,26 +1,105 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type ICounterState = {
-  counter: number;
+export interface IUserLocation {
+  city: string;
+  country: string;
+  latitude: number;
+  longitude: number;
+}
+
+export interface IAuthState {
+  signed: boolean;
+  loading: boolean;
+  user: {
+    uuid: string;
+    phone: string;
+    email: string;
+    lastName: string;
+    images: string[];
+    hobbies: string[];
+    firstName: string;
+    likesCount: number;
+    languages: string[];
+    description: string;
+    socialMedia: string[];
+    location: IUserLocation;
+    settings: {
+      isDarkModeForced: boolean;
+    };
+  };
+}
+
+const initialState: IAuthState = {
+  signed: false,
+  loading: false,
+  user: {
+    uuid: '',
+    phone: '',
+    email: '',
+    images: [],
+    hobbies: [],
+    lastName: '',
+    likesCount: 0,
+    location: {
+      city: '',
+      country: '',
+      latitude: 0,
+      longitude: 0,
+    },
+    languages: [],
+    firstName: '',
+    description: '',
+    socialMedia: [],
+    settings: {
+      isDarkModeForced: false,
+    },
+  },
 };
 
-const initialState: ICounterState = {
-  counter: 0,
-};
-
-const counterSlice = createSlice({
-  name: 'counter',
+const authSlice = createSlice({
+  name: 'auth',
   initialState,
   reducers: {
-    incremented: (state: ICounterState) => {
-      state.counter += 1;
+    signIn: (state: IAuthState) => {
+      state.signed = true;
     },
 
-    decremented: (state: ICounterState) => {
-      state.counter -= 1;
+    signOut: (state: IAuthState) => {
+      state.signed = false;
+      state.loading = false;
+      state.user = initialState.user;
+    },
+
+    setLoading: (state: IAuthState, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+    },
+
+    updateProfile: (
+      state: IAuthState,
+      action: PayloadAction<Partial<IAuthState['user']>>
+    ) => {
+      state.user = { ...state.user, ...action.payload };
+    },
+
+    updateSettings: (
+      state: IAuthState,
+      action: PayloadAction<Partial<IAuthState['user']['settings']>>
+    ) => {
+      state.user.settings = { ...state.user.settings, ...action.payload };
+    },
+
+    updateLikesCount: (state: IAuthState, action: PayloadAction<number>) => {
+      state.user.likesCount = action.payload;
     },
   },
 });
 
-export const { incremented, decremented } = counterSlice.actions;
-export default counterSlice;
+export const {
+  signIn,
+  signOut,
+  setLoading,
+  updateProfile,
+  updateSettings,
+  updateLikesCount,
+} = authSlice.actions;
+export default authSlice;
