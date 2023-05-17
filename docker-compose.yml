@@ -1,0 +1,50 @@
+version: "3.0"
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/app
+  backend:
+    container_name: backend
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server:/app
+    env_file:
+      - ./server/.dev.env
+  postgres:
+    container_name: postgres
+    image: postgres:15
+    env_file:
+      - ./server/.dev.env
+    environment:
+      PG_DATA: /var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+    restart: always
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+    restart: always
+    depends_on:
+      - frontend
+      - backend
+      - postgres
+
+volumes:
+  pgdata:
