@@ -1,5 +1,5 @@
 import {Model, Table, Column, DataType, ForeignKey, BelongsToMany, HasOne} from "sequelize-typescript"
-import {Image} from "../image/image.model";
+import {Image} from "../user-image/user-image.model";
 import {User} from "./user.model";
 
 @Table({tableName: "user_images", createdAt: false, updatedAt: false})

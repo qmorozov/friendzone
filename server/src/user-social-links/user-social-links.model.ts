@@ -1,13 +1,13 @@
 import {Model, Table, Column, DataType, ForeignKey, BelongsTo} from "sequelize-typescript"
 import {User} from "../user/user.model";
 
-interface SocialLinksCreationAttributes{
+interface UserSocialLinksCreationAttributes{
     name: string,
     link: string
 }
 
-@Table({tableName: "social_links"})
-export class SocialLinks extends Model<SocialLinks, SocialLinksCreationAttributes>{
+@Table({tableName: "user_social_links"})
+export class UserSocialLinks extends Model<UserSocialLinks, UserSocialLinksCreationAttributes>{
 
     @Column({
         type: DataType.BIGINT,
@@ -34,7 +34,7 @@ export class SocialLinks extends Model<SocialLinks, SocialLinksCreationAttribute
         allowNull:false
     })
     @ForeignKey(() => User)
-    userId: string;
+    userId: number;
 
     @BelongsTo(() => User,"id")
     users: User[]

@@ -1,7 +1,7 @@
 import {Model, Table, Column, DataType, BelongsTo} from "sequelize-typescript"
 import {User} from "../user/user.model";
 
-interface LocationCreationAttributes{
+interface UserLocationCreationAttributes{
     country: string,
     city: string,
     latitude?: string,
@@ -11,8 +11,8 @@ interface LocationCreationAttributes{
     speed?: string
 }
 
-@Table({tableName: "locations"})
-export class Location extends Model<Location, LocationCreationAttributes>{
+@Table({tableName: "user_locations"})
+export class UserLocation extends Model<UserLocation, UserLocationCreationAttributes>{
 
     @Column({
         type: DataType.BIGINT,
