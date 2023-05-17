@@ -1,0 +1,36 @@
+@use 'styles/variables';
+
+@mixin media-to($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media #{inspect(map-get($breakpoints, $breakpoint))} {
+      @content;
+    }
+  } @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+      + "Available breakpoints are: #{map-keys($breakpoints)}.";
+  }
+}
+
+@mixin for-mobile {
+  @include media-to('mobile') {
+    @content;
+  }
+}
+
+@mixin for-tablet {
+  @include media-to('tablet') {
+    @content;
+  }
+}
+
+@mixin for-laptop {
+  @include media-to('laptop') {
+    @content;
+  }
+}
+
+@mixin for-desktop {
+  @include media-to('desktop') {
+    @content;
+  }
+}
