@@ -19,7 +19,7 @@ const Home: NextPage = () => {
         <h2>RU</h2>
       </Link>
       <h1>{auth.user.firstName}</h1>
-      <Input label="text" />
+      <Input label="text" type="checkbox" required />
       {/*<button onClick={() => dispatch(incremented())}>+</button>*/}
       {/*<button onClick={() => dispatch(decremented())}>-</button>*/}
     </>
