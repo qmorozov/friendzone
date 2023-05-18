@@ -10,11 +10,14 @@
     left: 0;
     transform: translateY(3px);
     pointer-events: none;
-    transition: 0.3s ease;
     color: #939393;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out,
+      font-size 0.3s ease-in-out, color 0.3s ease-in;
 
     &.up {
-      transform: translateY(-100%) scale(0.8);
+      font-size: variables.rem(12px);
+      transform: translateY(-100%);
+      opacity: 0.7;
     }
   }
 
@@ -32,8 +35,22 @@
 
     &:disabled {
       cursor: auto;
-      opacity: 0.5;
       pointer-events: none;
+
+      &,
+      & + p {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  &.required {
+    input {
+      border-bottom-color: #f02849;
+    }
+
+    p {
+      color: #f02849;
     }
   }
 
@@ -49,19 +66,23 @@
 
   @include media.for-mobile {
     input {
-      padding: variables.rem(10px) 0 variables.rem(10px) 0;
+      padding: variables.rem(14px) 0 variables.rem(8px) 0;
     }
 
     input,
     p {
       font-size: variables.rem(14px);
       line-height: variables.rem(16px);
+    }
+
+    p.up {
+      font-size: variables.rem(10px);
     }
   }
 
   @include media.for-tablet {
     input {
-      padding: variables.rem(12px) 0 variables.rem(12px) 0;
+      padding: variables.rem(16px) 0 variables.rem(10px) 0;
     }
 
     input,
@@ -69,11 +90,15 @@
       font-size: variables.rem(14px);
       line-height: variables.rem(16px);
     }
+
+    p.up {
+      font-size: variables.rem(12px);
+    }
   }
 
   @include media.for-laptop {
     input {
-      padding: variables.rem(14px) 0 variables.rem(14px) 0;
+      padding: variables.rem(18px) 0 variables.rem(12px) 0;
     }
 
     input,
@@ -81,17 +106,25 @@
       font-size: variables.rem(16px);
       line-height: variables.rem(19px);
     }
+
+    p.up {
+      font-size: variables.rem(14px);
+    }
   }
 
   @include media.for-desktop {
     input {
-      padding: variables.rem(16px) 0 variables.rem(16px) 0;
+      padding: variables.rem(20px) 0 variables.rem(14px) 0;
     }
 
     input,
     p {
       font-size: variables.rem(18px);
       line-height: variables.rem(21px);
+    }
+
+    p.up {
+      font-size: variables.rem(16px);
     }
   }
 }
