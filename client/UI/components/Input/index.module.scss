@@ -1,7 +1,7 @@
 @use 'styles/variables' as variables;
 @use 'styles/mixin/media' as media;
 
-.wrapper {
+.default {
   position: relative;
 
   p {
@@ -125,6 +125,136 @@
 
     p.up {
       font-size: variables.rem(16px);
+    }
+  }
+}
+
+.checkbox {
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+
+    &:checked + span {
+      background-color: #007dff;
+      border-color: #007dff;
+
+      &::before {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    &:disabled + span,
+    &:disabled + span + p {
+      cursor: auto;
+      pointer-events: none;
+      opacity: 0.5;
+      user-select: none;
+    }
+  }
+
+  span {
+    position: relative;
+    display: block;
+    border: variables.rem(2px) solid #d1d1d1;
+    border-radius: variables.rem(2px);
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, opacity 0.3s ease-in-out;
+
+    &::before {
+      position: relative;
+      content: '';
+      top: 50%;
+      left: 50%;
+      display: block;
+      opacity: 0;
+      visibility: hidden;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24"><path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>');
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    }
+  }
+
+  p {
+    font-weight: 400;
+    letter-spacing: variables.rem(0.15px);
+    transition: color 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+
+  &.required {
+    span {
+      border-color: #f02849;
+    }
+
+    p {
+      color: #f02849;
+    }
+  }
+
+  @include media.for-mobile {
+    gap: variables.rem(6px);
+
+    span {
+      width: variables.rem(14px);
+      height: variables.rem(14px);
+
+      &::before {
+        width: variables.rem(8px);
+        height: variables.rem(8px);
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24"><path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>');
+      }
+    }
+
+    p {
+      font-size: variables.rem(14px);
+      line-height: variables.rem(18px);
+    }
+  }
+
+  @include media.for-tablet {
+    gap: variables.rem(8px);
+
+    span {
+      width: variables.rem(16px);
+      height: variables.rem(16px);
+
+      &::before {
+        width: variables.rem(9px);
+        height: variables.rem(9px);
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 24 24"><path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>');
+      }
+    }
+
+    p {
+      font-size: variables.rem(15px);
+      line-height: variables.rem(19px);
+    }
+  }
+
+  @include media.for-laptop {
+    gap: variables.rem(12px);
+
+    span {
+      width: variables.rem(18px);
+      height: variables.rem(18px);
+
+      &::before {
+        width: variables.rem(11px);
+        height: variables.rem(11px);
+      }
+    }
+
+    p {
+      font-size: variables.rem(16px);
+      line-height: variables.rem(20px);
     }
   }
 }

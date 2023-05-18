@@ -14,16 +14,31 @@ const Input: FC<IInput> = ({ label, required, disabled, ...inputProps }) => {
     setValue(event.target.value);
   };
 
+  const isCheckbox = inputProps.type === 'checkbox';
+
   const wrapperClasses = classnames({
-    [styles.wrapper]: true,
     [styles.full]: value,
     [styles.required]: required && !disabled,
     [styles.disabled]: disabled,
+    [styles.checkbox]: isCheckbox,
+    [styles.default]: !isCheckbox,
   });
 
   return (
     <label title={`input ${label}`} className={wrapperClasses}>
-      <input {...inputProps} onChange={handleChange} disabled={disabled} />
+      {isCheckbox ? (
+        <>
+          <input
+            type="checkbox"
+            {...inputProps}
+            onChange={handleChange}
+            disabled={disabled}
+          />
+          <span></span>
+        </>
+      ) : (
+        <input {...inputProps} onChange={handleChange} disabled={disabled} />
+      )}
       {label && <p>{label}</p>}
     </label>
   );

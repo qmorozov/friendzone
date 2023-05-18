@@ -8,6 +8,7 @@ export default {
     label: { control: 'text' },
     required: { control: 'boolean' },
     disabled: { control: 'boolean' },
+    defaultValue: { control: { disable: true } },
   },
 } as Meta;
 
@@ -37,4 +38,13 @@ export const WithoutLabel: Story<IInput> = InputTemplate.bind({});
 WithoutLabel.args = {
   ...Default.args,
   label: '',
+};
+
+export const Checkbox: Story<IInput> = InputTemplate.bind({});
+Checkbox.args = {
+  label: 'checkbox Label',
+  type: 'checkbox',
+  required: false,
+  disabled: false,
+  checked: true,
 };
