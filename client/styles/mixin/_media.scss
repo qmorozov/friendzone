@@ -1,13 +1,13 @@
-@use 'styles/variables';
+@use 'styles/variables' as variables;
 
 @mixin media-to($breakpoint) {
-  @if map-has-key($breakpoints, $breakpoint) {
-    @media #{inspect(map-get($breakpoints, $breakpoint))} {
+  @if map-has-key(variables.$breakpoints, $breakpoint) {
+    @media #{inspect(map-get(variables.$breakpoints, $breakpoint))} {
       @content;
     }
   } @else {
     @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
-      + "Available breakpoints are: #{map-keys($breakpoints)}.";
+      + "Available breakpoints are: #{map-keys(variables.$breakpoints)}.";
   }
 }
 

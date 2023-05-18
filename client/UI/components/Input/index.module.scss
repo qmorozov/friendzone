@@ -1,0 +1,97 @@
+@use 'styles/variables' as variables;
+@use 'styles/mixin/media' as media;
+
+.wrapper {
+  position: relative;
+
+  p {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateY(3px);
+    pointer-events: none;
+    transition: 0.3s ease;
+    color: #939393;
+
+    &.up {
+      transform: translateY(-100%) scale(0.8);
+    }
+  }
+
+  input {
+    border-bottom: variables.rem(1px) solid #939393;
+    transition: border-bottom-color 0.3s ease-in-out;
+
+    &:focus {
+      border-bottom-color: lighten(#939393, 40%);
+
+      & + p {
+        @extend .up;
+      }
+    }
+
+    &:disabled {
+      cursor: auto;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+
+  &.full input + p {
+    @extend .up;
+  }
+
+  p,
+  input {
+    color: #f2f2f2;
+    letter-spacing: variables.rem(0.15px);
+  }
+
+  @include media.for-mobile {
+    input {
+      padding: variables.rem(10px) 0 variables.rem(10px) 0;
+    }
+
+    input,
+    p {
+      font-size: variables.rem(14px);
+      line-height: variables.rem(16px);
+    }
+  }
+
+  @include media.for-tablet {
+    input {
+      padding: variables.rem(12px) 0 variables.rem(12px) 0;
+    }
+
+    input,
+    p {
+      font-size: variables.rem(14px);
+      line-height: variables.rem(16px);
+    }
+  }
+
+  @include media.for-laptop {
+    input {
+      padding: variables.rem(14px) 0 variables.rem(14px) 0;
+    }
+
+    input,
+    p {
+      font-size: variables.rem(16px);
+      line-height: variables.rem(19px);
+    }
+  }
+
+  @include media.for-desktop {
+    input {
+      padding: variables.rem(16px) 0 variables.rem(16px) 0;
+    }
+
+    input,
+    p {
+      font-size: variables.rem(18px);
+      line-height: variables.rem(21px);
+    }
+  }
+}

@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import useTranslation from 'next-translate/useTranslation';
 import Link from 'next/link';
 import { useAppDispatch, useAppSelector } from '../hooks/useAppRedux';
+import Input from '../UI/components/Input';
 
 const Home: NextPage = () => {
   const { t } = useTranslation('common');
@@ -18,6 +19,7 @@ const Home: NextPage = () => {
         <h2>RU</h2>
       </Link>
       <h1>{auth.user.firstName}</h1>
+      <Input label="text" />
       {/*<button onClick={() => dispatch(incremented())}>+</button>*/}
       {/*<button onClick={() => dispatch(decremented())}>-</button>*/}
     </>
