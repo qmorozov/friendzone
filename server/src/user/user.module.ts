@@ -26,6 +26,10 @@ import {UserHobby} from "./user-hobby.model";
           Hobby,
           Language
       ])
-  ]
+  ],
+
+    exports: [
+        UserService
+    ]
 })
 export class UserModule {}

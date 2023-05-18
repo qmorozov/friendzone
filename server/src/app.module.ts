@@ -16,6 +16,7 @@ import {UserLanguage} from "./user/user-language.model";
 import {UserHobby} from "./user/user-hobby.model";
 import {Hobby} from "./hobby/hobby.model";
 import {Language} from "./language/language.model";
+import {AuthModule} from "./auth/auth.module";
 
 @Module({
   imports: [
@@ -54,7 +55,9 @@ import {Language} from "./language/language.model";
 
       HobbyModule,
 
-      LanguageModule
+      LanguageModule,
+
+      AuthModule
   ],
   controllers: [],
   providers: [],
