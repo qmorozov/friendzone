@@ -11,4 +11,7 @@ npm run lint
 
 # storybook
 npm run storybook
+
+# test
+npm run test
 ```
