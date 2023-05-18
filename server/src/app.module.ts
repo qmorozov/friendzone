@@ -2,14 +2,18 @@ import { Module } from '@nestjs/common';
 import {SequelizeModule} from "@nestjs/sequelize";
 import {ConfigModule} from "@nestjs/config";
 import { UserModule } from './user/user.module';
-import { LocationModule } from './location/location.module';
-import { ImageModule } from './image/image.module';
-import { SocialLinksModule } from './social-links/social-links.module';
+import { UserLocationModule } from './user-location/user-location.module';
+import { UserImageModule } from './user-image/user-image.module';
+import { UserSocialLinksModule } from './user-social-links/user-social-links.module';
 import {User} from "./user/user.model";
-import {Image} from "./image/image.model";
-import {Location} from "./location/location.model";
-import {SocialLinks} from "./social-links/social-links.model";
+import {Image} from "./user-image/user-image.model";
+import {UserLocation} from "./user-location/user-location.model";
+import {UserSocialLinks} from "./user-social-links/user-social-links.model";
 import {UserImage} from "./user/user-image.model";
+import { UserHobbyModule } from './user-hobby/user-hobby.module';
+import {UserHobby} from "./user-hobby/user-hobby.model";
+import {UserLanguage} from "./user-language/user-language.model";
+import {UserLanguageModule} from "./user-language/user-language.module";
 
 @Module({
   imports: [
@@ -24,17 +28,29 @@ import {UserImage} from "./user/user-image.model";
           username: process.env.POSTGRES_USER,
           password: process.env.POSTGRES_PASSWORD,
           database: process.env.POSTGRES_DB,
-          models: [User, Image, Location, SocialLinks, UserImage],
+          models: [
+              User,
+              Image,
+              UserLocation,
+              UserSocialLinks,
+              UserImage,
+              UserHobby,
+              UserLanguage
+          ],
           autoLoadModels: true,
       }),
 
       UserModule,
 
-      LocationModule,
+      UserLocationModule,
 
-      ImageModule,
+      UserImageModule,
 
-      SocialLinksModule
+      UserSocialLinksModule,
+
+      UserHobbyModule,
+
+      UserLanguageModule
   ],
   controllers: [],
   providers: [],

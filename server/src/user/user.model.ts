@@ -1,12 +1,14 @@
 import {Model, Table, Column, DataType, ForeignKey, BelongsToMany, HasOne, HasMany} from "sequelize-typescript"
 import {ApiProperty} from "@nestjs/swagger";
-import {Image} from "../image/image.model";
+import {Image} from "../user-image/user-image.model";
 import {UserImage} from "./user-image.model";
-import {Location} from "../location/location.model";
-import {SocialLinks} from "../social-links/social-links.model";
+import {UserLocation} from "../user-location/user-location.model";
+import {UserSocialLinks} from "../user-social-links/user-social-links.model";
+import {UserHobby} from "../user-hobby/user-hobby.model";
 
 interface UserCreationAttributes{
-    email?: string,
+    email: string,
+    password: string,
     firstName?: string,
     lastName?: string,
     phone?: string,
@@ -35,6 +37,13 @@ export class User extends Model<User, UserCreationAttributes>{
     })
     email: string;
 
+    @ApiProperty({description: "User Password", example: "12345"})
+    @Column({
+        type: DataType.STRING,
+        allowNull:false
+    })
+    password: string;
+
     @ApiProperty({description: "User First Name", example: "John"})
     @Column({
         type: DataType.STRING
@@ -55,7 +64,7 @@ export class User extends Model<User, UserCreationAttributes>{
     phone: string;
 
     @ApiProperty({description: "User Location ID", example: 123})
-    @ForeignKey(() => Location)
+    @ForeignKey(() => UserLocation)
     @Column({
         type: DataType.BIGINT
     })
@@ -78,9 +87,12 @@ export class User extends Model<User, UserCreationAttributes>{
     @BelongsToMany(() => Image, () => UserImage)
     images: Image[];
 
-    @HasOne(() => Location, "id")
+    @HasOne(() => UserLocation, "id")
     location: Location[];
 
-    @HasMany(() => SocialLinks)
-    socialLinks: SocialLinks[];
+    @HasMany(() => UserSocialLinks, "userId")
+    socialLinks: UserSocialLinks[];
+
+    @HasMany(() => UserHobby, "userId")
+    hobbies: UserHobby[];
 }
