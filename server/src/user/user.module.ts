@@ -6,8 +6,10 @@ import {Image} from "../user-image/user-image.model";
 import {UserLocation} from "../user-location/user-location.model";
 import {UserImage} from "./user-image.model";
 import {UserSocialLinks} from "../user-social-links/user-social-links.model";
-import {UserHobby} from "../user-hobby/user-hobby.model";
-import {UserLanguage} from "../user-language/user-language.model";
+import {Hobby} from "../hobby/hobby.model";
+import {Language} from "../language/language.model";
+import {UserLanguage} from "./user-language.model";
+import {UserHobby} from "./user-hobby.model";
 
 @Module({
   providers: [UserService],
@@ -20,7 +22,9 @@ import {UserLanguage} from "../user-language/user-language.model";
           UserImage,
           UserSocialLinks,
           UserHobby,
-          UserLanguage
+          UserLanguage,
+          Hobby,
+          Language
       ])
   ]
 })

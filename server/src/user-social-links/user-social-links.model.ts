@@ -18,8 +18,7 @@ export class UserSocialLinks extends Model<UserSocialLinks, UserSocialLinksCreat
     id: number;
 
     @Column({
-        type: DataType.STRING,
-        allowNull:false
+        type: DataType.STRING
     })
     name: string;
 

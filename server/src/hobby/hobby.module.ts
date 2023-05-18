@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { UserHobbyService } from './user-hobby.service';
+import { HobbyService } from './hobby.service';
 import {SequelizeModule} from "@nestjs/sequelize";
 import {User} from "../user/user.model";
-import {UserHobby} from "./user-hobby.model";
+import {UserHobby} from "../user/user-hobby.model";
 
 @Module({
-  providers: [UserHobbyService],
+  providers: [HobbyService],
   imports: [
     SequelizeModule.forFeature([User, UserHobby])
   ]
 })
-export class UserHobbyModule {}
+export class HobbyModule {}
