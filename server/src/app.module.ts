@@ -10,10 +10,12 @@ import {Image} from "./user-image/user-image.model";
 import {UserLocation} from "./user-location/user-location.model";
 import {UserSocialLinks} from "./user-social-links/user-social-links.model";
 import {UserImage} from "./user/user-image.model";
-import { UserHobbyModule } from './user-hobby/user-hobby.module';
-import {UserHobby} from "./user-hobby/user-hobby.model";
-import {UserLanguage} from "./user-language/user-language.model";
-import {UserLanguageModule} from "./user-language/user-language.module";
+import { HobbyModule } from './hobby/hobby.module';
+import {LanguageModule} from "./language/language.module";
+import {UserLanguage} from "./user/user-language.model";
+import {UserHobby} from "./user/user-hobby.model";
+import {Hobby} from "./hobby/hobby.model";
+import {Language} from "./language/language.model";
 
 @Module({
   imports: [
@@ -35,7 +37,9 @@ import {UserLanguageModule} from "./user-language/user-language.module";
               UserSocialLinks,
               UserImage,
               UserHobby,
-              UserLanguage
+              UserLanguage,
+              Hobby,
+              Language
           ],
           autoLoadModels: true,
       }),
@@ -48,9 +52,9 @@ import {UserLanguageModule} from "./user-language/user-language.module";
 
       UserSocialLinksModule,
 
-      UserHobbyModule,
+      HobbyModule,
 
-      UserLanguageModule
+      LanguageModule
   ],
   controllers: [],
   providers: [],

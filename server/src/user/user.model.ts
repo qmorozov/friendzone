@@ -4,7 +4,10 @@ import {Image} from "../user-image/user-image.model";
 import {UserImage} from "./user-image.model";
 import {UserLocation} from "../user-location/user-location.model";
 import {UserSocialLinks} from "../user-social-links/user-social-links.model";
-import {UserHobby} from "../user-hobby/user-hobby.model";
+import {Hobby} from "../hobby/hobby.model";
+import {UserLanguage} from "./user-language.model";
+import {Language} from "../language/language.model";
+import {UserHobby} from "./user-hobby.model";
 
 interface UserCreationAttributes{
     email: string,
@@ -87,12 +90,15 @@ export class User extends Model<User, UserCreationAttributes>{
     @BelongsToMany(() => Image, () => UserImage)
     images: Image[];
 
+    @BelongsToMany(() => Language, () => UserLanguage)
+    languages: Language[];
+
+    @BelongsToMany(() => Hobby, () => UserHobby)
+    hobbies: Hobby[];
+
     @HasOne(() => UserLocation, "id")
     location: Location[];
 
     @HasMany(() => UserSocialLinks, "userId")
     socialLinks: UserSocialLinks[];
-
-    @HasMany(() => UserHobby, "userId")
-    hobbies: UserHobby[];
 }
