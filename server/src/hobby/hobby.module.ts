@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
 import { HobbyService } from './hobby.service';
-import {SequelizeModule} from "@nestjs/sequelize";
-import {User} from "../user/user.model";
-import {UserHobby} from "../user/user-hobby.model";
+import {MongooseModule} from "@nestjs/mongoose";
+import {Hobby, HobbySchema} from "../schemas/hobby.schema";
 
 @Module({
   providers: [HobbyService],
   imports: [
-    SequelizeModule.forFeature([User, UserHobby])
+    MongooseModule.forFeature([{ name: Hobby.name, schema: HobbySchema }])
   ]
 })
 export class HobbyModule {}
