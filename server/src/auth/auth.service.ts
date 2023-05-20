@@ -30,14 +30,14 @@ export class AuthService {
         const candidate = await this.userService.getByEmail(dto.email);
 
         const user = candidate ? candidate : await this.userService.create(dto);
-
+console.log(user);
         return this.generateToken(user);
     }
 
     generateToken(user: any){
         return {
             access_token: this.jwtService.sign({
-                id: user.id,
+                id: user._id,
                 email: user.email
             })
         }
