@@ -3,10 +3,10 @@
 /* ==== Mixin ==== */
 $breakpoints: (
   'mobile': (
-    max-width: 1024px,
+    max-width: 800px,
   ),
   'tablet': (
-    min-width: 1024px,
+    min-width: 800px,
   ),
   'laptop': (
     min-width: 1280px,

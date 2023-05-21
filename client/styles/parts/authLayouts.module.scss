@@ -1,0 +1,72 @@
+@use 'styles/variables' as variables;
+@use 'styles/mixin/media' as media;
+
+.auth {
+  display: flex;
+  height: 100vh;
+
+  &__decor {
+    display: none;
+    flex-shrink: 0;
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 100%;
+
+    &_container {
+      width: 100%;
+      padding: 0 variables.rem(15px);
+      margin: 0 auto;
+
+      svg {
+        display: block;
+        margin: 0 auto;
+
+        path {
+          fill: #fff;
+        }
+      }
+    }
+  }
+
+  @include media.for-mobile {
+    svg {
+      max-width: variables.rem(280px);
+      height: variables.rem(80px);
+    }
+  }
+
+  @include media.for-tablet {
+    &__decor {
+      display: block;
+      flex-basis: 32%;
+    }
+
+    &__content {
+      flex-basis: 68%;
+    }
+
+    svg {
+      max-width: variables.rem(380px);
+      height: variables.rem(120px);
+    }
+  }
+
+  @include media.for-laptop {
+    &__decor {
+      flex-basis: 50%;
+    }
+
+    &__content_container {
+      max-width: variables.rem(435px);
+
+      svg {
+        max-width: variables.rem(435px);
+        height: variables.rem(157px);
+      }
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import { Story, Meta } from '@storybook/react';
+
 import Input, { IInput } from './index';
 
 export default {
@@ -9,6 +10,7 @@ export default {
     required: { control: 'boolean' },
     disabled: { control: 'boolean' },
     defaultValue: { control: { disable: true } },
+    type: { control: 'radio' },
   },
 } as Meta;
 
@@ -42,9 +44,17 @@ WithoutLabel.args = {
 
 export const Checkbox: Story<IInput> = InputTemplate.bind({});
 Checkbox.args = {
-  label: 'checkbox Label',
+  label: 'Checkbox Label',
   type: 'checkbox',
   required: false,
   disabled: false,
   checked: true,
+};
+
+export const Radio: Story<IInput> = InputTemplate.bind({});
+Radio.args = {
+  label: 'Radio Label',
+  type: 'radio',
+  required: false,
+  disabled: false,
 };
