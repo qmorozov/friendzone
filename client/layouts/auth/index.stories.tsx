@@ -1,8 +1,9 @@
 import { Story, Meta } from '@storybook/react';
+
 import AuthLayout, { IAuthLayout } from './index';
 
 export default {
-  title: 'Components/AuthLayout',
+  title: 'Layouts/AuthLayout',
   component: AuthLayout,
   argTypes: {
     children: { control: 'text' },

@@ -132,7 +132,6 @@
 .checkbox {
   position: relative;
   display: inline-flex;
-  cursor: pointer;
 
   input {
     position: absolute;
@@ -165,7 +164,8 @@
     display: block;
     border: variables.rem(2px) solid #d1d1d1;
     border-radius: variables.rem(2px);
-    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out,
+      opacity 0.3s ease-in-out;
 
     &::before {
       position: relative;
@@ -255,6 +255,123 @@
     p {
       font-size: variables.rem(16px);
       line-height: variables.rem(20px);
+    }
+  }
+}
+
+.radio {
+  display: flex;
+  align-items: center;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+
+    &:checked + span::before {
+      opacity: 1;
+    }
+
+    &:disabled + span,
+    &:disabled + span + p {
+      cursor: auto;
+      pointer-events: none;
+      opacity: 0.5;
+      user-select: none;
+    }
+  }
+
+  span {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    background-color: #fff;
+    transition: opacity 0.3s ease-in-out, background-color 0.3s ease-in-out;
+
+    &::before {
+      position: absolute;
+      content: '';
+      opacity: 0;
+      background-color: #007dff;
+      border-radius: inherit;
+      transition: opacity 0.3s ease-in-out;
+    }
+  }
+
+  p {
+    font-weight: 400;
+    letter-spacing: variables.rem(0.15px);
+    transition: color 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+
+  &.required {
+    span {
+      background-color: #f02849;
+    }
+
+    p {
+      color: #f02849;
+    }
+  }
+
+  @include media.for-mobile {
+    gap: variables.rem(5px);
+
+    p {
+      font-size: variables.rem(14px);
+      line-height: variables.rem(18px);
+    }
+
+    span {
+      width: variables.rem(20px);
+      height: variables.rem(20px);
+
+      &::before {
+        width: variables.rem(14px);
+        height: variables.rem(14px);
+      }
+    }
+  }
+
+  @include media.for-tablet {
+    gap: variables.rem(6px);
+
+    p {
+      font-size: variables.rem(15px);
+      line-height: variables.rem(19px);
+    }
+
+    span {
+      width: variables.rem(22px);
+      height: variables.rem(22px);
+
+      &::before {
+        width: variables.rem(16px);
+        height: variables.rem(16px);
+      }
+    }
+  }
+
+  @include media.for-laptop {
+    gap: variables.rem(8px);
+
+    p {
+      font-size: variables.rem(16px);
+      line-height: variables.rem(20px);
+    }
+
+    span {
+      width: variables.rem(26px);
+      height: variables.rem(26px);
+
+      &::before {
+        width: variables.rem(20px);
+        height: variables.rem(20px);
+      }
     }
   }
 }

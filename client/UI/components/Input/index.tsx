@@ -15,21 +15,23 @@ const Input: FC<IInput> = ({ label, required, disabled, ...inputProps }) => {
   };
 
   const isCheckbox = inputProps.type === 'checkbox';
+  const isRadio = inputProps.type === 'radio';
 
   const wrapperClasses = classnames({
     [styles.full]: value,
     [styles.required]: required && !disabled,
     [styles.disabled]: disabled,
     [styles.checkbox]: isCheckbox,
-    [styles.default]: !isCheckbox,
+    [styles.radio]: isRadio,
+    [styles.default]: !isCheckbox && !isRadio,
   });
 
   return (
     <label title={`input ${label}`} className={wrapperClasses}>
-      {isCheckbox ? (
+      {isCheckbox || isRadio ? (
         <>
           <input
-            type="checkbox"
+            type={isCheckbox ? 'checkbox' : 'radio'}
             {...inputProps}
             onChange={handleChange}
             disabled={disabled}

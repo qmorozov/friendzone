@@ -38,4 +38,10 @@ describe('Input component', () => {
     const labelText = queryByText('Test');
     expect(labelText).not.toBeInTheDocument();
   });
+
+  it('applies "radio" style when type prop is "radio"', () => {
+    const { container } = render(<Input type="radio" />);
+    const label = container.querySelector('label');
+    expect(label).toHaveClass('radio');
+  });
 });
