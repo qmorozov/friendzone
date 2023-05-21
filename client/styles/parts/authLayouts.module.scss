@@ -15,12 +15,27 @@
     align-items: center;
     justify-content: center;
     flex-basis: 100%;
-    flex-shrink: 0;
 
     &_container {
       width: 100%;
       padding: 0 variables.rem(15px);
       margin: 0 auto;
+
+      svg {
+        display: block;
+        margin: 0 auto;
+
+        path {
+          fill: #fff;
+        }
+      }
+    }
+  }
+
+  @include media.for-mobile {
+    svg {
+      max-width: variables.rem(280px);
+      height: variables.rem(80px);
     }
   }
 
@@ -33,6 +48,11 @@
     &__content {
       flex-basis: 68%;
     }
+
+    svg {
+      max-width: variables.rem(380px);
+      height: variables.rem(120px);
+    }
   }
 
   @include media.for-laptop {
@@ -42,6 +62,11 @@
 
     &__content_container {
       max-width: variables.rem(435px);
+
+      svg {
+        max-width: variables.rem(435px);
+        height: variables.rem(157px);
+      }
     }
   }
 }
