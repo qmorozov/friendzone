@@ -1,0 +1,45 @@
+@use 'styles/variables' as variables;
+@use 'styles/mixin/media' as media;
+
+.auth {
+  display: flex;
+  height: 100vh;
+
+  &__decor {
+    display: none;
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 100%;
+
+    &_container {
+      width: 100%;
+      padding: 0 variables.rem(15px);
+      margin: 0 auto;
+    }
+  }
+
+  @include media.for-tablet {
+    &__decor {
+      display: block;
+      flex-basis: 32%;
+    }
+
+    &__content {
+      flex-basis: 68%;
+    }
+  }
+
+  @include media.for-laptop {
+    &__decor {
+      flex-basis: 50%;
+    }
+
+    &__content_container {
+      max-width: variables.rem(435px);
+    }
+  }
+}
