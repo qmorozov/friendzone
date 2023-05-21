@@ -12,7 +12,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <AuthLayout>content</AuthLayout>
+      <AuthLayout title="content">content</AuthLayout>
       {/*<div>{t('hello')}</div>*/}
       {/*<Link href="/" locale="en">*/}
       {/*  <h2>EN</h2>*/}

@@ -1,8 +1,9 @@
 import { FC, ReactNode } from 'react';
-import DocumentHead from './_head';
-import styles from '../styles/parts/authLayouts.module.scss';
+import DocumentHead from '../_head';
 
-interface IAuthLayout {
+import styles from '../../styles/parts/authLayouts.module.scss';
+
+export interface IAuthLayout {
   title: string;
   children: ReactNode;
 }
