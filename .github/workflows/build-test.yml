@@ -19,11 +19,11 @@ jobs:
           node-version: 14
 
       - name: Install dependencies
-        run: npm ci
+        run: npm шт
         working-directory: client
 
       - name: Build
-        run: npm run build
+        run: npm run build --if-present
         working-directory: client
 
       - name: Run tests
