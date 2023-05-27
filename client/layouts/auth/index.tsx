@@ -26,7 +26,7 @@ const AuthLayout: FC<IAuthLayout> = ({ children, title }) => {
 
       <div className={styles.auth__content}>
         <div className={styles.auth__content_container}>
-          <img src="/images/big-logo.png" />
+          <img src="/images/big-logo.svg" />
 
           {children}
         </div>

@@ -1,2 +1,115 @@
 @use 'styles/variables' as variables;
 @use 'styles/mixin/media' as media;
+
+.auth__footer {
+  display: flex;
+  gap: variables.rem(5px);
+  justify-content: center;
+
+  p {
+    user-select: none;
+    color: variables.$light-100;
+  }
+
+  a {
+    user-select: none;
+    color: variables.$primary;
+    text-decoration: underline;
+    transition: color variables.$transition;
+
+    &:hover {
+      color: darken(variables.$primary, 15%);
+    }
+  }
+
+  @include media.for-mobile {
+    margin-top: variables.rem(20px);
+
+    p,
+    a {
+      font-size: variables.rem(14px);
+      line-height: variables.rem(16px);
+    }
+  }
+
+  @include media.for-tablet {
+    margin-top: variables.rem(26px);
+
+    p,
+    a {
+      font-size: variables.rem(16px);
+      line-height: variables.rem(19px);
+    }
+  }
+
+  @include media.for-laptop {
+    margin-top: variables.rem(30px);
+
+    p,
+    a {
+      font-size: variables.rem(17px);
+      line-height: variables.rem(20px);
+    }
+  }
+
+  @include media.for-desktop {
+    margin-top: variables.rem(34px);
+
+    p,
+    a {
+      font-size: variables.rem(18px);
+      line-height: variables.rem(21px);
+    }
+  }
+}
+
+.title {
+  font-weight: 400;
+  letter-spacing: variables.rem(0.15px);
+
+  @include media.for-mobile {
+    font-size: variables.rem(20px);
+    line-height: variables.rem(26px);
+  }
+
+  @include media.for-tablet {
+    font-size: variables.rem(24px);
+    line-height: variables.rem(30px);
+  }
+
+  @include media.for-laptop {
+    font-size: variables.rem(28px);
+    line-height: variables.rem(34px);
+  }
+
+  @include media.for-desktop {
+    font-size: variables.rem(30px);
+    line-height: variables.rem(38px);
+  }
+}
+
+.button {
+  @include media.for-mobile {
+    margin-top: variables.rem(30px);
+    padding-top: variables.rem(12px);
+    padding-bottom: variables.rem(12px);
+  }
+
+  @include media.for-tablet {
+    margin-top: variables.rem(36px);
+    padding-top: variables.rem(14px);
+    padding-bottom: variables.rem(14px);
+  }
+
+  @include media.for-laptop {
+    margin-top: variables.rem(40px);
+    padding-top: variables.rem(15px);
+    padding-bottom: variables.rem(15px);
+  }
+
+  @include media.for-desktop {
+    margin-top: variables.rem(43px);
+    padding-top: variables.rem(16px);
+    padding-bottom: variables.rem(16px);
+  }
+}

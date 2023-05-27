@@ -2,11 +2,6 @@
 @use 'styles/mixin/media' as media;
 
 .wrapper {
-  h1 {
-    font-weight: 400;
-    letter-spacing: variables.rem(0.15px);
-  }
-
   form {
     display: flex;
     flex-direction: column;
@@ -31,49 +26,16 @@
     }
   }
 
-  .create_account p,
-  .create_account a,
   .remember_forgot a {
     user-select: none;
   }
 
-  .create_account {
-    display: flex;
-    gap: variables.rem(5px);
-    justify-content: center;
-
-    p {
-      color: variables.$light-100;
-    }
-
-    a {
-      color: variables.$primary;
-      text-decoration: underline;
-      transition: color variables.$transition;
-
-      &:hover {
-        color: darken(variables.$primary, 15%);
-      }
-    }
-  }
-
   @include media.for-mobile {
-    h1 {
-      font-size: variables.rem(20px);
-      line-height: variables.rem(26px);
-    }
-
     form {
       margin-top: variables.rem(20px);
 
       label + label {
         margin-top: variables.rem(30px);
-      }
-
-      button {
-        margin-top: variables.rem(30px);
-        padding-top: variables.rem(12px);
-        padding-bottom: variables.rem(12px);
       }
     }
 
@@ -82,35 +44,18 @@
       margin-top: variables.rem(40px);
     }
 
-    .create_account p,
-    .create_account a,
     .remember_forgot a {
       font-size: variables.rem(14px);
       line-height: variables.rem(16px);
     }
-
-    .create_account {
-      margin-top: variables.rem(20px);
-    }
   }
 
   @include media.for-tablet {
-    h1 {
-      font-size: variables.rem(24px);
-      line-height: variables.rem(30px);
-    }
-
     form {
       margin-top: variables.rem(26px);
 
       label + label {
         margin-top: variables.rem(36px);
-      }
-
-      button {
-        margin-top: variables.rem(36px);
-        padding-top: variables.rem(14px);
-        padding-bottom: variables.rem(14px);
       }
     }
 
@@ -119,35 +64,18 @@
       margin-top: variables.rem(50px);
     }
 
-    .create_account p,
-    .create_account a,
     .remember_forgot a {
       font-size: variables.rem(16px);
       line-height: variables.rem(19px);
     }
-
-    .create_account {
-      margin-top: variables.rem(26px);
-    }
   }
 
   @include media.for-laptop {
-    h1 {
-      font-size: variables.rem(28px);
-      line-height: variables.rem(34px);
-    }
-
     form {
       margin-top: variables.rem(30px);
 
       label + label {
         margin-top: variables.rem(40px);
-      }
-
-      button {
-        margin-top: variables.rem(40px);
-        padding-top: variables.rem(15px);
-        padding-bottom: variables.rem(15px);
       }
     }
 
@@ -156,35 +84,18 @@
       margin-top: variables.rem(60px);
     }
 
-    .create_account p,
-    .create_account a,
     .remember_forgot a {
       font-size: variables.rem(17px);
       line-height: variables.rem(20px);
     }
-
-    .create_account {
-      margin-top: variables.rem(30px);
-    }
   }
 
   @include media.for-desktop {
-    h1 {
-      font-size: variables.rem(30px);
-      line-height: variables.rem(38px);
-    }
-
     form {
       margin-top: variables.rem(34px);
 
       label + label {
         margin-top: variables.rem(44px);
-      }
-
-      button {
-        margin-top: variables.rem(43px);
-        padding-top: variables.rem(16px);
-        padding-bottom: variables.rem(16px);
       }
     }
 
@@ -193,15 +104,9 @@
       margin-top: variables.rem(66px);
     }
 
-    .create_account p,
-    .create_account a,
     .remember_forgot a {
       font-size: variables.rem(18px);
       line-height: variables.rem(21px);
-    }
-
-    .create_account {
-      margin-top: variables.rem(34px);
     }
   }
 }
