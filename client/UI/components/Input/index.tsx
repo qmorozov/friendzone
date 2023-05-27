@@ -3,11 +3,19 @@ import { classnames } from '../../../services/helper';
 
 import styles from './index.module.scss';
 
-export interface IInput extends InputHTMLAttributes<HTMLInputElement> {
+export interface IInput
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'placeholder'> {
   label?: string;
+  classes?: string;
 }
 
-const Input: FC<IInput> = ({ label, required, disabled, ...inputProps }) => {
+const Input: FC<IInput> = ({
+  label,
+  required,
+  disabled,
+  classes,
+  ...inputProps
+}) => {
   const [value, setValue] = useState<string>('');
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +35,7 @@ const Input: FC<IInput> = ({ label, required, disabled, ...inputProps }) => {
   });
 
   return (
-    <label title={`input ${label}`} className={wrapperClasses}>
+    <label title={`input ${label}`} className={`${wrapperClasses} ${classes}`}>
       {isCheckbox || isRadio ? (
         <>
           <input

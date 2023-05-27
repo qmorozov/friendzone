@@ -11,8 +11,9 @@
     transform: translateY(3px);
     pointer-events: none;
     color: #939393;
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out,
-      font-size 0.3s ease-in-out, color 0.3s ease-in;
+    user-select: none;
+    transition: opacity variables.$transition, transform variables.$transition,
+      font-size variables.$transition, color variables.$transition;
 
     &.up {
       font-size: variables.rem(12px);
@@ -23,7 +24,7 @@
 
   input {
     border-bottom: variables.rem(1px) solid #939393;
-    transition: border-bottom-color 0.3s ease-in-out;
+    transition: border-bottom-color variables.$transition;
 
     &:focus {
       border-bottom-color: lighten(#939393, 40%);
@@ -185,6 +186,7 @@
 
   p {
     font-weight: 400;
+    user-select: none;
     letter-spacing: variables.rem(0.15px);
     transition: color 0.3s ease-in-out, opacity 0.3s ease-in-out;
   }
@@ -274,9 +276,17 @@
       opacity: 1;
     }
 
+    & + span {
+      cursor: pointer;
+    }
+
+    & + span + p {
+      cursor: pointer;
+    }
+
     &:disabled + span,
     &:disabled + span + p {
-      cursor: auto;
+      cursor: auto !important;
       pointer-events: none;
       opacity: 0.5;
       user-select: none;
@@ -304,6 +314,7 @@
 
   p {
     font-weight: 400;
+    user-select: none;
     letter-spacing: variables.rem(0.15px);
     transition: color 0.3s ease-in-out, opacity 0.3s ease-in-out;
   }
