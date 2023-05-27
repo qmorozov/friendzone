@@ -18,6 +18,11 @@ $breakpoints: (
 
 /* ==== Colors ==== */
 
+$primary: #ffb800;
+$light-text: #f2f2f2;
+$dark-text: #000;
+$border-color: #3a444c;
+
 /* ==== pxl to rem ==== */
 @function rem($size) {
   @return math.div($size, 16px) * 1rem;

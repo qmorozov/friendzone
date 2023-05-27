@@ -1,3 +1,5 @@
+@use 'variables' as variables;
+
 @import '~normalize.css/normalize.css';
 
 @import 'parts/reset';
@@ -5,9 +7,9 @@
 body {
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 19px;
-  background-color: black;
+  font-size: variables.rem(16px);
+  line-height: variables.rem(19px);
+  background-color: #000;
   color: #F2F2F2;
 }
 

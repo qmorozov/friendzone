@@ -17,7 +17,7 @@ const AuthLayout: FC<IAuthLayout> = ({ children, title }) => {
 
       <div className={styles.auth__decor}>
         <img
-          src="/images/auth-bg.png"
+          src="/images/auth-bg.webp"
           alt="Auth Background"
           className={styles.auth__background}
         />
