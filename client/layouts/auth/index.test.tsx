@@ -25,6 +25,6 @@ describe('Auth layout', () => {
 
     const backgroundImage = screen.getByAltText('Auth Background');
     expect(backgroundImage).toBeInTheDocument();
-    expect(backgroundImage.getAttribute('src')).toBe('/images/auth-bg.png');
+    expect(backgroundImage.getAttribute('src')).toBe('/images/auth-bg.webp');
   });
 });

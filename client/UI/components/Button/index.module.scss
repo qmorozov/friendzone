@@ -1,0 +1,80 @@
+@use 'styles/variables' as variables;
+@use 'styles/mixin/media' as media;
+
+.btn {
+  width: 100%;
+  cursor: pointer;
+  font-weight: 500;
+  letter-spacing: variables.rem(0.4px);
+  text-transform: uppercase;
+  border-radius: variables.rem(4px);
+  box-shadow: 0 variables.rem(3px) variables.rem(1px) variables.rem(-2px) rgba(0, 0, 0, 0.2), 0 variables.rem(2px) variables.rem(2px) rgba(0, 0, 0, 0.14),
+    0 variables.rem(1px) variables.rem(5px) rgba(0, 0, 0, 0.12);
+  transition: border-color 0.3s ease-in-out, color 0.3s ease-in-out,
+    background-color 0.3s ease-in-out, opacity 0.3s ease-in-out, transform 0.2s ease-in-out;
+  border: 2px solid transparent;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &.fill {
+    color: variables.$dark-text;
+    background-color: variables.$primary;
+
+    &:hover {
+      color: variables.$light-text;
+      background-color: transparent;
+      border-color: variables.$primary;
+    }
+
+    &:focus {
+      border-color: lighten(variables.$primary, 40%)
+    }
+  }
+
+  &.border {
+    color: variables.$light-text;
+    border-color: variables.$primary;
+
+    &:hover {
+      color: variables.$dark-text;
+      background-color: variables.$primary;
+    }
+
+    &:focus {
+      border-color: darken(variables.$primary, 15%)
+    }
+  }
+
+  &:disabled {
+    cursor: auto;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  @include media.for-mobile {
+    padding: variables.rem(4px) variables.rem(20px);
+    font-size: variables.rem(12px);
+    line-height: variables.rem(20px);
+  }
+
+  @include media.for-tablet {
+    padding: variables.rem(4px) variables.rem(30px);
+    font-size: variables.rem(13px);
+    line-height: variables.rem(22px);
+  }
+
+  @include media.for-laptop {
+    padding: variables.rem(4px) variables.rem(35px);
+    font-size: variables.rem(14px);
+    line-height: variables.rem(24px);
+  }
+
+  @include media.for-desktop {
+    padding: variables.rem(4px) variables.rem(40px);
+  }
+}

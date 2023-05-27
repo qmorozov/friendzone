@@ -2,6 +2,7 @@ import { FC, ReactNode } from 'react';
 import DocumentHead from '../_head';
 
 import styles from '../../styles/parts/authLayouts.module.scss';
+import Button from '../../UI/components/Button';
 
 export interface IAuthLayout {
   title: string;
