@@ -11,7 +11,7 @@ const DocumentHead: FC<IDocumentHead> = ({ title }) => {
       <title>{title} | FriendZone</title>
       <link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Overpass:wght@700&family=Roboto:wght@400;700;900&display=swap"
       />
       <link
         sizes="180x180"

@@ -2,6 +2,7 @@ import { FC, ReactNode } from 'react';
 import DocumentHead from '../_head';
 
 import styles from '../../styles/parts/authLayouts.module.scss';
+import Button from '../../UI/components/Button';
 
 export interface IAuthLayout {
   title: string;
@@ -17,7 +18,7 @@ const AuthLayout: FC<IAuthLayout> = ({ children, title }) => {
 
       <div className={styles.auth__decor}>
         <img
-          src="/images/auth-bg.png"
+          src="/images/auth-bg.webp"
           alt="Auth Background"
           className={styles.auth__background}
         />
