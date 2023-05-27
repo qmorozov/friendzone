@@ -10,6 +10,14 @@ export class Hobby{
     @Prop({required: true})
     name: String
 
+    @Prop()
+    @ApiProperty({description: "Hobby Name in Russian", example: "Рыбалка"})
+    nameRu: String
+
+    @Prop()
+    @ApiProperty({description: "Hobby Name in Ukrainian", example: "Риболовля"})
+    nameUa: String
+
     @Prop({ default: Date.now })
     createdAt: Date;
 }
