@@ -7,6 +7,9 @@ import {Language, LanguageSchema} from "../schemas/language.schema";
   providers: [LanguageService],
   imports: [
     MongooseModule.forFeature([{ name: Language.name, schema: LanguageSchema }])
+  ],
+  exports: [
+      LanguageService
   ]
 })
 export class LanguageModule {}
