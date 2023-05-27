@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { HobbyService } from './hobby.service';
 import {MongooseModule} from "@nestjs/mongoose";
 import {Hobby, HobbySchema} from "../schemas/hobby.schema";
+import { HobbyController } from './hobby.controller';
 
 @Module({
   providers: [HobbyService],
@@ -11,6 +12,8 @@ import {Hobby, HobbySchema} from "../schemas/hobby.schema";
 
   exports: [
       HobbyService
-  ]
+  ],
+
+  controllers: [HobbyController]
 })
 export class HobbyModule {}

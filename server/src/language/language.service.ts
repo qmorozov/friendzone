@@ -12,4 +12,7 @@ export class LanguageService {
         return this.languageModel.findById(ids);
     }
 
+    async getAll(){
+        return this.languageModel.find()
+    }
 }

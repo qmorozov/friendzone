@@ -10,4 +10,9 @@ export class HobbyService {
     async findManyById(ids: Array<string>){
         return this.hobbyModel.findById(ids);
     }
+
+    async getAll(){
+        return this.hobbyModel.find()
+    }
+
 }
