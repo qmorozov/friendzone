@@ -7,9 +7,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "chromatic": "npx chromatic --project-token=chpt_dd1be52e2a57b62"
+    "storybook": "storybook dev -p 6006"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
@@ -47,8 +45,5 @@
     "sass": "^1.62.1",
     "storybook": "^7.0.12",
     "typescript": "5.0.4"
-  },
-  "version": "",
-  "readme": "ERROR: No README data found!",
-  "_id": "friendzone@"
+  }
 }
