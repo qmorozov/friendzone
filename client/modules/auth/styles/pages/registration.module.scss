@@ -1,0 +1,128 @@
+@use 'styles/variables' as variables;
+@use 'styles/mixin/media' as media;
+@use 'styles/mixin/fonts' as fonts;
+
+.wrapper {
+  @include media.for-mobile {
+    form {
+      margin-top: variables.rem(20px);
+    }
+
+    h1 {
+      margin-top: variables.rem(16px);
+    }
+  }
+
+  @include media.for-tablet {
+    form {
+      margin-top: variables.rem(30px);
+    }
+
+    h1 {
+      margin-top: variables.rem(24px);
+    }
+  }
+
+  @include media.for-laptop {
+    form {
+      margin-top: variables.rem(40px);
+    }
+
+    h1 {
+      margin-top: variables.rem(32px);
+    }
+  }
+
+  @include media.for-desktop {
+    form {
+      margin-top: variables.rem(54px);
+    }
+
+    h1 {
+      margin-top: variables.rem(38px);
+    }
+  }
+}
+
+.steps {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 0;
+
+    letter-spacing: variables.rem(-0.24px);
+    @include fonts.Manrope(700);
+
+    border-radius: 100%;
+    border: variables.rem(2px) solid variables.$primary;
+    background-color: variables.$dark-50;
+
+    user-select: none;
+
+    &.completed {
+      color: variables.$dark-50;
+      background-color: variables.$primary;
+    }
+  }
+
+  .bar {
+    position: absolute;
+    display: flex;
+    top: 50%;
+    right: 50%;
+    bottom: 50%;
+    left: 50%;
+    width: 100%;
+    height: variables.rem(2px);
+    z-index: -1;
+    background-color: variables.$primary;
+    transform: translate(-50%, -50%);
+  }
+
+  @include media.for-mobile {
+    span {
+      width: variables.rem(30px);
+      height: variables.rem(30px);
+
+      font-size: variables.rem(14px);
+      line-height: variables.rem(18px);
+    }
+  }
+
+  @include media.for-tablet {
+    span {
+      width: variables.rem(35px);
+      height: variables.rem(35px);
+
+      font-size: variables.rem(16px);
+      line-height: variables.rem(22px);
+    }
+  }
+
+  @include media.for-laptop {
+    span {
+      width: variables.rem(40px);
+      height: variables.rem(40px);
+
+      font-size: variables.rem(18px);
+      line-height: variables.rem(24px);
+    }
+  }
+
+  @include media.for-desktop {
+    span {
+      width: variables.rem(45px);
+      height: variables.rem(45px);
+
+      font-size: variables.rem(20px);
+      line-height: variables.rem(27px);
+    }
+  }
+}
