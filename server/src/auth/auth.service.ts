@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {Injectable, UnprocessableEntityException} from '@nestjs/common';
 import {UserService} from "../user/user.service";
 import * as bcrypt from 'bcrypt';
 import {JwtService} from "@nestjs/jwt";
@@ -10,6 +10,7 @@ export class AuthService {
     constructor(private userService: UserService, private jwtService: JwtService) {}
 
     async validateUser(email: string, password: string): Promise<any>{
+
         const user = await this.userService.getByEmail(email);
 
         if(user && await bcrypt.compare(password, user.password)){
@@ -29,8 +30,12 @@ export class AuthService {
 
         const candidate = await this.userService.getByEmail(dto.email);
 
-        const user = candidate ? candidate : await this.userService.create(dto);
-console.log(user);
+        if(candidate){
+            throw new UnprocessableEntityException("This e-mail already registered")
+        }
+
+        const user = await this.userService.create(dto);
+
         return this.generateToken(user);
     }
 
@@ -41,6 +46,10 @@ console.log(user);
                 email: user.email
             })
         }
+    }
+
+    verifyToken(token: string){
+        return this.jwtService.verify(token)
     }
 
 }

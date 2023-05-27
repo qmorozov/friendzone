@@ -1,8 +1,9 @@
-import {Body, Controller, Post, Request, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, Headers, Post, Request, UseGuards} from '@nestjs/common';
 import {LocalAuthGuard} from "./local-auth.guard";
 import {ApiOkResponse, ApiOperation, ApiTags} from "@nestjs/swagger";
 import {AuthService} from "./auth.service";
 import {CreateUserDto} from "../user/dto/create-user.dto";
+import {JwtAuthGuard} from "./jwt-auth.guard";
 
 @ApiTags("Authorization")
 @Controller('/auth')
@@ -25,4 +26,10 @@ export class AuthController {
         return await this.authService.register(dto)
     }
 
+    @ApiOperation({summary: "Get User Profile by JWT Token"})
+    @UseGuards(JwtAuthGuard)
+    @Get('/profile')
+    getProfile(@Request() req) {
+        return req.user;
+    }
 }

@@ -31,18 +31,21 @@ export class User {
         description: "User First Name",
         example: "John"
     })
+    @Prop()
     firstName: String;
 
     @ApiProperty({
         description: "User Last Name",
         example: "Johnson"
     })
-    lastNme: String;
+    @Prop()
+    lastName: String;
 
     @ApiProperty({
         description: "User Phone",
         example: "38099123456"
     })
+    @Prop()
     phone: String;
 
     @ApiProperty({description: "User Location Object", example: {
@@ -52,6 +55,7 @@ export class User {
             longitude: 3.3488896,
             accuracy: 7173.528443511279
     }})
+    @Prop()
     location: [{
         country: String,
         city: String,
@@ -64,24 +68,28 @@ export class User {
         description: "User Pictures Array",
         example: ['123.jpg', '321.jpg']
     })
+    @Prop()
     pictures: String[]
 
     @ApiProperty({
         description: "User Social Media Links Array",
         example: ['https://www.instagram.com/', 'https://facebook.com/']
     })
+    @Prop()
     socialMedia: String[]
 
     @ApiProperty({
         description: "User Description",
         example: "My name is John. I am from Kyiv, Ukraine"
     })
+    @Prop()
     description: String;
 
     @ApiProperty({
         description: "User Settings",
         example: {isDarkModeForced: true}
     })
+    @Prop()
     settings: [{
         isDarkModeForced: Boolean
     }];
@@ -90,10 +98,10 @@ export class User {
     createdAt: Date;
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Language' })
-    language: Language;
+    languages: Language[];
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Hobby' })
-    hobby: Hobby;
+    hobbies: Hobby[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
