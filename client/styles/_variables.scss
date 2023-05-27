@@ -1,29 +1,46 @@
 @use 'sass:math' as math;
 
+/* ==== pxl to rem ==== */
+@function rem($size) {
+  @return math.div($size, 16px) * 1rem;
+}
+
 /* ==== Mixin ==== */
 $breakpoints: (
   'mobile': (
-    max-width: 800px,
+    max-width: rem(800px),
   ),
   'tablet': (
-    min-width: 800px,
+    min-width: rem(800px),
   ),
   'laptop': (
-    min-width: 1280px,
+    min-width: rem(1280px),
   ),
   'desktop': (
-    min-width: 1920px,
+    min-width: rem(1920px),
   ),
 ) !default;
 
 /* ==== Colors ==== */
 
 $primary: #ffb800;
-$light-text: #f2f2f2;
-$dark-text: #000;
-$border-color: #3a444c;
 
-/* ==== pxl to rem ==== */
-@function rem($size) {
-  @return math.div($size, 16px) * 1rem;
-}
+/* ==== Light colors ==== */
+
+$light-50: #f2f2f2;
+$light-100: #bdbdbd;
+
+/* ==== Grey colors ==== */
+
+$grey-50: #939393;
+$grey-100: #3a444c;
+$grey-150: #424242;
+$grey-200: #bfbfbf;
+
+/* ==== Dark colors ==== */
+
+$dark-50: #000;
+
+/* ==== Animation ==== */
+
+$transition: 0.3s ease-in-out;

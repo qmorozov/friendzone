@@ -1,0 +1,14 @@
+@mixin Roboto($weight) {
+  font-family: 'Roboto', sans-serif;
+  font-weight: $weight;
+}
+
+@mixin Manrope($weight) {
+  font-family: 'Manrope', sans-serif;
+  font-weight: $weight;
+}
+
+@mixin Overpass($weight) {
+  font-family: 'Overpass', sans-serif;
+  font-weight: $weight;
+}
