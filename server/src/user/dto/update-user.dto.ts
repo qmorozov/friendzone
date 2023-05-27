@@ -29,7 +29,7 @@ export class UpdateUserDto{
 
     @ApiProperty({description: "User Languages", example: ["uuid1", "uuid2"]})
     // @IsArray({message: "Languages must be an array" })
-    readonly languages?: Array<string>
+    readonly languages: Array<string>
 
     @ApiProperty({description: "User Social Media Links Array", example: ['https://www.instagram.com/', 'https://facebook.com/']})
     @IsArray({message: "Social Media Links must be an array" })
