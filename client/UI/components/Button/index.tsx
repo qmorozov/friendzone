@@ -12,6 +12,7 @@ type ButtonVariantString = keyof typeof ButtonVariant;
 
 export interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: ReactNode;
+  classes?: string;
   children: ReactNode;
   variant?: ButtonVariantString;
 }
@@ -19,6 +20,7 @@ export interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
 const Button: FC<IButton> = ({
   children,
   icon = false,
+  classes,
   variant = ButtonVariant.fill,
   ...rest
 }) => {
@@ -28,7 +30,7 @@ const Button: FC<IButton> = ({
   });
 
   return (
-    <button className={wrapperClasses} {...rest}>
+    <button className={`${wrapperClasses} ${classes}`} {...rest}>
       {icon && <span className={styles.icon}>{icon}</span>}
       {children}
     </button>

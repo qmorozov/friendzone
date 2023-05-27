@@ -5,6 +5,7 @@
   width: 100%;
   cursor: pointer;
   font-weight: 500;
+  user-select: none;
   letter-spacing: variables.rem(0.4px);
   text-transform: uppercase;
   border-radius: variables.rem(4px);

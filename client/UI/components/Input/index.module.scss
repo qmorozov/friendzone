@@ -11,6 +11,7 @@
     transform: translateY(3px);
     pointer-events: none;
     color: #939393;
+    user-select: none;
     transition: opacity variables.$transition, transform variables.$transition,
       font-size variables.$transition, color variables.$transition;
 
@@ -185,6 +186,7 @@
 
   p {
     font-weight: 400;
+    user-select: none;
     letter-spacing: variables.rem(0.15px);
     transition: color 0.3s ease-in-out, opacity 0.3s ease-in-out;
   }
@@ -312,6 +314,7 @@
 
   p {
     font-weight: 400;
+    user-select: none;
     letter-spacing: variables.rem(0.15px);
     transition: color 0.3s ease-in-out, opacity 0.3s ease-in-out;
   }
