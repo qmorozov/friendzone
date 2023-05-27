@@ -28,8 +28,8 @@ export class UpdateUserDto{
     readonly hobbies: Array<string>
 
     @ApiProperty({description: "User Languages", example: ["uuid1", "uuid2"]})
-    @IsArray({message: "Languages must be an array" })
-    readonly languages: Array<string>
+    // @IsArray({message: "Languages must be an array" })
+    readonly languages?: Array<string>
 
     @ApiProperty({description: "User Social Media Links Array", example: ['https://www.instagram.com/', 'https://facebook.com/']})
     @IsArray({message: "Social Media Links must be an array" })
@@ -43,11 +43,11 @@ export class UpdateUserDto{
             accuracy: "7173.528443511279",
         }
     })
-    @IsObject({message: "Location must be an object"})
+    // @IsObject({message: "Location must be an object"})
     readonly location?: object;
 
     @ApiProperty({description: "User Settings", example: {isDarkModeForced: true}})
-    @IsObject({message: "Settings must be an object" })
+    // @IsObject({message: "Settings must be an object" })
     readonly settings?:object
 
 }

@@ -9,7 +9,7 @@ export class LanguageService {
     constructor(@InjectModel(Language.name) private languageModel: Model<Language>) {}
 
     async findManyById(ids: Array<string>){
-        return this.languageModel.find({_id: ids});
+        return this.languageModel.findById(ids);
     }
 
 }

@@ -8,6 +8,6 @@ export class HobbyService {
     constructor(@InjectModel(Hobby.name) private hobbyModel: Model<Hobby>) {}
 
     async findManyById(ids: Array<string>){
-        return this.hobbyModel.find({_id: ids});
+        return this.hobbyModel.findById(ids);
     }
 }

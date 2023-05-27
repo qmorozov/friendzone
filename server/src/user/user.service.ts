@@ -24,7 +24,7 @@ export class UserService {
     }
 
     async getByEmail(email: string){
-        return this.userModel.findOne({email}).exec();
+        return this.userModel.findOne({email}).populate(["hobbies", "languages"]).exec();
     }
 
     async update(userId: string, dto: UpdateUserDto){
@@ -39,6 +39,6 @@ export class UserService {
             ...dto,
             languages: languageItems,
             hobbies: hobbyItems
-        });
+        }).populate(['hobbies', 'languages']);
     }
 }
