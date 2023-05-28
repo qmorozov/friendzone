@@ -3,9 +3,28 @@
 @use 'styles/mixin/fonts' as fonts;
 
 .wrapper {
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: variables.rem(20px);
+
+    fieldset {
+      display: flex;
+      justify-content: space-between;
+
+      label {
+        flex-basis: 50%;
+      }
+    }
+  }
+
   @include media.for-mobile {
     form {
       margin-top: variables.rem(20px);
+
+      fieldset {
+        gap: variables.rem(16px);
+      }
     }
 
     h1 {
@@ -16,6 +35,10 @@
   @include media.for-tablet {
     form {
       margin-top: variables.rem(30px);
+
+      fieldset {
+        gap: variables.rem(24px);
+      }
     }
 
     h1 {

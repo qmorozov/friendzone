@@ -8,7 +8,6 @@ import Languages from './Steps/languages';
 
 import auth from '../../styles/index.module.scss';
 import styles from '../../styles/pages/registration.module.scss';
-import Input from '../../../../UI/components/Input';
 
 enum registrationSteps {
   basic = 'Basic',
@@ -47,18 +46,12 @@ const Registration = () => {
 
   return (
     <div className={styles.wrapper}>
-      {/*<Tabs*/}
-      {/*  options={steps}*/}
-      {/*  selectedTabId={steps[0].id}*/}
-      {/*  listClasses={styles.steps}*/}
-      {/*  headerContent={<div className={styles.bar}></div>}*/}
-      {/*/>*/}
-
-      <div>
-        <Input type="textarea" label="textarea label" />
-        <Input label="textarea label" />
-        <Input label="textarea label" />
-      </div>
+      <Tabs
+        options={steps}
+        selectedTabId={steps[0].id}
+        listClasses={styles.steps}
+        headerContent={<div className={styles.bar}></div>}
+      />
 
       <div className={auth.auth__footer}>
         <p>You already have an account?</p>

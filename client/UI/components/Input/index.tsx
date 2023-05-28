@@ -32,7 +32,6 @@ const Input: FC<IInput> = ({
     [styles.checkbox]: isCheckbox,
     [styles.radio]: isRadio,
     [styles.default]: !isCheckbox && !isRadio,
-    [styles.textarea]: isTextarea,
   });
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -49,7 +48,10 @@ const Input: FC<IInput> = ({
   };
 
   return (
-    <label title={`input ${label}`} className={`${wrapperClasses} ${classes}`}>
+    <label
+      title={`input ${label}`}
+      className={`${wrapperClasses} ${classes ? classes : ''}`}
+    >
       {isCheckbox || isRadio ? (
         <>
           <input

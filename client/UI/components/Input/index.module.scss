@@ -3,6 +3,7 @@
 
 .default {
   position: relative;
+  display: block;
 
   p {
     position: absolute;
@@ -23,7 +24,7 @@
 
     &.up {
       font-size: variables.rem(12px);
-      transform: translateY(-100%);
+      transform: translateY(-60%);
       opacity: 0.7;
     }
   }
