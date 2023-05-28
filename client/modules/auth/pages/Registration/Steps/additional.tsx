@@ -2,10 +2,10 @@ import Button from '../../../../../UI/components/Button';
 
 import auth from '../../../styles/index.module.scss';
 
-const Basic = () => {
+const Additional = () => {
   return (
     <>
-      <h1 className={auth.title}>Basic information</h1>
+      <h1 className={auth.title}>Additional information</h1>
 
       <form>
         <Button classes={auth.button}>CONTINUE</Button>
@@ -14,4 +14,4 @@ const Basic = () => {
   );
 };
 
-export default Basic;
+export default Additional;

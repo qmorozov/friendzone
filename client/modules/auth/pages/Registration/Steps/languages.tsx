@@ -2,16 +2,16 @@ import Button from '../../../../../UI/components/Button';
 
 import auth from '../../../styles/index.module.scss';
 
-const Basic = () => {
+const Languages = () => {
   return (
     <>
-      <h1 className={auth.title}>Basic information</h1>
+      <h1 className={auth.title}>Languages</h1>
 
       <form>
-        <Button classes={auth.button}>CONTINUE</Button>
+        <Button classes={auth.button}>SIGN UP!</Button>
       </form>
     </>
   );
 };
 
-export default Basic;
+export default Languages;

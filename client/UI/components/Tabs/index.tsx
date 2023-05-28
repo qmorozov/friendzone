@@ -3,19 +3,28 @@ import { Tab } from '@headlessui/react';
 
 export interface ITab {
   id: string;
-  title: string;
+  title: string | ReactNode;
   content: ReactNode;
   disabled?: boolean;
   onClick?: () => void;
+  className?: string;
 }
 
 export interface ITabs {
   options: ITab[];
-  classes?: string;
+  bodyClasses?: string;
+  listClasses?: string;
+  headerContent?: ReactNode;
   selectedTabId?: ITab['id'];
 }
 
-const Tabs: FC<ITabs> = ({ options, selectedTabId, classes }) => {
+const Tabs: FC<ITabs> = ({
+  options,
+  selectedTabId,
+  bodyClasses,
+  listClasses,
+  headerContent,
+}) => {
   const [selectedTab, setSelectedTab] = useState(selectedTabId);
 
   useEffect(() => {
@@ -30,27 +39,31 @@ const Tabs: FC<ITabs> = ({ options, selectedTabId, classes }) => {
   };
 
   return (
-    <div className={classes ? classes : ''}>
+    <div className={bodyClasses ?? bodyClasses}>
       <Tab.Group
         selectedIndex={options.findIndex(({ id }) => id === selectedTab)}
         onChange={handleTabChange}
       >
-        <Tab.List>
-          {options.map(({ title, id, disabled = false, onClick }) => (
-            <Tab
-              key={id}
-              disabled={disabled}
-              onClick={() => {
-                if (onClick) {
-                  onClick();
-                }
+        <Tab.List className={listClasses ?? listClasses}>
+          {headerContent}
+          {options.map(
+            ({ title, id, disabled = false, onClick, className }) => (
+              <Tab
+                key={id}
+                disabled={disabled}
+                onClick={() => {
+                  if (onClick) {
+                    onClick();
+                  }
 
-                setSelectedTab(id);
-              }}
-            >
-              {title}
-            </Tab>
-          ))}
+                  setSelectedTab(id);
+                }}
+                className={className}
+              >
+                {title}
+              </Tab>
+            )
+          )}
         </Tab.List>
         <Tab.Panels>
           {options.map(({ id, content }) => (
