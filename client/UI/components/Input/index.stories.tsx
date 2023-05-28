@@ -58,3 +58,11 @@ Radio.args = {
   required: false,
   disabled: false,
 };
+
+export const Textarea: Story<IInput> = InputTemplate.bind({});
+Textarea.args = {
+  label: 'Textarea Label',
+  type: 'textarea',
+  required: false,
+  disabled: false,
+};

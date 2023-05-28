@@ -1,10 +1,9 @@
-import { ChangeEvent, FC, InputHTMLAttributes, useState } from 'react';
+import { ChangeEvent, FC, InputHTMLAttributes, useRef, useState } from 'react';
 import { classnames } from '../../../services/helper';
 
 import styles from './index.module.scss';
 
-export interface IInput
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'placeholder'> {
+export interface IInput extends Omit<InputHTMLAttributes<any>, 'placeholder'> {
   label?: string;
   classes?: string;
 }
@@ -18,12 +17,13 @@ const Input: FC<IInput> = ({
 }) => {
   const [value, setValue] = useState<string>('');
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<any>) => {
     setValue(event.target.value);
   };
 
   const isCheckbox = inputProps.type === 'checkbox';
   const isRadio = inputProps.type === 'radio';
+  const isTextarea = inputProps.type === 'textarea';
 
   const wrapperClasses = classnames({
     [styles.full]: value,
@@ -32,7 +32,21 @@ const Input: FC<IInput> = ({
     [styles.checkbox]: isCheckbox,
     [styles.radio]: isRadio,
     [styles.default]: !isCheckbox && !isRadio,
+    [styles.textarea]: isTextarea,
   });
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleTextareaInput = () => {
+    const textareaElement = textareaRef.current;
+    if (textareaElement) {
+      textareaElement.style.height = 'auto';
+      textareaElement.style.height = `${Math.min(
+        textareaElement.scrollHeight,
+        150
+      )}px`;
+    }
+  };
 
   return (
     <label title={`input ${label}`} className={`${wrapperClasses} ${classes}`}>
@@ -46,6 +60,14 @@ const Input: FC<IInput> = ({
           />
           <span></span>
         </>
+      ) : isTextarea ? (
+        <textarea
+          ref={textareaRef}
+          {...inputProps}
+          onChange={handleChange}
+          onInput={handleTextareaInput}
+          disabled={disabled}
+        />
       ) : (
         <input {...inputProps} onChange={handleChange} disabled={disabled} />
       )}
