@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react';
 import DocumentHead from '../_head';
 
 import styles from '../../styles/parts/authLayouts.module.scss';
-import Button from '../../UI/components/Button';
+import Tabs from '../../UI/components/Tabs';
 
 export interface IAuthLayout {
   title: string;
@@ -26,7 +26,7 @@ const AuthLayout: FC<IAuthLayout> = ({ children, title }) => {
 
       <div className={styles.auth__content}>
         <div className={styles.auth__content_container}>
-          <img src="/images/big-logo.svg" />
+          <img src="/images/big-logo.svg" alt="logo" />
 
           {children}
         </div>

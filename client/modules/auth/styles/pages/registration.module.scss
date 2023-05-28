@@ -3,9 +3,28 @@
 @use 'styles/mixin/fonts' as fonts;
 
 .wrapper {
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: variables.rem(20px);
+
+    fieldset {
+      display: flex;
+      justify-content: space-between;
+
+      label {
+        flex-basis: 50%;
+      }
+    }
+  }
+
   @include media.for-mobile {
     form {
       margin-top: variables.rem(20px);
+
+      fieldset {
+        gap: variables.rem(16px);
+      }
     }
 
     h1 {
@@ -16,6 +35,10 @@
   @include media.for-tablet {
     form {
       margin-top: variables.rem(30px);
+
+      fieldset {
+        gap: variables.rem(24px);
+      }
     }
 
     h1 {
@@ -50,7 +73,7 @@
   align-items: center;
   justify-content: space-between;
 
-  span {
+  .step {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -66,9 +89,19 @@
 
     user-select: none;
 
-    &.completed {
+    cursor: pointer;
+    transition: color variables.$transition,
+      background-color variables.$transition;
+
+    &:hover:not([disabled]),
+    &.completed:not([disabled]),
+    &[data-headlessui-state='selected']:not([disabled]) {
       color: variables.$dark-50;
       background-color: variables.$primary;
+    }
+
+    &:disabled {
+      cursor: auto;
     }
   }
 
@@ -87,7 +120,7 @@
   }
 
   @include media.for-mobile {
-    span {
+    .step {
       width: variables.rem(30px);
       height: variables.rem(30px);
 
@@ -97,7 +130,7 @@
   }
 
   @include media.for-tablet {
-    span {
+    .step {
       width: variables.rem(35px);
       height: variables.rem(35px);
 
@@ -107,7 +140,7 @@
   }
 
   @include media.for-laptop {
-    span {
+    .step {
       width: variables.rem(40px);
       height: variables.rem(40px);
 
@@ -117,7 +150,7 @@
   }
 
   @include media.for-desktop {
-    span {
+    .step {
       width: variables.rem(45px);
       height: variables.rem(45px);
 

@@ -3,6 +3,7 @@
 
 .default {
   position: relative;
+  display: block;
 
   p {
     position: absolute;
@@ -12,17 +13,32 @@
     pointer-events: none;
     color: #939393;
     user-select: none;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+
     transition: opacity variables.$transition, transform variables.$transition,
       font-size variables.$transition, color variables.$transition;
 
     &.up {
       font-size: variables.rem(12px);
-      transform: translateY(-100%);
+      transform: translateY(-60%);
       opacity: 0.7;
     }
   }
 
-  input {
+  textarea {
+    resize: vertical;
+    width: 100%;
+    max-width: inherit;
+  }
+
+  input,
+  textarea {
+    display: block;
+    width: 100%;
     border-bottom: variables.rem(1px) solid #939393;
     transition: border-bottom-color variables.$transition;
 
@@ -46,7 +62,8 @@
   }
 
   &.required {
-    input {
+    input,
+    textarea {
       border-bottom-color: #f02849;
     }
 
@@ -55,17 +72,24 @@
     }
   }
 
-  &.full input + p {
+  &.full input + p,
+  &.full textarea + p {
     @extend .up;
   }
 
   p,
-  input {
+  input,
+  textarea {
     color: #f2f2f2;
     letter-spacing: variables.rem(0.15px);
   }
 
   @include media.for-mobile {
+    textarea {
+      max-height: variables.rem(100px);
+      min-height: variables.rem(60px);
+    }
+
     input {
       padding: variables.rem(14px) 0 variables.rem(8px) 0;
     }
@@ -82,11 +106,18 @@
   }
 
   @include media.for-tablet {
-    input {
+    textarea {
+      max-height: variables.rem(150px);
+      min-height: variables.rem(100px);
+    }
+
+    input,
+    textarea {
       padding: variables.rem(16px) 0 variables.rem(10px) 0;
     }
 
     input,
+    textarea,
     p {
       font-size: variables.rem(14px);
       line-height: variables.rem(16px);
@@ -98,11 +129,13 @@
   }
 
   @include media.for-laptop {
-    input {
+    input,
+    textarea {
       padding: variables.rem(18px) 0 variables.rem(12px) 0;
     }
 
     input,
+    textarea,
     p {
       font-size: variables.rem(16px);
       line-height: variables.rem(19px);
@@ -114,11 +147,13 @@
   }
 
   @include media.for-desktop {
-    input {
+    input,
+    textarea {
       padding: variables.rem(20px) 0 variables.rem(14px) 0;
     }
 
     input,
+    textarea,
     p {
       font-size: variables.rem(18px);
       line-height: variables.rem(21px);
