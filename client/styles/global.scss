@@ -4,13 +4,26 @@
 
 @import 'parts/reset';
 
+::-webkit-scrollbar {
+  width: variables.rem(12px);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: variables.$grey-200;
+  border-radius: variables.rem(10px);
+}
+
+::-webkit-scrollbar-track {
+  background-color: variables.$grey-150;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
   font-size: variables.rem(16px);
   line-height: variables.rem(19px);
   background-color: #000;
-  color: #F2F2F2;
+  color: #f2f2f2;
 }
 
 .sb-show-main.sb-main-padded {
