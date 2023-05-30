@@ -1,0 +1,61 @@
+@use 'styles/variables' as variables;
+@use 'styles/mixin/media' as media;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: variables.rem(2px);
+  overflow-y: auto;
+  border: variables.rem(1px) solid variables.$dark-100;
+
+  label {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    transition: background-color variables.$transition;
+
+    &:hover {
+      background-color: rgba(variables.$grey-50, 20%);
+    }
+  }
+
+  @include media.for-mobile {
+    padding: variables.rem(8px) variables.rem(5px);
+    max-height: variables.rem(200px);
+
+    label {
+      height: variables.rem(30px);
+      padding: 0 variables.rem(5px);
+    }
+  }
+
+  @include media.for-tablet {
+    padding: variables.rem(12px) variables.rem(8px);
+    max-height: variables.rem(250px);
+
+    label {
+      height: variables.rem(34px);
+      padding: 0 variables.rem(7px);
+    }
+  }
+
+  @include media.for-laptop {
+    padding: variables.rem(16px) variables.rem(10px);
+    max-height: variables.rem(318px);
+
+    label {
+      height: variables.rem(38px);
+      padding: 0 variables.rem(9px);
+    }
+  }
+
+  @include media.for-desktop {
+    padding: variables.rem(16px) variables.rem(10px);
+    max-height: variables.rem(318px);
+
+    label {
+      height: variables.rem(38px);
+      padding: 0 variables.rem(9px);
+    }
+  }
+}

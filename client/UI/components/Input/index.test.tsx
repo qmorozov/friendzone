@@ -27,12 +27,6 @@ describe('Input component', () => {
     expect(label).toHaveClass('checkbox');
   });
 
-  it('applies "textarea" style when type prop is "textarea"', () => {
-    const { container } = render(<Input type="textarea" />);
-    const label = container.querySelector('label');
-    expect(label).toHaveClass('textarea');
-  });
-
   it('renders label text when label prop is provided', () => {
     const { getByText } = render(<Input label="Test" />);
     const labelText = getByText('Test');

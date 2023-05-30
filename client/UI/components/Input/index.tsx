@@ -57,7 +57,6 @@ const Input: FC<IInput> = ({
           <input
             type={isCheckbox ? 'checkbox' : 'radio'}
             {...inputProps}
-            onChange={handleChange}
             disabled={disabled}
           />
           <span></span>
