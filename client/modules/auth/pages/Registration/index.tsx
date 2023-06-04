@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import { motion } from 'framer-motion';
+
 import Tabs, { ITab } from '../../../../UI/components/Tabs';
 import Basic from './Steps/basic';
 import Additional from './Steps/additional';
@@ -45,7 +47,14 @@ const Registration = () => {
   ];
 
   return (
-    <div className={styles.wrapper}>
+    <motion.div
+      className={styles.wrapper}
+      initial={{ y: 25, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{
+        duration: 0.75,
+      }}
+    >
       <Tabs
         options={steps}
         selectedTabId={steps[0].id}
@@ -57,7 +66,7 @@ const Registration = () => {
         <p>You already have an account?</p>
         <Link href="/auth/login">Log in!</Link>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

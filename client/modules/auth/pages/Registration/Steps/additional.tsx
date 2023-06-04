@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+
 import Button from '../../../../../UI/components/Button';
 import Input from '../../../../../UI/components/Input';
 
@@ -8,7 +10,13 @@ const Additional = () => {
     <>
       <h1 className={auth.title}>Additional information</h1>
 
-      <form>
+      <motion.form
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{
+          duration: 0.75,
+        }}
+      >
         <Input type="textarea" label="Bio" />
 
         <Input label="Social Media URL #1" />
@@ -16,7 +24,7 @@ const Additional = () => {
         <Input label="Social Media URL #3" />
 
         <Button classes={auth.button}>CONTINUE</Button>
-      </form>
+      </motion.form>
     </>
   );
 };

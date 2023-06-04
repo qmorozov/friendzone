@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import { motion } from 'framer-motion';
+
 import Input from '../../../../UI/components/Input';
 import Button from '../../../../UI/components/Button';
 
@@ -8,7 +10,14 @@ import auth from '../../styles/index.module.scss';
 
 const Login = () => {
   return (
-    <div className={styles.wrapper}>
+    <motion.div
+      className={styles.wrapper}
+      initial={{ y: 25, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{
+        duration: 0.75,
+      }}
+    >
       <h1 className={auth.title}>Welcome, login to your account!</h1>
       <form>
         <Input label="Email" />
@@ -24,7 +33,7 @@ const Login = () => {
         <p>Don’t have an account yet?</p>
         <Link href="/auth/registration">Sign up!</Link>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+
 import Button from '../../../../../UI/components/Button';
 import Input from '../../../../../UI/components/Input';
 
@@ -8,7 +10,13 @@ const Basic = () => {
     <>
       <h1 className={auth.title}>Basic information</h1>
 
-      <form>
+      <motion.form
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{
+          duration: 0.75,
+        }}
+      >
         <Input label="Login" />
         <Input label="Email" />
         <fieldset>
@@ -22,7 +30,7 @@ const Basic = () => {
         </fieldset>
 
         <Button classes={auth.button}>CONTINUE</Button>
-      </form>
+      </motion.form>
     </>
   );
 };
