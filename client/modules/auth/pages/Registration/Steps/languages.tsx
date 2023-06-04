@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { AuthApi } from '../../../auth.api';
 
+import { motion } from 'framer-motion';
+
 import Button from '../../../../../UI/components/Button';
 import MultiSelect, {
   IMultiSelectItem,

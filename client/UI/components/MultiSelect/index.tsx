@@ -1,5 +1,7 @@
 import { useState, ChangeEvent, FC } from 'react';
 
+import { motion } from 'framer-motion';
+
 import Input from '../Input';
 
 import styles from './index.module.scss';
@@ -35,7 +37,14 @@ const MultiSelect: FC<IMultiSelect> = ({ options, onSelect }) => {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <motion.div
+      className={styles.wrapper}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{
+        duration: 0.75,
+      }}
+    >
       {options.map((option: IMultiSelectItem) => (
         <Input
           id={option.id}
@@ -50,7 +59,7 @@ const MultiSelect: FC<IMultiSelect> = ({ options, onSelect }) => {
           )}
         />
       ))}
-    </div>
+    </motion.div>
   );
 };
 
