@@ -3,11 +3,11 @@ import { Tab } from '@headlessui/react';
 
 export interface ITab {
   id: string;
-  title: string | ReactNode;
+  className?: string;
   content: ReactNode;
   disabled?: boolean;
   onClick?: () => void;
-  className?: string;
+  title: string | ReactNode;
 }
 
 export interface ITabs {
@@ -33,7 +33,7 @@ const Tabs: FC<ITabs> = ({
     }
   }, [selectedTabId]);
 
-  const handleTabChange = (index: number) => {
+  const handleTabChange = (index: number): void => {
     const selectedTabId = options[index].id;
     setSelectedTab(selectedTabId);
   };

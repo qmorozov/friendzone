@@ -12,7 +12,7 @@ describe('Button', () => {
 
   it('renders button with icon and children', () => {
     const { getByText, getByTestId } = render(
-      <Button icon={<i data-testid="test-icon" />}>Button with Icon</Button>
+      <Button icon={<i data-test-id="test-icon" />}>Button with Icon</Button>
     );
     const buttonElement = getByText('Button with Icon');
     const iconElement = getByTestId('test-icon');
