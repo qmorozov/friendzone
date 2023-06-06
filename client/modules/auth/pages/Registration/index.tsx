@@ -1,8 +1,11 @@
-import Link from 'next/link';
-
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { registrationSteps } from '../../dto/auth.dto';
 
 import Tabs, { ITab } from '../../../../UI/components/Tabs';
+import { IMultiSelectItem } from '../../../../UI/components/MultiSelect';
+import { AuthApi } from '../../auth.api';
 import Basic from './Steps/basic';
 import Additional from './Steps/additional';
 import Interests from './Steps/interests';
@@ -11,14 +14,10 @@ import Languages from './Steps/languages';
 import auth from '../../styles/index.module.scss';
 import styles from '../../styles/pages/registration.module.scss';
 
-enum registrationSteps {
-  basic = 'Basic',
-  additional = 'Additional',
-  interests = 'Interests',
-  languages = 'Languages',
-}
-
 const Registration = () => {
+  const [hobbies, setHobbies] = useState<IMultiSelectItem[]>([]);
+  const [languages, setLanguages] = useState<IMultiSelectItem[]>([]);
+
   const steps: ITab[] = [
     {
       id: registrationSteps.basic,
@@ -34,17 +33,50 @@ const Registration = () => {
     },
     {
       id: registrationSteps.interests,
-      content: <Interests />,
+      content: <Interests hobbies={hobbies} />,
       title: 3,
       className: styles.step,
     },
     {
       id: registrationSteps.languages,
-      content: <Languages />,
+      content: <Languages languages={languages} />,
       title: 4,
       className: styles.step,
     },
   ];
+
+  useEffect(() => {
+    const getHobbies = (): void => {
+      AuthApi.getHobbies()
+        .then((response: any) => {
+          const transformedOptions = response.map((item: any) => ({
+            id: item._id,
+            name: item.name,
+          }));
+          setHobbies(transformedOptions);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    const getLanguages = (): void => {
+      AuthApi.getLanguages()
+        .then((response: any) => {
+          const transformedOptions = response.map((item: any) => ({
+            id: item._id,
+            name: item.name,
+          }));
+          setLanguages(transformedOptions);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    getHobbies();
+    getLanguages();
+  }, []);
 
   return (
     <motion.div

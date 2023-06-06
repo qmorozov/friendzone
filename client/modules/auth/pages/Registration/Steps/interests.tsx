@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { AuthApi } from '../../../auth.api';
+import { FC } from 'react';
 
 import Button from '../../../../../UI/components/Button';
 import MultiSelect, {
@@ -8,23 +7,11 @@ import MultiSelect, {
 
 import auth from '../../../styles/index.module.scss';
 
-const Interests = () => {
-  const [hobbies, setHobbies] = useState<IMultiSelectItem[]>([]);
+interface IInterests {
+  hobbies: IMultiSelectItem[];
+}
 
-  useEffect(() => {
-    AuthApi.getHobbies()
-      .then((response: any) => {
-        const transformedOptions = response.map((item: any) => ({
-          id: item._id,
-          name: item.name,
-        }));
-        setHobbies(transformedOptions);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
+const Interests: FC<IInterests> = ({ hobbies }) => {
   return (
     <>
       <h1 className={auth.title}>Interests</h1>
