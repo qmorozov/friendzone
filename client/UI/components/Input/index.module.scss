@@ -90,7 +90,8 @@
       min-height: variables.rem(60px);
     }
 
-    input {
+    input,
+    textarea {
       padding: variables.rem(14px) 0 variables.rem(8px) 0;
     }
 

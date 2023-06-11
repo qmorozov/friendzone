@@ -11,6 +11,7 @@ const Basic = () => {
       <h1 className={auth.title}>Basic information</h1>
 
       <motion.form
+        className={auth.form}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{

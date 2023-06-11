@@ -1,5 +1,7 @@
 import { FC } from 'react';
 
+import { motion } from 'framer-motion';
+
 import Button from '../../../../../UI/components/Button';
 import MultiSelect, {
   IMultiSelectItem,
@@ -16,14 +18,21 @@ const Languages: FC<ILanguages> = ({ languages }) => {
     <>
       <h1 className={auth.title}>Languages</h1>
 
-      <form>
+      <motion.form
+        className={auth.form}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{
+          duration: 0.75,
+        }}
+      >
         <MultiSelect
           options={languages}
           onSelect={(value: IMultiSelectItem[]) => console.log(value)}
         />
 
         <Button classes={auth.button}>SIGN UP!</Button>
-      </form>
+      </motion.form>
     </>
   );
 };
