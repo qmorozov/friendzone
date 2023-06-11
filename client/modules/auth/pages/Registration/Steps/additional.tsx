@@ -11,6 +11,7 @@ const Additional = () => {
       <h1 className={auth.title}>Additional information</h1>
 
       <motion.form
+        className={auth.form}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{

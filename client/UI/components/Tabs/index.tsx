@@ -12,6 +12,7 @@ export interface ITab {
 
 export interface ITabs {
   options: ITab[];
+  tabsPanel?: string;
   bodyClasses?: string;
   listClasses?: string;
   headerContent?: ReactNode;
@@ -24,6 +25,7 @@ const Tabs: FC<ITabs> = ({
   bodyClasses,
   listClasses,
   headerContent,
+  tabsPanel,
 }) => {
   const [selectedTab, setSelectedTab] = useState(selectedTabId);
 
@@ -65,7 +67,7 @@ const Tabs: FC<ITabs> = ({
             )
           )}
         </Tab.List>
-        <Tab.Panels>
+        <Tab.Panels className={tabsPanel ?? tabsPanel}>
           {options.map(({ id, content }) => (
             <Tab.Panel key={id}>{content}</Tab.Panel>
           ))}

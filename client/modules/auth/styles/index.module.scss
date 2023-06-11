@@ -113,3 +113,42 @@
     padding-bottom: variables.rem(16px);
   }
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: variables.rem(20px);
+
+  fieldset {
+    display: flex;
+    justify-content: space-between;
+
+    label {
+      flex-basis: 50%;
+    }
+  }
+
+  @include media.for-mobile {
+    margin-top: variables.rem(20px);
+
+    fieldset {
+      gap: variables.rem(16px);
+    }
+  }
+
+  @include media.for-tablet {
+    margin-top: variables.rem(30px);
+
+    fieldset {
+      gap: variables.rem(24px);
+    }
+  }
+
+  @include media.for-laptop {
+    margin-top: variables.rem(40px);
+  }
+
+  @include media.for-desktop {
+    margin-top: variables.rem(54px);
+  }
+}

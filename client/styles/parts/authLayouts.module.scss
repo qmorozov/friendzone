@@ -8,15 +8,27 @@
   flex-direction: column;
 
   &__decor {
-    display: block;
-    height: 20%;
+    display: none;
   }
 
   &__content {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 80%;
+    height: 100vh;
+    background: url('/images/auth-bg.webp') center / cover no-repeat;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.65);
+      z-index: 0;
+    }
 
     &_container {
       display: flex;
@@ -25,6 +37,7 @@
       margin: 0 auto;
       padding: 0 variables.rem(15px);
       max-width: variables.rem(400px);
+      z-index: 1;
     }
   }
 
@@ -48,6 +61,7 @@
     flex-direction: row;
 
     &__decor {
+      display: block;
       height: 100%;
       flex-basis: 40%;
     }
@@ -55,6 +69,7 @@
     &__content {
       height: 100%;
       flex-basis: 60%;
+      background: none;
 
       &_container {
         gap: variables.rem(44px);

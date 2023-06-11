@@ -80,17 +80,17 @@ const Registration = () => {
 
   return (
     <motion.div
-      className={styles.wrapper}
-      initial={{ y: 25, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{
-        duration: 0.75,
-      }}
+      className={styles.tab}
+      initial={{ x: -20 }}
+      animate={{ x: 0 }}
+      transition={{ duration: 0.5 }}
     >
       <Tabs
         options={steps}
         selectedTabId={steps[0].id}
         listClasses={styles.steps}
+        bodyClasses={styles.wrapper__tabs}
+        tabsPanel={styles.wrapper__tabs_panel}
         headerContent={<div className={styles.bar}></div>}
       />
 

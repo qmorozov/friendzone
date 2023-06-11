@@ -12,11 +12,9 @@ const ForgotPassword = () => {
   return (
     <motion.div
       className={styles.wrapper}
-      initial={{ y: 25, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{
-        duration: 0.75,
-      }}
+      initial={{ x: -20 }}
+      animate={{ x: 0 }}
+      transition={{ duration: 0.5 }}
     >
       <h1 className={auth.title}>Reset your password</h1>
 
