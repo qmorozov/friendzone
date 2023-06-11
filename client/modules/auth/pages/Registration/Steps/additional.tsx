@@ -4,8 +4,15 @@ import Button from '../../../../../UI/components/Button';
 import Input from '../../../../../UI/components/Input';
 
 import auth from '../../../styles/index.module.scss';
+import { useForm } from 'react-hook-form';
 
 const Additional = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   return (
     <>
       <h1 className={auth.title}>Additional information</h1>
