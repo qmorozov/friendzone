@@ -16,7 +16,7 @@
   @include media.for-mobile {
     &__tabs {
       flex-direction: row;
-      gap: variables.rem(37px);
+      gap: variables.rem(20px);
     }
   }
 }

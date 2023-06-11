@@ -4,6 +4,7 @@
 .auth {
   display: flex;
   height: 100vh;
+  overflow: hidden;
 
   flex-direction: column;
 
@@ -47,13 +48,13 @@
 
   @include media.for-mobile {
     &__content_container {
-      gap: variables.rem(34px);
+      gap: variables.rem(20px);
     }
   }
 
   @include media.for-tablet {
     &__content_container {
-      gap: variables.rem(40px);
+      gap: variables.rem(24px);
     }
   }
 
@@ -72,7 +73,7 @@
       background: none;
 
       &_container {
-        gap: variables.rem(44px);
+        gap: variables.rem(26px);
         max-width: variables.rem(470px);
       }
     }
@@ -87,7 +88,7 @@
       flex-basis: 50%;
 
       &_container {
-        gap: variables.rem(54px);
+        gap: variables.rem(36px);
       }
     }
   }
