@@ -8,18 +8,56 @@ import Button from '../../../../UI/components/Button';
 import styles from '../../styles/pages/login.module.scss';
 import auth from '../../styles/index.module.scss';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 enum Field {
   Email = 'email',
   Password = 'password',
 }
 
+const loginValidationSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email('Please provide a valid email address')
+    .matches(
+      /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+      'Please provide a valid email address'
+    )
+    .required('Email address is required'),
+  password: yup
+    .string()
+    .required('Password is required')
+    .min(8, 'Password must be at least 8 characters long')
+    .test(
+      'uppercase',
+      'Password must contain at least one uppercase letter',
+      (value) => /[A-Z]/.test(value)
+    )
+    .test(
+      'lowercase',
+      'Password must contain at least one lowercase letter',
+      (value) => /[a-z]/.test(value)
+    )
+    .test('number', 'Password must contain at least one digit', (value) =>
+      /\d/.test(value)
+    )
+    .test(
+      'specialChar',
+      'Password must contain at least one special character',
+      (value) => /[!@#$%^&*()]/.test(value)
+    ),
+});
+
 const Login = () => {
   const {
     register,
+    getValues,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(loginValidationSchema),
+  });
 
   const handleLoginData = (data: any): void => {
     console.log(data);
@@ -40,23 +78,23 @@ const Login = () => {
         onSubmit={handleSubmit(handleLoginData)}
       >
         <Input
+          type="email"
           label="Email"
-          error={errors[Field.Email]?.message}
-          {...register(Field.Email, {
-            required: 'This field is required',
-          })}
+          errors={errors}
+          name={Field.Email}
+          register={register}
         />
+
         <Input
           type="password"
+          errors={errors}
           label="Password"
-          error={errors[Field.Password]?.message}
-          {...register(Field.Password, {
-            required: 'This field is required',
-          })}
+          register={register}
+          name={Field.Password}
         />
 
         <div className={styles.remember_forgot}>
-          <Input type="radio" label="Remember me" name="remember" />
+          <Input type="radio" name="remember" label="Remember me" />
           <Link href="/auth/forgot-password">Forgot password</Link>
         </div>
 
