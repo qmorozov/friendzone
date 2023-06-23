@@ -11,14 +11,17 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.14",
+    "@hookform/resolvers": "^3.1.1",
     "@reduxjs/toolkit": "^1.9.5",
     "next": "13.4.2",
     "next-translate": "^2.0.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.44.3",
     "react-redux": "^8.0.5",
     "redux": "^4.2.1",
-    "sass-loader": "^12.6.0"
+    "sass-loader": "^12.6.0",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.0.12",

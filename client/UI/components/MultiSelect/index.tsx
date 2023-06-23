@@ -2,9 +2,10 @@ import { useState, ChangeEvent, FC } from 'react';
 
 import { motion } from 'framer-motion';
 
-import Input from '../Input';
+import Input from '../FormControl';
 
 import styles from './index.module.scss';
+import FormControl from '../FormControl';
 
 export interface IMultiSelectItem {
   id: string;
@@ -46,18 +47,18 @@ const MultiSelect: FC<IMultiSelect> = ({ options, onSelect }) => {
       }}
     >
       {options.map((option: IMultiSelectItem) => (
-        <Input
-          id={option.id}
-          key={option.id}
-          type="checkbox"
-          label={option.name}
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            handleCheckboxChange(event, option)
-          }
-          checked={selectedItems.some(
-            (checkbox: IMultiSelectItem) => checkbox.id === option.id
-          )}
-        />
+        <FormControl key={option.id} type="checkbox" label={option.name}>
+          <input
+            id={option.id}
+            type="checkbox"
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              handleCheckboxChange(event, option)
+            }
+            checked={selectedItems.some(
+              (checkbox: IMultiSelectItem) => checkbox.id === option.id
+            )}
+          />
+        </FormControl>
       ))}
     </motion.div>
   );
