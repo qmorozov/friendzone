@@ -1,11 +1,10 @@
 import {
   FC,
-  useRef,
   useState,
-  ReactNode,
   ChangeEvent,
   cloneElement,
   ReactElement,
+  JSXElementConstructor,
 } from 'react';
 import { classnames } from '../../../services/helper';
 
@@ -27,7 +26,9 @@ export interface IFormControl {
   classes?: string;
   disabled?: boolean;
   required?: boolean;
-  children?: ReactNode;
+  children: ReactElement<any, string | JSXElementConstructor<any>> & {
+    type: string;
+  };
 }
 
 const FormControl: FC<IFormControl> = ({
@@ -45,7 +46,6 @@ const FormControl: FC<IFormControl> = ({
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
     const newValue = event.target.value;
-
     setValue(newValue);
   };
 
@@ -62,16 +62,35 @@ const FormControl: FC<IFormControl> = ({
     [styles.default]: !isCheckbox && !isRadio,
   });
 
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const renderTextarea = () =>
+    cloneElement(children as ReactElement<HTMLFormElement>, {
+      onInput: (event: ChangeEvent<HTMLTextAreaElement>): void => {
+        handleChange(event);
+      },
+    });
 
-  const handleTextareaInput = (): void => {
-    const textareaElement = textareaRef.current;
-    if (textareaElement) {
-      textareaElement.style.height = 'auto';
-      textareaElement.style.height = `${Math.min(
-        textareaElement.scrollHeight,
-        150
-      )}px`;
+  const renderRadioCheckbox = () => (
+    <>
+      {cloneElement(children as ReactElement<HTMLFormElement>, {
+        type: isCheckbox ? 'checkbox' : 'radio',
+      })}
+      <span></span>
+    </>
+  );
+
+  const renderInput = () =>
+    cloneElement(children as ReactElement<HTMLFormElement>, {
+      type: type,
+      onInput: handleChange,
+    });
+
+  const renderFormControl = () => {
+    if (isCheckbox || isRadio) {
+      return renderRadioCheckbox();
+    } else if (isTextarea) {
+      return renderTextarea();
+    } else {
+      return renderInput();
     }
   };
 
@@ -80,27 +99,7 @@ const FormControl: FC<IFormControl> = ({
       title={`input ${label}`}
       className={`${wrapperClasses} ${classes ? classes : ''}`}
     >
-      {isCheckbox || isRadio ? (
-        <>
-          {cloneElement(children as ReactElement<HTMLInputElement>, {
-            type: isCheckbox ? 'checkbox' : 'radio',
-          })}
-          <span></span>
-        </>
-      ) : isTextarea ? (
-        cloneElement(children as ReactElement<HTMLFormElement>, {
-          ref: textareaRef,
-          onChange: handleChange,
-          onInput: handleTextareaInput,
-          disabled: disabled,
-        })
-      ) : (
-        cloneElement(children as ReactElement<HTMLFormElement>, {
-          type: type,
-          onInput: handleChange,
-        })
-      )}
-
+      {renderFormControl()}
       {label && <p>{label}</p>}
       {error && <span style={{ color: 'red' }}>{error.message}</span>}
     </label>
