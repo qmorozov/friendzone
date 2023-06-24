@@ -5,6 +5,39 @@
   position: relative;
   display: block;
 
+  &.error {
+    p {
+      color: variables.$error;
+
+      &.up {
+        opacity: 7;
+      }
+    }
+
+    input,
+    textarea {
+      border-bottom-color: variables.$error;
+
+      &:focus {
+        border-bottom-color: variables.$error;
+      }
+    }
+
+    & .password_visible path {
+      stroke: variables.$error;
+    }
+
+    & .icon path {
+      fill: variables.$error;
+    }
+  }
+
+  .errorText {
+    position: absolute;
+    color: variables.$error;
+    letter-spacing: variables.rem(0.15px);
+  }
+
   p {
     position: absolute;
     top: 0;
@@ -61,17 +94,6 @@
     }
   }
 
-  &.required {
-    input,
-    textarea {
-      border-bottom-color: #f02849;
-    }
-
-    p {
-      color: #f02849;
-    }
-  }
-
   &.full input + p,
   &.full textarea + p {
     @extend .up;
@@ -82,6 +104,13 @@
   textarea {
     color: #f2f2f2;
     letter-spacing: variables.rem(0.15px);
+  }
+
+  .icon {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
   }
 
   @include media.for-mobile {
@@ -103,6 +132,11 @@
 
     p.up {
       font-size: variables.rem(10px);
+    }
+
+    .errorText {
+      font-size: variables.rem(10px);
+      line-height: variables.rem(18px);
     }
   }
 
@@ -127,6 +161,11 @@
     p.up {
       font-size: variables.rem(12px);
     }
+
+    .errorText {
+      font-size: variables.rem(12px);
+      line-height: variables.rem(18px);
+    }
   }
 
   @include media.for-laptop {
@@ -144,6 +183,11 @@
 
     p.up {
       font-size: variables.rem(14px);
+    }
+
+    .errorText {
+      font-size: variables.rem(14px);
+      line-height: variables.rem(22px);
     }
   }
 
@@ -420,6 +464,33 @@
         width: variables.rem(20px);
         height: variables.rem(20px);
       }
+    }
+  }
+}
+
+.password_visible {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  cursor: pointer;
+
+  svg {
+    display: inline-block;
+    width: variables.rem(21px);
+    height: variables.rem(21px);
+
+    path {
+      stroke: #fff;
+      stroke-opacity: 0.95;
+      stroke-width: variables.rem(2px);
+      transition: variables.$transition stroke;
+    }
+  }
+
+  @media (hover: hover) {
+    svg:hover path {
+      stroke: variables.$primary;
     }
   }
 }
