@@ -78,7 +78,11 @@ const Login = () => {
           <input type="email" {...register(Field.Email)} />
         </FormControl>
 
-        <FormControl label="Password" error={errors[Field.Password]}>
+        <FormControl
+          type="password"
+          label="Password"
+          error={errors[Field.Password]}
+        >
           <input type="password" {...register(Field.Password)} />
         </FormControl>
 

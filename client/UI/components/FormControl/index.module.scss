@@ -423,3 +423,30 @@
     }
   }
 }
+
+.password_visible {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  cursor: pointer;
+
+  svg {
+    display: inline-block;
+    width: variables.rem(21px);
+    height: variables.rem(21px);
+
+    path {
+      stroke: #fff;
+      stroke-opacity: 0.95;
+      stroke-width: variables.rem(2px);
+      transition: variables.$transition stroke;
+    }
+  }
+
+  @media (hover: hover) {
+    svg:hover path {
+      stroke: variables.$primary;
+    }
+  }
+}
