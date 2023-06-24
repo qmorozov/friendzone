@@ -1,5 +1,6 @@
 import React, {
   FC,
+  useRef,
   useState,
   ChangeEvent,
   cloneElement,
@@ -27,7 +28,7 @@ export interface IFormControl {
   classes?: string;
   disabled?: boolean;
   required?: boolean;
-  icon?: ReactElement;
+  icon?: ReactElement | null;
   children: ReactElement<any, string | JSXElementConstructor<any>> & {
     type: string;
   };
@@ -68,7 +69,6 @@ const FormControl: FC<IFormControl> = ({
     [styles.checkbox]: isCheckbox,
     [styles.required]: required && !disabled,
     [styles.default]: !isCheckbox && !isRadio,
-    [styles.iconWrapper]: icon !== undefined || type === 'password',
   });
 
   const renderTextarea = (): JSX.Element =>
@@ -87,10 +87,17 @@ const FormControl: FC<IFormControl> = ({
     </>
   );
 
+  const iconRef = useRef<HTMLElement>(null);
+
   const renderInput = (): JSX.Element => {
     const inputProps = {
       type: showPassword ? 'text' : type,
       onInput: handleChange,
+      style: iconRef.current?.clientWidth
+        ? {
+            paddingRight: `${iconRef.current.clientWidth + 10}px`,
+          }
+        : ({} as any),
     };
 
     return (
@@ -120,7 +127,7 @@ const FormControl: FC<IFormControl> = ({
         )}
         {icon &&
           type !== 'password' &&
-          cloneElement(icon, { className: styles.icon })}
+          cloneElement(icon, { className: styles.icon, ref: iconRef })}
         {cloneElement(children as ReactElement<HTMLInputElement>, inputProps)}
       </>
     );

@@ -152,3 +152,28 @@
     margin-top: variables.rem(54px);
   }
 }
+
+.remove_field {
+  cursor: pointer;
+
+  path {
+    fill: white;
+    transition: variables.$transition fill;
+  }
+
+  @media (hover: hover) {
+    &:hover path {
+      fill: variables.$primary;
+    }
+  }
+
+  @include media.for-mobile {
+    width: variables.rem(14px);
+    height: variables.rem(14px);
+  }
+
+  @include media.for-tablet {
+    width: variables.rem(16px);
+    height: variables.rem(16px);
+  }
+}
