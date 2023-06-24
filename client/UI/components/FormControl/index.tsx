@@ -8,7 +8,7 @@ import React, {
   JSXElementConstructor,
 } from 'react';
 import { classnames } from '../../../services/helper';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import styles from './index.module.scss';
 
@@ -69,6 +69,7 @@ const FormControl: FC<IFormControl> = ({
     [styles.checkbox]: isCheckbox,
     [styles.required]: required && !disabled,
     [styles.default]: !isCheckbox && !isRadio,
+    [styles.error]: error,
   });
 
   const renderTextarea = (): JSX.Element =>
@@ -150,7 +151,20 @@ const FormControl: FC<IFormControl> = ({
     >
       {renderFormControl()}
       {label && <p>{label}</p>}
-      {error && <span style={{ color: 'red' }}>{error.message}</span>}
+      <AnimatePresence>
+        {error && (
+          <motion.span
+            key="error"
+            className={styles.errorText}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+          >
+            {error.message}
+          </motion.span>
+        )}
+      </AnimatePresence>
     </label>
   );
 };
