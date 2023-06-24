@@ -27,6 +27,7 @@ export interface IFormControl {
   classes?: string;
   disabled?: boolean;
   required?: boolean;
+  icon?: ReactElement;
   children: ReactElement<any, string | JSXElementConstructor<any>> & {
     type: string;
   };
@@ -39,6 +40,7 @@ const FormControl: FC<IFormControl> = ({
   type,
   disabled,
   required,
+  icon,
   children,
 }): JSX.Element => {
   const [value, setValue] = useState<string>('');
@@ -66,6 +68,7 @@ const FormControl: FC<IFormControl> = ({
     [styles.checkbox]: isCheckbox,
     [styles.required]: required && !disabled,
     [styles.default]: !isCheckbox && !isRadio,
+    [styles.iconWrapper]: icon !== undefined || type === 'password',
   });
 
   const renderTextarea = (): JSX.Element =>
@@ -115,6 +118,9 @@ const FormControl: FC<IFormControl> = ({
             </svg>
           </button>
         )}
+        {icon &&
+          type !== 'password' &&
+          cloneElement(icon, { className: styles.icon })}
         {cloneElement(children as ReactElement<HTMLInputElement>, inputProps)}
       </>
     );
