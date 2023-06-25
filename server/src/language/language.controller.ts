@@ -1,7 +1,8 @@
 import {Controller, Get} from '@nestjs/common';
-import {ApiOkResponse, ApiOperation} from "@nestjs/swagger";
+import {ApiOkResponse, ApiOperation, ApiTags} from "@nestjs/swagger";
 import {LanguageService} from "./language.service";
 
+@ApiTags("Languages")
 @Controller('language')
 export class LanguageController {
 

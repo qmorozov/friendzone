@@ -35,6 +35,10 @@ export class UpdateUserDto{
     @IsArray({message: "Social Media Links must be an array" })
     readonly socialMedia: Array<string>
 
+    @ApiProperty({description: "User Picture Names Array", example: ['picture-1.jpg', 'picture-2.jpg']})
+    @IsArray({message: "User Picture Names must be an array"})
+    readonly pictures: Array<string>
+
     @ApiProperty({description: "Location Object", example: {
             country: "Ukraine",
             city: "Kyiv",

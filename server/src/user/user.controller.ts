@@ -1,9 +1,10 @@
 import {Body, Controller, Put, Request, UseGuards} from '@nestjs/common';
 import {JwtAuthGuard} from "../auth/jwt-auth.guard";
-import {ApiOperation} from "@nestjs/swagger";
+import {ApiOperation, ApiTags} from "@nestjs/swagger";
 import {UserService} from "./user.service";
 import {UpdateUserDto} from "./dto/update-user.dto";
 
+@ApiTags("Users")
 @Controller('user')
 export class UserController {
 
