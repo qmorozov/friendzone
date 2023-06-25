@@ -5,6 +5,7 @@ import { HobbyModule } from './hobby/hobby.module';
 import {LanguageModule} from "./language/language.module";
 import {AuthModule} from "./auth/auth.module";
 import {MongooseModule} from "@nestjs/mongoose";
+import { PictureModule } from './picture/picture.module';
 
 @Module({
   imports: [
@@ -20,7 +21,9 @@ import {MongooseModule} from "@nestjs/mongoose";
 
       LanguageModule,
 
-      AuthModule
+      AuthModule,
+
+      PictureModule
   ],
   controllers: [],
   providers: [],
