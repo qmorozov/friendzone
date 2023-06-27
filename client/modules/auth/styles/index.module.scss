@@ -154,26 +154,63 @@
 }
 
 .remove_field {
+  display: block;
   cursor: pointer;
 
   path {
     fill: white;
-    transition: variables.$transition fill;
+    transition: variables.$transition stroke;
   }
 
   @media (hover: hover) {
     &:hover path {
-      fill: variables.$primary;
+      stroke: variables.$primary;
     }
   }
 
   @include media.for-mobile {
-    width: variables.rem(14px);
-    height: variables.rem(14px);
+      width: variables.rem(18px);
+      height: variables.rem(18px);
   }
 
   @include media.for-tablet {
-    width: variables.rem(16px);
-    height: variables.rem(16px);
+      width: variables.rem(22px);
+      height: variables.rem(22px);
+  }
+}
+
+.add__field {
+  display: block;
+  margin-left: auto;
+  width: fit-content;
+
+  svg {
+    width: variables.rem(38px);
+    height: variables.rem(38px);
+    cursor: pointer;
+
+    path {
+      stroke-width: variables.rem(0.6px);
+      stroke: white;
+      transition: variables.$transition stroke;
+    }
+  }
+
+  &:hover svg path {
+    stroke: variables.$primary;
+  }
+
+  @include media.for-mobile {
+    svg {
+      width: variables.rem(28px);
+      height: variables.rem(28px);
+    }
+  }
+
+  @include media.for-tablet {
+    svg {
+      width: variables.rem(38px);
+      height: variables.rem(38px);
+    }
   }
 }

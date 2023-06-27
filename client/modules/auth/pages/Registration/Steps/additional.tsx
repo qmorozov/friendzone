@@ -34,18 +34,17 @@ const Additional = () => {
     resolver: yupResolver(additionalValidationSchema),
   });
 
-  const handleAddSocialMediaField = (): void => {
+  const handleAddSocialMediaField = () => {
     if (socialMediaFields.length < 6) {
-      setSocialMediaFields([
-        ...socialMediaFields,
-        socialMediaFields.length + 1,
+      setSocialMediaFields((prevFields) => [
+        ...prevFields,
+        prevFields.length + 1,
       ]);
     }
   };
 
-  const handleDeleteSocialMediaField = (index: number): void => {
-    const updatedFields = [...socialMediaFields];
-    updatedFields.splice(index, 1);
+  const handleDeleteSocialMediaField = (index: number) => {
+    const updatedFields = socialMediaFields.filter((_, i) => i !== index);
     setSocialMediaFields(updatedFields);
 
     const updatedErrors = { ...errors };
@@ -62,7 +61,7 @@ const Additional = () => {
     clearErrors();
   };
 
-  const handleAdditionalData = (data: any): void => {
+  const handleAdditionalData = (data: any) => {
     console.log(data);
   };
 
@@ -74,9 +73,9 @@ const Additional = () => {
         noValidate
         autoComplete="off"
         className={auth.form}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.75 }}
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
         onSubmit={handleSubmit(handleAdditionalData)}
       >
         <FormControl
@@ -90,34 +89,38 @@ const Additional = () => {
         <AnimatePresence>
           {socialMediaFields.map((field, index) => (
             <motion.div
-              key={field}
+              key={index}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.4 }}
             >
               <FormControl
                 icon={
                   index > 0 ? (
-                    <button
+                    <motion.button
                       type="button"
                       onClick={() => handleDeleteSocialMediaField(index)}
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.5 }}
+                      transition={{ duration: 0.2 }}
                     >
                       <svg
                         fill="none"
-                        viewBox="0 0 20 20"
+                        viewBox="0 0 26 26"
                         className={auth.remove_field}
                       >
                         <path
-                          fillRule="evenodd"
-                          d="M16.21 6.25H3.78918C3.67186 6.24953 3.55977 6.29854 3.48046 6.38499C3.40114 6.47144 3.36195 6.58732 3.37251 6.70417L4.44501 18.4842C4.52303 19.3427 5.24292 20.0001 6.10501 20H13.8942C14.7563 20.0001 15.4762 19.3427 15.5542 18.4842L16.625 6.70417C16.6354 6.58767 16.5964 6.47216 16.5175 6.38584C16.4386 6.29939 16.327 6.25009 16.21 6.25ZM8.54335 17.0833C8.54335 17.4285 8.26353 17.7083 7.91835 17.7083C7.57318 17.7083 7.29336 17.4285 7.29336 17.0833V9.58334C7.29336 9.23816 7.57318 8.95834 7.91835 8.95834C8.26353 8.95834 8.54335 9.23816 8.54335 9.58334V17.0833ZM12.085 17.7083C12.4302 17.7083 12.71 17.4285 12.71 17.0833V9.58334C12.71 9.23816 12.4302 8.95834 12.085 8.95834C11.7398 8.95834 11.46 9.23816 11.46 9.58334V17.0833C11.46 17.4285 11.7398 17.7083 12.085 17.7083Z"
-                        ></path>
+                          d="M6.11621 19.1165h18v1.5h-18v-1.5z"
+                          transform="rotate(-45 6.11621 19.1165)"
+                        />
                         <path
-                          fillRule="evenodd"
-                          d="M14.375 3.33333H18.3333C18.7936 3.33333 19.1667 3.70643 19.1667 4.16667C19.1667 4.6269 18.7936 5 18.3333 5H1.66667C1.20643 5 0.833332 4.6269 0.833332 4.16667C0.833332 3.70643 1.20643 3.33333 1.66667 3.33333H5.625C5.68025 3.33333 5.73324 3.31138 5.77231 3.27231C5.81138 3.23324 5.83333 3.18025 5.83333 3.125V2.08333C5.83333 0.93274 6.76607 0 7.91667 0H12.0833C13.2339 0 14.1667 0.93274 14.1667 2.08333V3.125C14.1667 3.24006 14.2599 3.33333 14.375 3.33333ZM7.5 2.08333V3.125C7.5 3.24006 7.59327 3.33333 7.70833 3.33333H12.2917C12.4067 3.33333 12.5 3.24006 12.5 3.125V2.08333C12.5 1.85321 12.3135 1.66667 12.0833 1.66667H7.91667C7.68655 1.66667 7.5 1.85321 7.5 2.08333Z"
-                        ></path>
+                          d="M18.8447 19.6111h18v1.5h-18v-1.5z"
+                          transform="rotate(-135 18.8447 19.6111)"
+                        />
                       </svg>
-                    </button>
+                    </motion.button>
                   ) : null
                 }
                 label={`Social Media URL #${field}`}
@@ -130,9 +133,24 @@ const Additional = () => {
         </AnimatePresence>
 
         {socialMediaFields.length < 6 && (
-          <Button onClick={handleAddSocialMediaField} type="button">
-            Add new social media URL
-          </Button>
+          <motion.button
+            type="button"
+            className={auth.add__field}
+            onClick={handleAddSocialMediaField}
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            transition={{ duration: 0.3 }}
+          >
+            <svg viewBox="0 0 39 39" fill="none" className={auth.add__field}>
+              <path d="M10 18.6499h18v1h-18v-1z" />
+              <path
+                d="M18.6504 28h18v1h-18v-1z"
+                transform="rotate(-90 18.6504 28)"
+              />
+              <path d="M0.3 0.3h38.4v38.4H0.3V0.3z" />
+            </svg>
+          </motion.button>
         )}
 
         <Button classes={auth.button} type="submit">
