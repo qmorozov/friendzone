@@ -7,6 +7,7 @@ import {InjectModel} from "@nestjs/mongoose";
 import {UpdateUserDto} from "./dto/update-user.dto";
 import {HobbyService} from "../hobby/hobby.service";
 import {LanguageService} from "../language/language.service";
+import {CheckUsernameDto} from "./dto/check-username.dto";
 
 @Injectable()
 export class UserService {
@@ -40,5 +41,14 @@ export class UserService {
             languages: languageItems,
             hobbies: hobbyItems
         }).populate(['hobbies', 'languages']);
+    }
+
+    async checkUsername(dto: CheckUsernameDto){
+        const user = await this.userModel.findOne({username: dto.username}).exec();
+
+        return {
+            success: true,
+            exists: Boolean(user)
+        }
     }
 }
