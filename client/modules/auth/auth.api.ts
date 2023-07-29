@@ -8,4 +8,12 @@ export abstract class AuthApi extends ApiService {
   static async getLanguages() {
     return this.get('language');
   }
+
+  static async createUser(userData: any) {
+    return this.post('auth/register', userData);
+  }
+
+  static async editUser(userData: any, token: string) {
+    return this.putWithToken('user/update', userData, token);
+  }
 }

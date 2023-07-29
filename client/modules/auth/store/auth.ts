@@ -11,7 +11,6 @@ export interface IAuthState {
   signed: boolean;
   loading: boolean;
   user: {
-    uuid: string;
     phone: string;
     email: string;
     lastName: string;
@@ -33,7 +32,6 @@ const initialState: IAuthState = {
   signed: false,
   loading: false,
   user: {
-    uuid: '',
     phone: '',
     email: '',
     images: [],

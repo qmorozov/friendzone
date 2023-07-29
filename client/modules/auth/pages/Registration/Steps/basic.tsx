@@ -6,6 +6,7 @@ import Button from '../../../../../UI/components/Button';
 import FormControl from '../../../../../UI/components/FormControl';
 
 import auth from '../../../styles/index.module.scss';
+import { AuthApi } from '../../../auth.api';
 
 enum Field {
   Age = 'age',
@@ -26,30 +27,30 @@ const registrationValidationSchema = yup.object().shape({
       const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
       return emailRegex.test(value) && value.includes('.');
     }),
-  [Field.Name]: yup
-    .string()
-    .required('Name is required')
-    .matches(/^[A-Za-z]+$/, 'Name must contain only letters'),
-  [Field.LastName]: yup
-    .string()
-    .required('Surname is required')
-    .matches(/^[A-Za-z]+$/, 'Surname must contain only letters'),
-  [Field.Login]: yup
-    .string()
-    .required('Login is required')
-    .matches(
-      /^(?=.*[a-zA-Z]){3}[a-zA-Z0-9]*$/,
-      'Login must contain at least three Latin letters'
-    )
-    .test(
-      'atLeastThreeLetters',
-      'Login must contain at least three letters',
-      (value) => {
-        const letterRegex = /[a-zA-Z]/g;
-        const lettersCount = value.match(letterRegex)?.length || 0;
-        return lettersCount >= 3;
-      }
-    ),
+  // [Field.Name]: yup
+  //   .string()
+  //   .required('Name is required')
+  //   .matches(/^[A-Za-z]+$/, 'Name must contain only letters'),
+  // [Field.LastName]: yup
+  //   .string()
+  //   .required('Surname is required')
+  //   .matches(/^[A-Za-z]+$/, 'Surname must contain only letters'),
+  // [Field.Login]: yup
+  //   .string()
+  //   .required('Login is required')
+  //   .matches(
+  //     /^(?=.*[a-zA-Z]){3}[a-zA-Z0-9]*$/,
+  //     'Login must contain at least three Latin letters'
+  //   )
+  //   .test(
+  //     'atLeastThreeLetters',
+  //     'Login must contain at least three letters',
+  //     (value) => {
+  //       const letterRegex = /[a-zA-Z]/g;
+  //       const lettersCount = value.match(letterRegex)?.length || 0;
+  //       return lettersCount >= 3;
+  //     }
+  //   ),
   [Field.Password]: yup
     .string()
     .required('Password is required')
@@ -72,26 +73,46 @@ const registrationValidationSchema = yup.object().shape({
       'Password must contain at least one special character (!@#$%^&*())',
       (value) => /[!@#$%^&*()]/.test(value)
     ),
-  [Field.City]: yup.string().required('City is required'),
-  [Field.Age]: yup
-    .number()
-    .typeError('Age must be a valid number')
-    .required('Age is required')
-    .min(18, 'You must be at least 18 years old')
-    .max(120, 'Please provide a valid age'),
+  // [Field.City]: yup.string().required('City is required'),
+  // [Field.Age]: yup
+  //   .number()
+  //   .typeError('Age must be a valid number')
+  //   .required('Age is required')
+  //   .min(18, 'You must be at least 18 years old')
+  //   .max(120, 'Please provide a valid age'),
 });
 
 const Basic = () => {
   const {
     register,
+    setError,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(registrationValidationSchema),
   });
 
-  const handleRegistrationData = (data: any): void => {
+  const handleRegistrationData = async (data: any): Promise<void> => {
     console.log(data);
+
+    const registrationData = {
+      email: data.email,
+      password: data.password,
+    };
+
+    console.log(registrationData);
+
+    try {
+      const registrationResponse = await AuthApi.createUser(registrationData);
+      console.log(registrationResponse);
+    } catch (err: any) {
+      console.log(err.response.data.message);
+
+      setError(Field.Email, {
+        type: 'custom',
+        message: err.response.data.message,
+      });
+    }
   };
 
   return (
@@ -109,23 +130,23 @@ const Basic = () => {
         autoComplete="off"
         onSubmit={handleSubmit(handleRegistrationData)}
       >
-        <FormControl label="Login" error={errors[Field.Login]}>
-          <input {...register(Field.Login)} />
-        </FormControl>
+        {/*<FormControl label="Login" error={errors[Field.Login]}>*/}
+        {/*  <input {...register(Field.Login)} />*/}
+        {/*</FormControl>*/}
 
         <FormControl label="Email" error={errors[Field.Email]}>
           <input {...register(Field.Email)} />
         </FormControl>
 
-        <fieldset>
-          <FormControl label="Name" error={errors[Field.Name]}>
-            <input {...register(Field.Name)} />
-          </FormControl>
+        {/*<fieldset>*/}
+        {/*  <FormControl label="Name" error={errors[Field.Name]}>*/}
+        {/*    <input {...register(Field.Name)} />*/}
+        {/*  </FormControl>*/}
 
-          <FormControl label="Last name" error={errors[Field.LastName]}>
-            <input {...register(Field.LastName)} />
-          </FormControl>
-        </fieldset>
+        {/*  <FormControl label="Last name" error={errors[Field.LastName]}>*/}
+        {/*    <input {...register(Field.LastName)} />*/}
+        {/*  </FormControl>*/}
+        {/*</fieldset>*/}
 
         <FormControl
           type="password"
@@ -135,15 +156,15 @@ const Basic = () => {
           <input type="password" {...register(Field.Password)} />
         </FormControl>
 
-        <fieldset>
-          <FormControl label="City" error={errors[Field.City]}>
-            <input {...register(Field.City)} />
-          </FormControl>
+        {/*<fieldset>*/}
+        {/*  <FormControl label="City" error={errors[Field.City]}>*/}
+        {/*    <input {...register(Field.City)} />*/}
+        {/*  </FormControl>*/}
 
-          <FormControl label="Age" error={errors[Field.Age]}>
-            <input {...register(Field.Age)} />
-          </FormControl>
-        </fieldset>
+        {/*  <FormControl label="Age" error={errors[Field.Age]}>*/}
+        {/*    <input {...register(Field.Age)} />*/}
+        {/*  </FormControl>*/}
+        {/*</fieldset>*/}
 
         <Button classes={auth.button}>CONTINUE</Button>
       </motion.form>
