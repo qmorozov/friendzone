@@ -90,25 +90,25 @@
 
 .button {
   @include media.for-mobile {
-    margin-top: variables.rem(30px);
+    margin-top: variables.rem(16px);
     padding-top: variables.rem(12px);
     padding-bottom: variables.rem(12px);
   }
 
   @include media.for-tablet {
-    margin-top: variables.rem(36px);
+    margin-top: variables.rem(20px);
     padding-top: variables.rem(14px);
     padding-bottom: variables.rem(14px);
   }
 
   @include media.for-laptop {
-    margin-top: variables.rem(40px);
+    margin-top: variables.rem(24px);
     padding-top: variables.rem(15px);
     padding-bottom: variables.rem(15px);
   }
 
   @include media.for-desktop {
-    margin-top: variables.rem(43px);
+    margin-top: variables.rem(34px);
     padding-top: variables.rem(16px);
     padding-bottom: variables.rem(16px);
   }
@@ -117,7 +117,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: variables.rem(20px);
+  gap: variables.rem(28px);
 
   fieldset {
     display: flex;
@@ -129,51 +129,88 @@
   }
 
   @include media.for-mobile {
-    margin-top: variables.rem(20px);
+    margin-top: variables.rem(12px);
 
     fieldset {
-      gap: variables.rem(16px);
+      gap: variables.rem(12px);
     }
   }
 
   @include media.for-tablet {
-    margin-top: variables.rem(30px);
+    margin-top: variables.rem(26px);
 
     fieldset {
-      gap: variables.rem(24px);
+      gap: variables.rem(20px);
     }
   }
 
   @include media.for-laptop {
-    margin-top: variables.rem(40px);
+    margin-top: variables.rem(30px);
   }
 
   @include media.for-desktop {
-    margin-top: variables.rem(54px);
+    margin-top: variables.rem(40px);
   }
 }
 
 .remove_field {
+  display: block;
   cursor: pointer;
 
   path {
     fill: white;
-    transition: variables.$transition fill;
+    transition: variables.$transition stroke;
   }
 
   @media (hover: hover) {
     &:hover path {
-      fill: variables.$primary;
+      stroke: variables.$primary;
     }
   }
 
   @include media.for-mobile {
-    width: variables.rem(14px);
-    height: variables.rem(14px);
+      width: variables.rem(18px);
+      height: variables.rem(18px);
   }
 
   @include media.for-tablet {
-    width: variables.rem(16px);
-    height: variables.rem(16px);
+      width: variables.rem(22px);
+      height: variables.rem(22px);
+  }
+}
+
+.add__field {
+  display: block;
+  margin-left: auto;
+  width: fit-content;
+
+  svg {
+    width: variables.rem(38px);
+    height: variables.rem(38px);
+    cursor: pointer;
+
+    path {
+      stroke-width: variables.rem(0.6px);
+      stroke: white;
+      transition: variables.$transition stroke;
+    }
+  }
+
+  &:hover svg path {
+    stroke: variables.$primary;
+  }
+
+  @include media.for-mobile {
+    svg {
+      width: variables.rem(28px);
+      height: variables.rem(28px);
+    }
+  }
+
+  @include media.for-tablet {
+    svg {
+      width: variables.rem(38px);
+      height: variables.rem(38px);
+    }
   }
 }

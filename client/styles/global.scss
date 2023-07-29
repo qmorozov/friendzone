@@ -4,17 +4,26 @@
 
 @import 'parts/reset';
 
-::-webkit-scrollbar {
-  width: variables.rem(12px);
-}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: variables.$grey-200 transparent;
 
-::-webkit-scrollbar-thumb {
-  background-color: variables.$grey-200;
-  border-radius: variables.rem(10px);
-}
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
 
-::-webkit-scrollbar-track {
-  background-color: variables.$grey-150;
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: variables.$grey-200;
+  }
 }
 
 body {

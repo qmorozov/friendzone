@@ -21,7 +21,7 @@
     background: url('/images/auth-bg.webp') center / cover no-repeat;
 
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       top: 0;
       left: 0;
@@ -32,23 +32,39 @@
     }
 
     &_container {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      align-items: baseline;
+      justify-content: center;
       width: 100%;
+      height: 100%;
+      overflow-y: auto;
       margin: 0 auto;
       padding: 0 variables.rem(15px);
       max-width: variables.rem(400px);
       z-index: 1;
     }
-  }
 
-  img {
-    user-select: none;
+    &_image {
+      margin-top: auto;
+
+      img {
+        user-select: none;
+      }
+    }
   }
 
   @include media.for-mobile {
     &__content_container {
       gap: variables.rem(20px);
+    }
+  }
+
+  @media screen and (max-width: variables.rem(1300px)) and (orientation: landscape) {
+    &__content_container {
+      //padding-top: variables.rem(40px);
+      //padding-bottom: variables.rem(40px);
+      overflow-y: auto;
+      height: 100%;
     }
   }
 

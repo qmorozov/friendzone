@@ -1,10 +1,8 @@
 import { useState, ChangeEvent, FC } from 'react';
-
 import { motion } from 'framer-motion';
 
-import Input from '../FormControl';
-
 import styles from './index.module.scss';
+
 import FormControl from '../FormControl';
 
 export interface IMultiSelectItem {
@@ -55,7 +53,7 @@ const MultiSelect: FC<IMultiSelect> = ({ options, onSelect }) => {
               handleCheckboxChange(event, option)
             }
             checked={selectedItems.some(
-              (checkbox: IMultiSelectItem) => checkbox.id === option.id
+              ({ id }: IMultiSelectItem) => id === option.id
             )}
           />
         </FormControl>
