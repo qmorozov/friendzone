@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
+
 import Button from '../../../../UI/components/Button';
 import FormControl from '../../../../UI/components/FormControl';
 
@@ -87,14 +88,16 @@ const Login = () => {
         </FormControl>
 
         <div className={styles.remember_forgot}>
-          <FormControl type="radio" label="Remember me">
-            <input type="radio" />
+          <FormControl type="checkbox" label="Remember me">
+            <input type="checkbox" />
           </FormControl>
 
           <Link href="/auth/forgot-password">Forgot password</Link>
         </div>
 
-        <Button classes={auth.button}>Login now</Button>
+        <Button classes={auth.button} aria-label="Login now">
+          Login now
+        </Button>
       </form>
 
       <div className={auth.auth__footer}>

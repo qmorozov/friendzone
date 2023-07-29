@@ -106,6 +106,7 @@ const FormControl: FC<IFormControl> = ({
         {type === 'password' && (
           <button
             type="button"
+            aria-label="Password visibility"
             onClick={toggleShowPassword}
             className={styles.password_visible}
           >

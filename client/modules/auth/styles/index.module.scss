@@ -90,25 +90,25 @@
 
 .button {
   @include media.for-mobile {
-    margin-top: variables.rem(30px);
+    margin-top: variables.rem(16px);
     padding-top: variables.rem(12px);
     padding-bottom: variables.rem(12px);
   }
 
   @include media.for-tablet {
-    margin-top: variables.rem(36px);
+    margin-top: variables.rem(20px);
     padding-top: variables.rem(14px);
     padding-bottom: variables.rem(14px);
   }
 
   @include media.for-laptop {
-    margin-top: variables.rem(40px);
+    margin-top: variables.rem(24px);
     padding-top: variables.rem(15px);
     padding-bottom: variables.rem(15px);
   }
 
   @include media.for-desktop {
-    margin-top: variables.rem(43px);
+    margin-top: variables.rem(34px);
     padding-top: variables.rem(16px);
     padding-bottom: variables.rem(16px);
   }
@@ -117,7 +117,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: variables.rem(20px);
+  gap: variables.rem(28px);
 
   fieldset {
     display: flex;
@@ -129,27 +129,27 @@
   }
 
   @include media.for-mobile {
-    margin-top: variables.rem(20px);
+    margin-top: variables.rem(12px);
 
     fieldset {
-      gap: variables.rem(16px);
+      gap: variables.rem(12px);
     }
   }
 
   @include media.for-tablet {
-    margin-top: variables.rem(30px);
+    margin-top: variables.rem(26px);
 
     fieldset {
-      gap: variables.rem(24px);
+      gap: variables.rem(20px);
     }
   }
 
   @include media.for-laptop {
-    margin-top: variables.rem(40px);
+    margin-top: variables.rem(30px);
   }
 
   @include media.for-desktop {
-    margin-top: variables.rem(54px);
+    margin-top: variables.rem(40px);
   }
 }
 

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { AuthApi } from '../../auth.api';
 import { registrationSteps } from '../../dto/auth.dto';
 
 import Tabs, { ITab } from '../../../../UI/components/Tabs';
 import { IMultiSelectItem } from '../../../../UI/components/MultiSelect';
-import { AuthApi } from '../../auth.api';
 import Basic from './Steps/basic';
 import Additional from './Steps/additional';
 import Interests from './Steps/interests';
@@ -45,37 +45,32 @@ const Registration = () => {
     },
   ];
 
+  const getLanguagesAndHobbies = () => {
+    Promise.all([AuthApi.getLanguages(), AuthApi.getHobbies()])
+      .then(([languagesResponse, hobbiesResponse]) => {
+        const transformedLanguages = (languagesResponse as any[]).map(
+          ({ _id: id, name }: any) => ({
+            id,
+            name,
+          })
+        );
+        setLanguages(transformedLanguages);
+
+        const transformedHobbies = (hobbiesResponse as any[]).map(
+          ({ _id: id, name }: any) => ({
+            id,
+            name,
+          })
+        );
+        setHobbies(transformedHobbies);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   useEffect(() => {
-    const getHobbies = (): void => {
-      AuthApi.getHobbies()
-        .then((response: any) => {
-          const transformedOptions = response.map((item: any) => ({
-            id: item._id,
-            name: item.name,
-          }));
-          setHobbies(transformedOptions);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    };
-
-    const getLanguages = (): void => {
-      AuthApi.getLanguages()
-        .then((response: any) => {
-          const transformedOptions = response.map((item: any) => ({
-            id: item._id,
-            name: item.name,
-          }));
-          setLanguages(transformedOptions);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    };
-
-    getHobbies();
-    getLanguages();
+    getLanguagesAndHobbies();
   }, []);
 
   return (

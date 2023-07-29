@@ -17,11 +17,11 @@ const additionalValidationSchema = yup.object().shape({
   [Field.Description]: yup.string().required('Description is required'),
   [Field.SocialMediaUrls]: yup
     .array()
-    .of(yup.string().url('Invalid URL format').required('URL is required')),
+    .of(yup.string().url('Invalid URL format')),
 });
 
 const Additional = () => {
-  const [socialMediaFields, setSocialMediaFields] = useState([1]);
+  const [socialMediaFields, setSocialMediaFields] = useState<number[]>([1]);
 
   const {
     reset,
@@ -35,17 +35,20 @@ const Additional = () => {
   });
 
   const handleAddSocialMediaField = () => {
-    if (socialMediaFields.length < 6) {
-      setSocialMediaFields((prevFields) => [
-        ...prevFields,
-        prevFields.length + 1,
-      ]);
-    }
+    setSocialMediaFields((prevFields: number[]) => [
+      ...prevFields,
+      prevFields.length + 1,
+    ]);
   };
 
-  const handleDeleteSocialMediaField = (index: number) => {
-    const updatedFields = socialMediaFields.filter((_, i) => i !== index);
-    setSocialMediaFields(updatedFields);
+  const handleDeleteSocialMediaField = (index: number): void => {
+    setSocialMediaFields((prevFields: number[]) =>
+      prevFields.filter((_: number, i: number) => i !== index)
+    );
+
+    setSocialMediaFields((prevFields: number[]) =>
+      prevFields.map((_: number, i: number) => i + 1)
+    );
 
     const updatedErrors = { ...errors };
     delete updatedErrors[Field.SocialMediaUrls]?.[index];
@@ -61,8 +64,19 @@ const Additional = () => {
     clearErrors();
   };
 
-  const handleAdditionalData = (data: any) => {
-    console.log(data);
+  const handleAdditionalData = (additionalData: any): void => {
+    const { description, socialMediaUrls } = additionalData;
+
+    const filteredSocialMediaUrls = socialMediaUrls.filter(
+      (url: string) => url !== ''
+    );
+
+    const filteredData = {
+      description: description,
+      socialMediaUrls: filteredSocialMediaUrls,
+    };
+
+    console.log(filteredData);
   };
 
   return (
@@ -87,60 +101,47 @@ const Additional = () => {
         </FormControl>
 
         <AnimatePresence>
-          {socialMediaFields.map((field, index) => (
-            <motion.div
+          {socialMediaFields.map((field: number, index: number) => (
+            <FormControl
               key={index}
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-            >
-              <FormControl
-                icon={
-                  index > 0 ? (
-                    <motion.button
-                      type="button"
-                      onClick={() => handleDeleteSocialMediaField(index)}
-                      initial={{ opacity: 0, scale: 0.5 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.5 }}
-                      transition={{ duration: 0.2 }}
+              icon={
+                index > 0 ? (
+                  <button
+                    type="button"
+                    aria-label="Remove field for social media url"
+                    onClick={() => handleDeleteSocialMediaField(index)}
+                  >
+                    <svg
+                      fill="none"
+                      viewBox="0 0 26 26"
+                      className={auth.remove_field}
                     >
-                      <svg
-                        fill="none"
-                        viewBox="0 0 26 26"
-                        className={auth.remove_field}
-                      >
-                        <path
-                          d="M6.11621 19.1165h18v1.5h-18v-1.5z"
-                          transform="rotate(-45 6.11621 19.1165)"
-                        />
-                        <path
-                          d="M18.8447 19.6111h18v1.5h-18v-1.5z"
-                          transform="rotate(-135 18.8447 19.6111)"
-                        />
-                      </svg>
-                    </motion.button>
-                  ) : null
-                }
-                label={`Social Media URL #${field}`}
-                error={errors[Field.SocialMediaUrls]?.[field - 1]}
-              >
-                <input {...register(`socialMediaUrls.${field - 1}`)} />
-              </FormControl>
-            </motion.div>
+                      <path
+                        d="M6.11621 19.1165h18v1.5h-18v-1.5z"
+                        transform="rotate(-45 6.11621 19.1165)"
+                      />
+                      <path
+                        d="M18.8447 19.6111h18v1.5h-18v-1.5z"
+                        transform="rotate(-135 18.8447 19.6111)"
+                      />
+                    </svg>
+                  </button>
+                ) : null
+              }
+              label={`Social Media URL #${field}`}
+              error={errors[Field.SocialMediaUrls]?.[index]}
+            >
+              <input {...register(`${Field.SocialMediaUrls}.${index}`)} />
+            </FormControl>
           ))}
         </AnimatePresence>
 
-        {socialMediaFields.length < 6 && (
-          <motion.button
+        {socialMediaFields.length < 4 && (
+          <button
             type="button"
             className={auth.add__field}
             onClick={handleAddSocialMediaField}
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.5 }}
-            transition={{ duration: 0.3 }}
+            aria-label="Add new field for social media url"
           >
             <svg viewBox="0 0 39 39" fill="none" className={auth.add__field}>
               <path d="M10 18.6499h18v1h-18v-1z" />
@@ -150,10 +151,10 @@ const Additional = () => {
               />
               <path d="M0.3 0.3h38.4v38.4H0.3V0.3z" />
             </svg>
-          </motion.button>
+          </button>
         )}
 
-        <Button classes={auth.button} type="submit">
+        <Button classes={auth.button} type="submit" aria-label="Continue">
           CONTINUE
         </Button>
       </motion.form>

@@ -145,7 +145,9 @@ const Basic = () => {
           </FormControl>
         </fieldset>
 
-        <Button classes={auth.button}>CONTINUE</Button>
+        <Button classes={auth.button} aria-label="Continue">
+          CONTINUE
+        </Button>
       </motion.form>
     </>
   );

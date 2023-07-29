@@ -1,5 +1,4 @@
 import { FC } from 'react';
-
 import { motion } from 'framer-motion';
 
 import Button from '../../../../../UI/components/Button';
@@ -31,7 +30,9 @@ const Languages: FC<ILanguages> = ({ languages }) => {
           onSelect={(value: IMultiSelectItem[]) => console.log(value)}
         />
 
-        <Button classes={auth.button}>SIGN UP!</Button>
+        <Button classes={auth.button} aria-label="Sign up">
+          SIGN UP!
+        </Button>
       </motion.form>
     </>
   );
