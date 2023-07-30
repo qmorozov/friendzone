@@ -27,19 +27,22 @@ export class UpdateUserDto{
     @ApiProperty({description: "User Description", required: true, example: "My name is John. I am from Kyiv, Ukraine"})
     @IsString({message: "Description must be a string"})
     @Length(15, 150, {message: "Description name must contains from 15 to 150 characters"})
-    readonly description: string;
+    @IsOptional()
+    readonly description?: string;
 
     @ApiProperty({description: "User Hobbies", required: true, example: ["uuid1", "uuid2"]})
     @IsArray({message: "Settings must be an array" })
     readonly hobbies: Array<string>
 
-    @ApiProperty({description: "User Languages", required: true, example: ["uuid1", "uuid2"]})
+    @ApiProperty({description: "User Languages", required: false, example: ["uuid1", "uuid2"]})
+    @IsOptional()
     // @IsArray({message: "Languages must be an array" })
-    readonly languages: Array<string>
+    readonly languages?: Array<string>
 
-    @ApiProperty({description: "User Social Media Links Array", required: true, example: ['https://www.instagram.com/', 'https://facebook.com/']})
+    @ApiProperty({description: "User Social Media Links Array", required: false, example: ['https://www.instagram.com/', 'https://facebook.com/']})
     @IsArray({message: "Social Media Links must be an array" })
-    readonly socialMedia: Array<string>
+    @IsOptional()
+    readonly socialMedia?: Array<string>
 
     @ApiProperty({description: "User Picture Names Array", required: false, example: ['picture-1.jpg', 'picture-2.jpg']})
     @IsArray({message: "User Picture Names must be an array"})
