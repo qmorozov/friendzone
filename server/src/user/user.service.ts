@@ -47,7 +47,6 @@ export class UserService {
         const user = await this.userModel.findOne({username}).exec();
 
         return {
-            success: true,
             exists: Boolean(user)
         }
     }
