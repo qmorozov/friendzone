@@ -1,5 +1,6 @@
-import { FC, ReactNode, useEffect, useState } from 'react';
+import { FC, ReactNode, useContext, useEffect, useState } from 'react';
 import { Tab } from '@headlessui/react';
+import { RegistrationData } from '../../../modules/auth/pages/Registration/registrationContext';
 
 export interface ITab {
   id: string;
@@ -7,6 +8,7 @@ export interface ITab {
   content: ReactNode;
   disabled?: boolean;
   onClick?: () => void;
+  onRemove?: () => void;
   title: string | ReactNode;
 }
 
@@ -28,6 +30,7 @@ const Tabs: FC<ITabs> = ({
   tabsPanel,
 }) => {
   const [selectedTab, setSelectedTab] = useState(selectedTabId);
+  const [previousTabStack, setPreviousTabStack] = useState<string[]>([]);
 
   useEffect(() => {
     if (selectedTabId !== selectedTab) {
@@ -35,9 +38,25 @@ const Tabs: FC<ITabs> = ({
     }
   }, [selectedTabId]);
 
-  const handleTabChange = (index: number): void => {
+  const handleTabChange = (index: number) => {
     const selectedTabId = options[index].id;
+
+    const previousTabId = selectedTab || '';
+    const previousTab = options.find((tab: ITab) => tab.id === previousTabId);
+    if (previousTab && previousTab.onRemove) {
+      previousTab.onRemove();
+    }
+
     setSelectedTab(selectedTabId);
+    setPreviousTabStack((prevStack: string[]) => [...prevStack, previousTabId]);
+  };
+
+  const handleTabRemove = (index: number) => {
+    const removedTabId = options[index].id;
+    const newTabStack = previousTabStack.filter(
+      (tabId) => tabId !== removedTabId
+    );
+    setPreviousTabStack(newTabStack);
   };
 
   return (
@@ -49,7 +68,7 @@ const Tabs: FC<ITabs> = ({
         <Tab.List className={listClasses ?? listClasses}>
           {headerContent}
           {options.map(
-            ({ title, id, disabled = false, onClick, className }) => (
+            ({ title, id, disabled = false, onClick, className }, index) => (
               <Tab
                 key={id}
                 disabled={disabled}
@@ -59,6 +78,7 @@ const Tabs: FC<ITabs> = ({
                   }
 
                   setSelectedTab(id);
+                  handleTabRemove(index);
                 }}
                 className={className}
               >

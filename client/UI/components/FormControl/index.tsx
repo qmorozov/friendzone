@@ -29,6 +29,7 @@ export interface IFormControl {
   disabled?: boolean;
   required?: boolean;
   icon?: ReactElement | null;
+  defaultValue?: string;
   children: ReactElement<any, string | JSXElementConstructor<any>> & {
     type: string;
   };
@@ -42,9 +43,10 @@ const FormControl: FC<IFormControl> = ({
   disabled,
   required,
   icon,
+  defaultValue,
   children,
 }): JSX.Element => {
-  const [value, setValue] = useState<string>('');
+  const [value, setValue] = useState<string>(defaultValue || '');
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handleChange = (
@@ -156,7 +158,7 @@ const FormControl: FC<IFormControl> = ({
         {error && (
           <motion.span
             key="error"
-            className={styles.errorText}
+            className="error-text"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}

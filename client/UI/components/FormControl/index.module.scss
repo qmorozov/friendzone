@@ -32,12 +32,6 @@
     }
   }
 
-  .errorText {
-    position: absolute;
-    color: variables.$error;
-    letter-spacing: variables.rem(0.15px);
-  }
-
   p {
     position: absolute;
     top: 0;
@@ -133,11 +127,6 @@
     p.up {
       font-size: variables.rem(10px);
     }
-
-    .errorText {
-      font-size: variables.rem(10px);
-      line-height: variables.rem(18px);
-    }
   }
 
   @include media.for-tablet {
@@ -161,11 +150,6 @@
     p.up {
       font-size: variables.rem(12px);
     }
-
-    .errorText {
-      font-size: variables.rem(12px);
-      line-height: variables.rem(18px);
-    }
   }
 
   @include media.for-laptop {
@@ -183,11 +167,6 @@
 
     p.up {
       font-size: variables.rem(14px);
-    }
-
-    .errorText {
-      font-size: variables.rem(14px);
-      line-height: variables.rem(22px);
     }
   }
 

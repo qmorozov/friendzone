@@ -119,6 +119,14 @@
   flex-direction: column;
   gap: variables.rem(28px);
 
+  &Wrapper {
+    position: relative;
+
+    :global .error-text {
+      bottom: variables.rem(-26px);
+    }
+  }
+
   fieldset {
     display: flex;
     justify-content: space-between;

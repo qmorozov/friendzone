@@ -1,5 +1,11 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { motion } from 'framer-motion';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../../hooks/useAppRedux';
+import { RootState } from '../../../../../services/app-store';
+import { updateProfile } from '../../../store/auth';
 
 import Button from '../../../../../UI/components/Button';
 import MultiSelect, {
@@ -13,6 +19,29 @@ interface ILanguages {
 }
 
 const Languages: FC<ILanguages> = ({ languages }) => {
+  const dispatch = useAppDispatch();
+
+  const { languages: languagesState } = useAppSelector(
+    ({ auth }: RootState) => auth.user
+  );
+
+  const [hasSelection, setHasSelection] = useState<boolean>(true);
+
+  const handleLanguages = (selectedLanguages: IMultiSelectItem[]): void => {
+    setHasSelection(selectedLanguages.length > 0);
+    dispatch(updateProfile({ languages: selectedLanguages }));
+  };
+
+  const handleContinue = (event: any): void => {
+    event.preventDefault();
+
+    if (languagesState.length > 0) {
+      console.log('SIGN UP!');
+    } else {
+      setHasSelection(false);
+    }
+  };
+
   return (
     <>
       <h1 className={auth.title}>Languages</h1>
@@ -25,12 +54,31 @@ const Languages: FC<ILanguages> = ({ languages }) => {
           duration: 0.75,
         }}
       >
-        <MultiSelect
-          options={languages}
-          onSelect={(value: IMultiSelectItem[]) => console.log(value)}
-        />
+        <div className={auth.formWrapper}>
+          <MultiSelect
+            options={languages}
+            onSelect={handleLanguages}
+            selectedItems={languagesState}
+          />
 
-        <Button classes={auth.button} aria-label="Sign up">
+          {!hasSelection && (
+            <motion.span
+              className="error-text"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+            >
+              Please choose at least one option to continue.
+            </motion.span>
+          )}
+        </div>
+
+        <Button
+          classes={auth.button}
+          aria-label="SIGN UP!"
+          onClick={handleContinue}
+        >
           SIGN UP!
         </Button>
       </motion.form>

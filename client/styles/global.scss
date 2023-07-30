@@ -1,4 +1,6 @@
 @use 'variables' as variables;
+@use 'mixin/media' as media;
+
 
 @import '~normalize.css/normalize.css';
 
@@ -37,4 +39,26 @@ body {
 
 .sb-show-main.sb-main-padded {
   padding: 0;
+}
+
+.error-text {
+  position: absolute;
+  color: variables.$error;
+  letter-spacing: variables.rem(0.15px);
+
+  @include media.for-mobile {
+    font-size: variables.rem(10px);
+    line-height: variables.rem(18px);
+  }
+
+  @include media.for-tablet {
+    font-size: variables.rem(12px);
+    line-height: variables.rem(18px);
+  }
+
+  @include media.for-laptop {
+    font-size: variables.rem(14px);
+    line-height: variables.rem(22px);
+  }
+
 }

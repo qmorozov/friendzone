@@ -4,3 +4,16 @@ export enum registrationSteps {
   interests = 'Interests',
   languages = 'Languages',
 }
+
+export enum basicFields {
+  FirstName = 'firstName',
+  Username = 'username',
+  Email = 'email',
+  Password = 'password',
+  LastName = 'lastName',
+}
+
+export enum additionalField {
+  Description = 'description',
+  SocialMediaUrls = 'socialMediaUrls',
+}

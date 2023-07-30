@@ -46,7 +46,7 @@
 
     cursor: pointer;
     transition: color variables.$transition,
-      background-color variables.$transition;
+      background-color variables.$transition, border-color variables.$transition;
 
     &:hover:not([disabled]),
     &.completed:not([disabled]),
@@ -57,6 +57,8 @@
 
     &:disabled {
       cursor: auto;
+      border-color: rgba(variables.$primary, .5);
+      color: rgba(#fff, .5);
     }
   }
 

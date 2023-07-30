@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IMultiSelectItem } from '../../../UI/components/MultiSelect';
 
 export interface IUserLocation {
   city: string;
@@ -11,15 +12,15 @@ export interface IAuthState {
   signed: boolean;
   loading: boolean;
   user: {
-    uuid: string;
     phone: string;
     email: string;
     lastName: string;
     images: string[];
-    hobbies: string[];
+    hobbies: IMultiSelectItem[];
+    username: string;
     firstName: string;
     likesCount: number;
-    languages: string[];
+    languages: IMultiSelectItem[];
     description: string;
     socialMedia: string[];
     location: IUserLocation;
@@ -33,12 +34,12 @@ const initialState: IAuthState = {
   signed: false,
   loading: false,
   user: {
-    uuid: '',
     phone: '',
     email: '',
     images: [],
     hobbies: [],
     lastName: '',
+    username: '',
     likesCount: 0,
     location: {
       city: '',

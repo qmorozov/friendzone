@@ -1,97 +1,143 @@
 import { motion } from 'framer-motion';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { AuthApi } from '../../../auth.api';
+import { ChangeEvent, FC, useEffect } from 'react';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../../hooks/useAppRedux';
+import { updateProfile } from '../../../store/auth';
+import { RootState } from '../../../../../services/app-store';
+import { registrationValidationSchema } from '../../../validation/schemaValidation';
+import { basicFields, registrationSteps } from '../../../dto/auth.dto';
+import { useRegistrationData } from '../registrationContext';
+
 import Button from '../../../../../UI/components/Button';
 import FormControl from '../../../../../UI/components/FormControl';
 
 import auth from '../../../styles/index.module.scss';
 
-enum Field {
-  Age = 'age',
-  Name = 'name',
-  City = 'city',
-  Login = 'login',
-  Email = 'email',
-  Password = 'password',
-  LastName = 'lastName',
+type RegistrationFormData = {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  username: string;
+};
+
+interface IBasic {
+  userPassword: string;
+  setUserPassword: (userPassword: string) => void;
 }
 
-const registrationValidationSchema = yup.object().shape({
-  [Field.Email]: yup
-    .string()
-    .required('Email address is required')
-    .email('Email address is invalid')
-    .test('emailFormat', 'Email address is invalid', (value) => {
-      const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-      return emailRegex.test(value) && value.includes('.');
-    }),
-  [Field.Name]: yup
-    .string()
-    .required('Name is required')
-    .matches(/^[A-Za-z]+$/, 'Name must contain only letters'),
-  [Field.LastName]: yup
-    .string()
-    .required('Surname is required')
-    .matches(/^[A-Za-z]+$/, 'Surname must contain only letters'),
-  [Field.Login]: yup
-    .string()
-    .required('Login is required')
-    .matches(
-      /^(?=.*[a-zA-Z]){3}[a-zA-Z0-9]*$/,
-      'Login must contain at least three Latin letters'
-    )
-    .test(
-      'atLeastThreeLetters',
-      'Login must contain at least three letters',
-      (value) => {
-        const letterRegex = /[a-zA-Z]/g;
-        const lettersCount = value.match(letterRegex)?.length || 0;
-        return lettersCount >= 3;
-      }
-    ),
-  [Field.Password]: yup
-    .string()
-    .required('Password is required')
-    .min(8, 'Password must be at least 8 characters long')
-    .test(
-      'uppercase',
-      'Password must contain at least one uppercase letter (A-Z)',
-      (value) => /[A-Z]/.test(value)
-    )
-    .test(
-      'lowercase',
-      'Password must contain at least one lowercase letter (a-z)',
-      (value) => /[a-z]/.test(value)
-    )
-    .test('number', 'Password must contain at least one digit (0-9)', (value) =>
-      /\d/.test(value)
-    )
-    .test(
-      'specialChar',
-      'Password must contain at least one special character (!@#$%^&*())',
-      (value) => /[!@#$%^&*()]/.test(value)
-    ),
-  [Field.City]: yup.string().required('City is required'),
-  [Field.Age]: yup
-    .number()
-    .typeError('Age must be a valid number')
-    .required('Age is required')
-    .min(18, 'You must be at least 18 years old')
-    .max(120, 'Please provide a valid age'),
-});
+const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
+  const { setStep, setVisibleTabs } = useRegistrationData();
 
-const Basic = () => {
+  const { email, firstName, lastName, username } = useAppSelector(
+    ({ auth }: RootState) => auth.user
+  );
+
   const {
     register,
+    setError,
+    setValue,
+    clearErrors,
     handleSubmit,
-    formState: { errors },
-  } = useForm({
+    formState: { errors, isValid },
+  } = useForm<RegistrationFormData>({
     resolver: yupResolver(registrationValidationSchema),
+    defaultValues: {
+      [basicFields.Email]: email,
+      [basicFields.LastName]: lastName,
+      [basicFields.Username]: username,
+      [basicFields.FirstName]: firstName,
+    },
   });
 
-  const handleRegistrationData = (data: any): void => {
-    console.log(data);
+  const pastDate: Date = new Date(0);
+
+  const dispatch = useAppDispatch();
+
+  let debounceTimer: NodeJS.Timeout;
+
+  useEffect(() => {
+    setValue(basicFields.Password, userPassword);
+  }, [userPassword]);
+
+  const handleUsername = async (
+    event: ChangeEvent<HTMLInputElement>
+  ): Promise<void> => {
+    const userName: string = event.target.value.trim();
+
+    if (!userName) {
+      clearErrors(basicFields.Username);
+      return;
+    }
+
+    try {
+      const { exists }: any = await AuthApi.checkUserName(userName);
+
+      if (exists) {
+        setError(basicFields.Username, {
+          type: 'manual',
+          message: 'This username already exists.',
+        });
+      } else {
+        clearErrors(basicFields.Username);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const debouncedHandleUsername = (
+    event: ChangeEvent<HTMLInputElement>
+  ): void => {
+    clearTimeout(debounceTimer);
+
+    debounceTimer = setTimeout(() => handleUsername(event), 300);
+  };
+
+  const handleRegistrationData: SubmitHandler<RegistrationFormData> = async (
+    data
+  ) => {
+    const { email, password, firstName, lastName, username } = data;
+
+    if (password) setUserPassword(password);
+
+    const registerData = {
+      email,
+      password,
+    };
+
+    const editData = {
+      email,
+      username,
+      lastName,
+      firstName,
+    };
+
+    try {
+      const { access_token }: any = await AuthApi.createUser(registerData);
+
+      dispatch(updateProfile(editData));
+
+      document.cookie = `accessToken=${access_token}; expires=${pastDate.toUTCString()}; path=/`;
+
+      if (isValid) {
+        setStep(registrationSteps.additional);
+        setVisibleTabs((prevState: any) => ({
+          ...prevState,
+          [registrationSteps.additional]: false,
+        }));
+      }
+    } catch (error: any) {
+      setError(basicFields.Email, {
+        type: 'custom',
+        message: error.response?.data?.message,
+      });
+    }
   };
 
   return (
@@ -109,41 +155,51 @@ const Basic = () => {
         autoComplete="off"
         onSubmit={handleSubmit(handleRegistrationData)}
       >
-        <FormControl label="Login" error={errors[Field.Login]}>
-          <input {...register(Field.Login)} />
+        <FormControl
+          label="Login"
+          defaultValue={username}
+          error={errors[basicFields.Username]}
+        >
+          <input
+            {...register(basicFields.Username)}
+            onChange={debouncedHandleUsername}
+          />
         </FormControl>
 
-        <FormControl label="Email" error={errors[Field.Email]}>
-          <input {...register(Field.Email)} />
+        <FormControl
+          label="Email"
+          defaultValue={email}
+          error={errors[basicFields.Email]}
+        >
+          <input {...register(basicFields.Email)} />
         </FormControl>
 
         <fieldset>
-          <FormControl label="Name" error={errors[Field.Name]}>
-            <input {...register(Field.Name)} />
+          <FormControl
+            label="First name"
+            defaultValue={firstName}
+            error={errors[basicFields.FirstName]}
+          >
+            <input {...register(basicFields.FirstName)} />
           </FormControl>
 
-          <FormControl label="Last name" error={errors[Field.LastName]}>
-            <input {...register(Field.LastName)} />
+          <FormControl
+            label="Last name"
+            defaultValue={lastName}
+            error={errors[basicFields.LastName]}
+          >
+            <input {...register(basicFields.LastName)} />
           </FormControl>
         </fieldset>
 
         <FormControl
           type="password"
           label="Password"
-          error={errors[Field.Password]}
+          defaultValue={userPassword}
+          error={errors[basicFields.Password]}
         >
-          <input type="password" {...register(Field.Password)} />
+          <input type="password" {...register(basicFields.Password)} />
         </FormControl>
-
-        <fieldset>
-          <FormControl label="City" error={errors[Field.City]}>
-            <input {...register(Field.City)} />
-          </FormControl>
-
-          <FormControl label="Age" error={errors[Field.Age]}>
-            <input {...register(Field.Age)} />
-          </FormControl>
-        </fieldset>
 
         <Button classes={auth.button} aria-label="Continue">
           CONTINUE
