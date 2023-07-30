@@ -23,7 +23,8 @@ export class User {
         example: "12345"
     })
     @Prop({
-        required: true
+        required: true,
+        select: false
     })
     password: String;
 

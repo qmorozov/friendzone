@@ -23,8 +23,12 @@ export class UserService {
         return this.userModel.create({email: dto.email, password});
     }
 
-    async getByEmail(email: string){
-        return this.userModel.findOne({email}).populate(["hobbies", "languages"]).exec();
+    async getByEmail(email: string, select = ""){
+        return this.userModel
+            .findOne({email})
+            .select(select)
+            .populate(["hobbies", "languages"])
+            .exec();
     }
 
     async update(userId: string, dto: UpdateUserDto){
