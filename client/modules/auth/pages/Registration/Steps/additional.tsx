@@ -3,13 +3,14 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { additionalValidationSchema } from '../../../validation/schemaValidation';
-import { additionalField } from '../../../dto/auth.dto';
+import { additionalField, registrationSteps } from '../../../dto/auth.dto';
 import {
   useAppDispatch,
   useAppSelector,
 } from '../../../../../hooks/useAppRedux';
 import { updateProfile } from '../../../store/auth';
 import { RootState } from '../../../../../services/app-store';
+import { useRegistrationData } from '../registrationContext';
 
 import Button from '../../../../../UI/components/Button';
 import FormControl from '../../../../../UI/components/FormControl';
@@ -17,6 +18,8 @@ import FormControl from '../../../../../UI/components/FormControl';
 import auth from '../../../styles/index.module.scss';
 
 const Additional = () => {
+  const { setStep, setVisibleTabs } = useRegistrationData();
+
   const dispatch = useAppDispatch();
 
   const { description, socialMedia } = useAppSelector(
@@ -31,7 +34,7 @@ const Additional = () => {
     getValues,
     clearErrors,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(additionalValidationSchema),
     defaultValues: {
@@ -51,7 +54,7 @@ const Additional = () => {
     }
   }, [socialMedia]);
 
-  const handleAddSocialMediaField = () => {
+  const handleAddSocialMediaField = (): void => {
     setSocialMediaFields((prevFields: number[]) => [
       ...prevFields,
       prevFields.length + 1,
@@ -94,6 +97,14 @@ const Additional = () => {
     };
 
     dispatch(updateProfile(filteredData));
+
+    if (isValid) {
+      setStep(registrationSteps.interests);
+      setVisibleTabs((prevState: any) => ({
+        ...prevState,
+        [registrationSteps.interests]: false,
+      }));
+    }
   };
 
   return (

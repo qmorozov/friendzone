@@ -10,7 +10,8 @@ import {
 import { updateProfile } from '../../../store/auth';
 import { RootState } from '../../../../../services/app-store';
 import { registrationValidationSchema } from '../../../validation/schemaValidation';
-import { basicFields } from '../../../dto/auth.dto';
+import { basicFields, registrationSteps } from '../../../dto/auth.dto';
+import { useRegistrationData } from '../registrationContext';
 
 import Button from '../../../../../UI/components/Button';
 import FormControl from '../../../../../UI/components/FormControl';
@@ -31,6 +32,8 @@ interface IBasic {
 }
 
 const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
+  const { setStep, setVisibleTabs } = useRegistrationData();
+
   const { email, firstName, lastName, username } = useAppSelector(
     ({ auth }: RootState) => auth.user
   );
@@ -41,7 +44,7 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
     setValue,
     clearErrors,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<RegistrationFormData>({
     resolver: yupResolver(registrationValidationSchema),
     defaultValues: {
@@ -121,6 +124,14 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
       dispatch(updateProfile(editData));
 
       document.cookie = `accessToken=${access_token}; expires=${pastDate.toUTCString()}; path=/`;
+
+      if (isValid) {
+        setStep(registrationSteps.additional);
+        setVisibleTabs((prevState: any) => ({
+          ...prevState,
+          [registrationSteps.additional]: false,
+        }));
+      }
     } catch (error: any) {
       setError(basicFields.Email, {
         type: 'custom',

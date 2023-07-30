@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { AuthApi } from '../../auth.api';
 import { registrationSteps } from '../../dto/auth.dto';
 import { useAppSelector } from '../../../../hooks/useAppRedux';
 import { RootState } from '../../../../services/app-store';
+import { RegistrationData } from './registrationContext';
 
 import Tabs, { ITab } from '../../../../UI/components/Tabs';
 import { IMultiSelectItem } from '../../../../UI/components/MultiSelect';
@@ -26,36 +27,52 @@ const Registration = () => {
 
   const [userPassword, setUserPassword] = useState<string>('');
 
+  const [step, setStep] = useState<ITab['id']>(registrationSteps.basic);
+  const [visibleTabs, setVisibleTabs] = useState({
+    [registrationSteps.basic]: false,
+    [registrationSteps.additional]: true,
+    [registrationSteps.interests]: true,
+    [registrationSteps.languages]: true,
+  });
+
   const steps: ITab[] = [
     {
       id: registrationSteps.basic,
+      disabled: visibleTabs[registrationSteps.basic],
       content: (
         <Basic userPassword={userPassword} setUserPassword={setUserPassword} />
       ),
       title: 1,
       className: styles.step,
+      onClick: () => setStep(registrationSteps.basic),
     },
     {
       id: registrationSteps.additional,
+      disabled: visibleTabs[registrationSteps.additional],
       content: <Additional />,
       title: 2,
       className: styles.step,
+      onClick: () => setStep(registrationSteps.additional),
     },
     {
       id: registrationSteps.interests,
+      disabled: visibleTabs[registrationSteps.interests],
       content: <Interests hobbies={hobbies} />,
       title: 3,
       className: styles.step,
+      onClick: () => setStep(registrationSteps.interests),
     },
     {
       id: registrationSteps.languages,
+      disabled: visibleTabs[registrationSteps.languages],
       content: <Languages languages={languages} />,
       title: 4,
       className: styles.step,
+      onClick: () => setStep(registrationSteps.languages),
     },
   ];
 
-  const getLanguagesAndHobbies = () => {
+  const getLanguagesAndHobbies = (): void => {
     Promise.all([AuthApi.getLanguages(), AuthApi.getHobbies()])
       .then(([languagesResponse, hobbiesResponse]) => {
         const transformedLanguages = (languagesResponse as any[]).map(
@@ -84,41 +101,43 @@ const Registration = () => {
   }, []);
 
   return (
-    <motion.div
-      className={styles.tab}
-      initial={{ x: -20 }}
-      animate={{ x: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <Tabs
-        options={steps}
-        selectedTabId={steps[0].id}
-        listClasses={styles.steps}
-        bodyClasses={styles.wrapper__tabs}
-        tabsPanel={styles.wrapper__tabs_panel}
-        headerContent={<div className={styles.bar}></div>}
-      />
+    <RegistrationData.Provider value={{ setStep, setVisibleTabs }}>
+      <motion.div
+        className={styles.tab}
+        initial={{ x: -20 }}
+        animate={{ x: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Tabs
+          options={steps}
+          selectedTabId={step}
+          listClasses={styles.steps}
+          bodyClasses={styles.wrapper__tabs}
+          tabsPanel={styles.wrapper__tabs_panel}
+          headerContent={<div className={styles.bar}></div>}
+        />
 
-      <AnimatePresence>
-        {email && firstName && (
-          <motion.div
-            className={auth.auth__footer}
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5 }}
-          >
-            <p>Complete Your Profile Later</p>
-            <Link href="/auth/login">Save and Finish Later</Link>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        <AnimatePresence>
+          {email && firstName && (
+            <motion.div
+              className={auth.auth__footer}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              <p>Complete Your Profile Later</p>
+              <Link href="/auth/login">Save and Finish Later</Link>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-      <div className={auth.auth__footer}>
-        <p>You already have an account?</p>
-        <Link href="/auth/login">Log in!</Link>
-      </div>
-    </motion.div>
+        <div className={auth.auth__footer}>
+          <p>You already have an account?</p>
+          <Link href="/auth/login">Log in!</Link>
+        </div>
+      </motion.div>
+    </RegistrationData.Provider>
   );
 };
 

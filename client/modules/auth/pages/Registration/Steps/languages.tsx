@@ -1,5 +1,11 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { motion } from 'framer-motion';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../../hooks/useAppRedux';
+import { RootState } from '../../../../../services/app-store';
+import { updateProfile } from '../../../store/auth';
 
 import Button from '../../../../../UI/components/Button';
 import MultiSelect, {
@@ -7,12 +13,6 @@ import MultiSelect, {
 } from '../../../../../UI/components/MultiSelect';
 
 import auth from '../../../styles/index.module.scss';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '../../../../../hooks/useAppRedux';
-import { RootState } from '../../../../../services/app-store';
-import { updateProfile } from '../../../store/auth';
 
 interface ILanguages {
   languages: IMultiSelectItem[];
@@ -25,8 +25,21 @@ const Languages: FC<ILanguages> = ({ languages }) => {
     ({ auth }: RootState) => auth.user
   );
 
-  const handleLanguages = (languages: IMultiSelectItem[]): void => {
-    dispatch(updateProfile({ languages }));
+  const [hasSelection, setHasSelection] = useState<boolean>(true);
+
+  const handleLanguages = (selectedLanguages: IMultiSelectItem[]): void => {
+    setHasSelection(selectedLanguages.length > 0);
+    dispatch(updateProfile({ languages: selectedLanguages }));
+  };
+
+  const handleContinue = (event: any): void => {
+    event.preventDefault();
+
+    if (languagesState.length > 0) {
+      console.log('SIGN UP!');
+    } else {
+      setHasSelection(false);
+    }
   };
 
   return (
@@ -41,13 +54,31 @@ const Languages: FC<ILanguages> = ({ languages }) => {
           duration: 0.75,
         }}
       >
-        <MultiSelect
-          options={languages}
-          onSelect={handleLanguages}
-          selectedItems={languagesState}
-        />
+        <div className={auth.formWrapper}>
+          <MultiSelect
+            options={languages}
+            onSelect={handleLanguages}
+            selectedItems={languagesState}
+          />
 
-        <Button classes={auth.button} aria-label="Sign up">
+          {!hasSelection && (
+            <motion.span
+              className="error-text"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+            >
+              Please choose at least one option to continue.
+            </motion.span>
+          )}
+        </div>
+
+        <Button
+          classes={auth.button}
+          aria-label="SIGN UP!"
+          onClick={handleContinue}
+        >
           SIGN UP!
         </Button>
       </motion.form>

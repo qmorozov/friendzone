@@ -158,7 +158,7 @@ const FormControl: FC<IFormControl> = ({
         {error && (
           <motion.span
             key="error"
-            className={styles.errorText}
+            className="error-text"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
