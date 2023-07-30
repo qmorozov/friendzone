@@ -1,6 +1,10 @@
 import { FC } from 'react';
-
 import { motion } from 'framer-motion';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../../hooks/useAppRedux';
+import { updateProfile } from '../../../store/auth';
 
 import Button from '../../../../../UI/components/Button';
 import MultiSelect, {
@@ -8,12 +12,23 @@ import MultiSelect, {
 } from '../../../../../UI/components/MultiSelect';
 
 import auth from '../../../styles/index.module.scss';
+import { RootState } from '../../../../../services/app-store';
 
 interface IInterests {
   hobbies: IMultiSelectItem[];
 }
 
 const Interests: FC<IInterests> = ({ hobbies }) => {
+  const dispatch = useAppDispatch();
+
+  const { hobbies: hobbiesState } = useAppSelector(
+    ({ auth }: RootState) => auth.user
+  );
+
+  const handleHobbies = (hobbies: IMultiSelectItem[]): void => {
+    dispatch(updateProfile({ hobbies }));
+  };
+
   return (
     <>
       <h1 className={auth.title}>Interests</h1>
@@ -28,7 +43,8 @@ const Interests: FC<IInterests> = ({ hobbies }) => {
       >
         <MultiSelect
           options={hobbies}
-          onSelect={(value: IMultiSelectItem[]) => console.log(value)}
+          onSelect={handleHobbies}
+          selectedItems={hobbiesState}
         />
 
         <Button classes={auth.button} aria-label="Continue">

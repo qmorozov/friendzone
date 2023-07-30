@@ -18,9 +18,6 @@ export abstract class AuthApi extends ApiService {
   }
 
   static async checkUserName(username: string) {
-    const params = {
-      username,
-    };
-    return this.get('user/checkUsername', params);
+    return this.get(`user/checkUsername/${username}`);
   }
 }

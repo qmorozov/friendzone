@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { AuthApi } from '../../auth.api';
 import { registrationSteps } from '../../dto/auth.dto';
+import { useAppSelector } from '../../../../hooks/useAppRedux';
+import { RootState } from '../../../../services/app-store';
 
 import Tabs, { ITab } from '../../../../UI/components/Tabs';
 import { IMultiSelectItem } from '../../../../UI/components/MultiSelect';
@@ -15,13 +17,21 @@ import auth from '../../styles/index.module.scss';
 import styles from '../../styles/pages/registration.module.scss';
 
 const Registration = () => {
+  const { email, firstName } = useAppSelector(
+    ({ auth }: RootState) => auth.user
+  );
+
   const [hobbies, setHobbies] = useState<IMultiSelectItem[]>([]);
   const [languages, setLanguages] = useState<IMultiSelectItem[]>([]);
+
+  const [userPassword, setUserPassword] = useState<string>('');
 
   const steps: ITab[] = [
     {
       id: registrationSteps.basic,
-      content: <Basic />,
+      content: (
+        <Basic userPassword={userPassword} setUserPassword={setUserPassword} />
+      ),
       title: 1,
       className: styles.step,
     },
@@ -88,6 +98,21 @@ const Registration = () => {
         tabsPanel={styles.wrapper__tabs_panel}
         headerContent={<div className={styles.bar}></div>}
       />
+
+      <AnimatePresence>
+        {email && firstName && (
+          <motion.div
+            className={auth.auth__footer}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+          >
+            <p>Complete Your Profile Later</p>
+            <Link href="/auth/login">Save and Finish Later</Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className={auth.auth__footer}>
         <p>You already have an account?</p>

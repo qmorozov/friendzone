@@ -1,26 +1,28 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { additionalValidationSchema } from '../../../validation/schemaValidation';
+import { additionalField } from '../../../dto/auth.dto';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../../hooks/useAppRedux';
+import { updateProfile } from '../../../store/auth';
+import { RootState } from '../../../../../services/app-store';
+
 import Button from '../../../../../UI/components/Button';
 import FormControl from '../../../../../UI/components/FormControl';
 
 import auth from '../../../styles/index.module.scss';
 
-enum Field {
-  Description = 'description',
-  SocialMediaUrls = 'socialMediaUrls',
-}
-
-const additionalValidationSchema = yup.object().shape({
-  [Field.Description]: yup.string().required('Description is required'),
-  [Field.SocialMediaUrls]: yup
-    .array()
-    .of(yup.string().url('Invalid URL format')),
-});
-
 const Additional = () => {
+  const dispatch = useAppDispatch();
+
+  const { description, socialMedia } = useAppSelector(
+    ({ auth }: RootState) => auth.user
+  );
+
   const [socialMediaFields, setSocialMediaFields] = useState<number[]>([1]);
 
   const {
@@ -32,7 +34,22 @@ const Additional = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(additionalValidationSchema),
+    defaultValues: {
+      [additionalField.Description]: description,
+      [additionalField.SocialMediaUrls]: socialMedia,
+    },
   });
+
+  useEffect(() => {
+    if (socialMedia.length > 0) {
+      setSocialMediaFields(
+        Array.from(
+          { length: socialMedia.length },
+          (_, index: number) => index + 1
+        )
+      );
+    }
+  }, [socialMedia]);
 
   const handleAddSocialMediaField = () => {
     setSocialMediaFields((prevFields: number[]) => [
@@ -51,14 +68,14 @@ const Additional = () => {
     );
 
     const updatedErrors = { ...errors };
-    delete updatedErrors[Field.SocialMediaUrls]?.[index];
+    delete updatedErrors[additionalField.SocialMediaUrls]?.[index];
 
     const updatedValues = getValues();
     updatedValues?.socialMediaUrls?.splice(index, 1);
 
     reset({
       ...updatedValues,
-      [Field.SocialMediaUrls]: updatedValues.socialMediaUrls,
+      [additionalField.SocialMediaUrls]: updatedValues.socialMediaUrls,
     });
 
     clearErrors();
@@ -72,11 +89,11 @@ const Additional = () => {
     );
 
     const filteredData = {
-      description: description,
-      socialMediaUrls: filteredSocialMediaUrls,
+      description,
+      socialMedia: filteredSocialMediaUrls,
     };
 
-    console.log(filteredData);
+    dispatch(updateProfile(filteredData));
   };
 
   return (
@@ -95,9 +112,10 @@ const Additional = () => {
         <FormControl
           label="Bio"
           type="textarea"
-          error={errors[Field.Description]}
+          defaultValue={description}
+          error={errors[additionalField.Description]}
         >
-          <textarea {...register(Field.Description)} />
+          <textarea {...register(additionalField.Description)} />
         </FormControl>
 
         <AnimatePresence>
@@ -128,10 +146,13 @@ const Additional = () => {
                   </button>
                 ) : null
               }
+              defaultValue={socialMedia[index]}
               label={`Social Media URL #${field}`}
-              error={errors[Field.SocialMediaUrls]?.[index]}
+              error={errors[additionalField.SocialMediaUrls]?.[index]}
             >
-              <input {...register(`${Field.SocialMediaUrls}.${index}`)} />
+              <input
+                {...register(`${additionalField.SocialMediaUrls}.${index}`)}
+              />
             </FormControl>
           ))}
         </AnimatePresence>

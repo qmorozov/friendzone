@@ -1,9 +1,8 @@
-import { useState, ChangeEvent, FC } from 'react';
+import { useState, ChangeEvent, FC, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-import styles from './index.module.scss';
-
 import FormControl from '../FormControl';
+import styles from './index.module.scss';
 
 export interface IMultiSelectItem {
   id: string;
@@ -12,11 +11,26 @@ export interface IMultiSelectItem {
 
 export interface IMultiSelect {
   options: IMultiSelectItem[];
+  selectedItems?: IMultiSelectItem[];
   onSelect: (selectedItems: IMultiSelectItem[]) => void;
 }
 
-const MultiSelect: FC<IMultiSelect> = ({ options, onSelect }) => {
-  const [selectedItems, setSelectedItems] = useState<IMultiSelectItem[]>([]);
+const MultiSelect: FC<IMultiSelect> = ({
+  options,
+  onSelect,
+  selectedItems: initialSelectedItems,
+}) => {
+  const defaultSelectedItems: IMultiSelectItem[] = [];
+
+  const [selectedItems, setSelectedItems] = useState<IMultiSelectItem[]>(
+    initialSelectedItems || defaultSelectedItems
+  );
+
+  useEffect(() => {
+    if (initialSelectedItems) {
+      setSelectedItems(initialSelectedItems);
+    }
+  }, [initialSelectedItems]);
 
   const handleCheckboxChange = (
     event: ChangeEvent<HTMLInputElement>,

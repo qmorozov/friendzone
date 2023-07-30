@@ -7,12 +7,28 @@ import MultiSelect, {
 } from '../../../../../UI/components/MultiSelect';
 
 import auth from '../../../styles/index.module.scss';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../../hooks/useAppRedux';
+import { RootState } from '../../../../../services/app-store';
+import { updateProfile } from '../../../store/auth';
 
 interface ILanguages {
   languages: IMultiSelectItem[];
 }
 
 const Languages: FC<ILanguages> = ({ languages }) => {
+  const dispatch = useAppDispatch();
+
+  const { languages: languagesState } = useAppSelector(
+    ({ auth }: RootState) => auth.user
+  );
+
+  const handleLanguages = (languages: IMultiSelectItem[]): void => {
+    dispatch(updateProfile({ languages }));
+  };
+
   return (
     <>
       <h1 className={auth.title}>Languages</h1>
@@ -27,7 +43,8 @@ const Languages: FC<ILanguages> = ({ languages }) => {
       >
         <MultiSelect
           options={languages}
-          onSelect={(value: IMultiSelectItem[]) => console.log(value)}
+          onSelect={handleLanguages}
+          selectedItems={languagesState}
         />
 
         <Button classes={auth.button} aria-label="Sign up">

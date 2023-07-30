@@ -28,6 +28,13 @@ export class User {
     password: String;
 
     @ApiProperty({
+        description: "Unique username",
+        example: "john123"
+    })
+    @Prop()
+    username: String;
+
+    @ApiProperty({
         description: "User First Name",
         example: "John"
     })

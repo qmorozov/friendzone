@@ -41,4 +41,14 @@ export class UserService {
             hobbies: hobbyItems
         }).populate(['hobbies', 'languages']);
     }
+
+    async checkUsername(username: string){
+
+        const user = await this.userModel.findOne({username}).exec();
+
+        return {
+            success: true,
+            exists: Boolean(user)
+        }
+    }
 }

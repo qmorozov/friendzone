@@ -3,6 +3,11 @@ import {IsArray, IsObject, IsString, Length} from "class-validator";
 
 export class UpdateUserDto{
 
+    @ApiProperty({description: "Unique username", example: "john123"})
+    @IsString({message: "Username must be a string"})
+    @Length(3, 10, {message: "Username must contains from 3 to 10 characters"})
+    readonly username: string;
+
     @ApiProperty({description: "User First Name", example: "John"})
     @IsString({message: "First name must be a string"})
     @Length(2, 20, {message: "First name must contains from 2 to 20 characters"})
