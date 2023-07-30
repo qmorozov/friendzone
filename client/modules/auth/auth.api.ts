@@ -20,4 +20,12 @@ export abstract class AuthApi extends ApiService {
   static async checkUserName(username: string) {
     return this.get(`user/checkUsername/${username}`);
   }
+
+  static async loginUserGetToken(userData: any) {
+    return this.post('auth/login', userData);
+  }
+
+  static async loginUserByToken(token: string) {
+    return this.getWithToken('auth/profile', token);
+  }
 }

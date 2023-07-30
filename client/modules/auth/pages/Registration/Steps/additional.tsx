@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { additionalValidationSchema } from '../../../validation/schemaValidation';
-import { additionalField, registrationSteps } from '../../../dto/auth.dto';
+import { AdditionalField, RegistrationSteps } from '../../../dto/auth.dto';
 import {
   useAppDispatch,
   useAppSelector,
@@ -43,8 +43,8 @@ const Additional = () => {
   } = useForm({
     resolver: yupResolver(additionalValidationSchema),
     defaultValues: {
-      [additionalField.Description]: description,
-      [additionalField.SocialMediaUrls]: socialMedia,
+      [AdditionalField.Description]: description,
+      [AdditionalField.SocialMediaUrls]: socialMedia,
     },
   });
 
@@ -76,14 +76,14 @@ const Additional = () => {
     );
 
     const updatedErrors = { ...errors };
-    delete updatedErrors[additionalField.SocialMediaUrls]?.[index];
+    delete updatedErrors[AdditionalField.SocialMediaUrls]?.[index];
 
     const updatedValues = getValues();
     updatedValues?.socialMediaUrls?.splice(index, 1);
 
     reset({
       ...updatedValues,
-      [additionalField.SocialMediaUrls]: updatedValues.socialMediaUrls,
+      [AdditionalField.SocialMediaUrls]: updatedValues.socialMediaUrls,
     });
 
     clearErrors();
@@ -104,10 +104,10 @@ const Additional = () => {
     dispatch(updateProfile(filteredData));
 
     if (isValid) {
-      setStep(registrationSteps.interests);
+      setStep(RegistrationSteps.interests);
       setVisibleTabs((prevState: any) => ({
         ...prevState,
-        [registrationSteps.interests]: false,
+        [RegistrationSteps.interests]: false,
       }));
     }
   };
@@ -129,9 +129,9 @@ const Additional = () => {
           label="Bio"
           type="textarea"
           defaultValue={description}
-          error={errors[additionalField.Description]}
+          error={errors[AdditionalField.Description]}
         >
-          <textarea {...register(additionalField.Description)} />
+          <textarea {...register(AdditionalField.Description)} />
         </FormControl>
 
         <AnimatePresence>
@@ -164,10 +164,10 @@ const Additional = () => {
               }
               defaultValue={socialMedia[index]}
               label={`Social Media URL #${field}`}
-              error={errors[additionalField.SocialMediaUrls]?.[index]}
+              error={errors[AdditionalField.SocialMediaUrls]?.[index]}
             >
               <input
-                {...register(`${additionalField.SocialMediaUrls}.${index}`)}
+                {...register(`${AdditionalField.SocialMediaUrls}.${index}`)}
               />
             </FormControl>
           ))}

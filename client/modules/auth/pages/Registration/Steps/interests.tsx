@@ -7,7 +7,7 @@ import {
 import { updateProfile } from '../../../store/auth';
 import { RootState } from '../../../../../services/app-store';
 import { useRegistrationData } from '../registrationContext';
-import { registrationSteps } from '../../../dto/auth.dto';
+import { RegistrationSteps } from '../../../dto/auth.dto';
 
 import Button from '../../../../../UI/components/Button';
 import MultiSelect, {
@@ -41,10 +41,10 @@ const Interests: FC<IInterests> = ({ hobbies }) => {
     event.preventDefault();
 
     if (hobbiesState.length > 0) {
-      setStep(registrationSteps.languages);
+      setStep(RegistrationSteps.languages);
       setVisibleTabs((prevState: any) => ({
         ...prevState,
-        [registrationSteps.languages]: false,
+        [RegistrationSteps.languages]: false,
       }));
     } else {
       setHasSelection(false);

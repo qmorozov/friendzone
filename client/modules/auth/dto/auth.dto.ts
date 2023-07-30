@@ -1,11 +1,11 @@
-export enum registrationSteps {
+export enum RegistrationSteps {
   basic = 'Basic',
   additional = 'Additional',
   interests = 'Interests',
   languages = 'Languages',
 }
 
-export enum basicFields {
+export enum BasicFields {
   FirstName = 'firstName',
   Username = 'username',
   Email = 'email',
@@ -13,7 +13,13 @@ export enum basicFields {
   LastName = 'lastName',
 }
 
-export enum additionalField {
+export enum AdditionalField {
   Description = 'description',
   SocialMediaUrls = 'socialMediaUrls',
+}
+
+export enum LoginField {
+  Email = 'email',
+  Password = 'password',
+  RememberMe = 'rememberMe',
 }

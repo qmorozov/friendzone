@@ -9,7 +9,7 @@ import {
 import { updateProfile } from '../../../store/auth';
 import { RootState } from '../../../../../services/app-store';
 import { registrationValidationSchema } from '../../../validation/schemaValidation';
-import { basicFields, registrationSteps } from '../../../dto/auth.dto';
+import { BasicFields, RegistrationSteps } from '../../../dto/auth.dto';
 import { useRegistrationData } from '../registrationContext';
 
 import Button from '../../../../../UI/components/Button';
@@ -48,10 +48,10 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
   } = useForm<RegistrationFormData>({
     resolver: yupResolver(registrationValidationSchema),
     defaultValues: {
-      [basicFields.Email]: email,
-      [basicFields.LastName]: lastName,
-      [basicFields.Username]: username,
-      [basicFields.FirstName]: firstName,
+      [BasicFields.Email]: email,
+      [BasicFields.LastName]: lastName,
+      [BasicFields.Username]: username,
+      [BasicFields.FirstName]: firstName,
     },
   });
 
@@ -60,7 +60,7 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
   let debounceTimer: NodeJS.Timeout;
 
   useEffect(() => {
-    setValue(basicFields.Password, userPassword);
+    setValue(BasicFields.Password, userPassword);
   }, [userPassword]);
 
   const handleUsername = async (
@@ -69,7 +69,7 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
     const userName: string = event.target.value.trim();
 
     if (!userName) {
-      clearErrors(basicFields.Username);
+      clearErrors(BasicFields.Username);
       return;
     }
 
@@ -77,15 +77,15 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
       const { exists }: any = await AuthApi.checkUserName(userName);
 
       if (exists) {
-        setError(basicFields.Username, {
+        setError(BasicFields.Username, {
           type: 'manual',
           message: 'This username already exists.',
         });
       } else {
-        clearErrors(basicFields.Username);
+        clearErrors(BasicFields.Username);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -126,14 +126,14 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
       )}; path=/`;
 
       if (isValid) {
-        setStep(registrationSteps.additional);
+        setStep(RegistrationSteps.additional);
         setVisibleTabs((prevState: any) => ({
           ...prevState,
-          [registrationSteps.additional]: false,
+          [RegistrationSteps.additional]: false,
         }));
       }
     } catch (error: any) {
-      setError(basicFields.Email, {
+      setError(BasicFields.Email, {
         type: 'custom',
         message: error.response?.data?.message,
       });
@@ -158,10 +158,10 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
         <FormControl
           label="Login"
           defaultValue={username}
-          error={errors[basicFields.Username] as FieldError}
+          error={errors[BasicFields.Username] as FieldError}
         >
           <input
-            {...register(basicFields.Username)}
+            {...register(BasicFields.Username)}
             onChange={debouncedHandleUsername}
           />
         </FormControl>
@@ -169,26 +169,26 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
         <FormControl
           label="Email"
           defaultValue={email}
-          error={errors[basicFields.Email] as FieldError}
+          error={errors[BasicFields.Email] as FieldError}
         >
-          <input {...register(basicFields.Email)} />
+          <input {...register(BasicFields.Email)} />
         </FormControl>
 
         <fieldset>
           <FormControl
             label="First name"
             defaultValue={firstName}
-            error={errors[basicFields.FirstName] as FieldError}
+            error={errors[BasicFields.FirstName] as FieldError}
           >
-            <input {...register(basicFields.FirstName)} />
+            <input {...register(BasicFields.FirstName)} />
           </FormControl>
 
           <FormControl
             label="Last name"
             defaultValue={lastName}
-            error={errors[basicFields.LastName] as FieldError}
+            error={errors[BasicFields.LastName] as FieldError}
           >
-            <input {...register(basicFields.LastName)} />
+            <input {...register(BasicFields.LastName)} />
           </FormControl>
         </fieldset>
 
@@ -196,9 +196,9 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
           type="password"
           label="Password"
           defaultValue={userPassword}
-          error={errors[basicFields.Password] as FieldError}
+          error={errors[BasicFields.Password] as FieldError}
         >
-          <input type="password" {...register(basicFields.Password)} />
+          <input type="password" {...register(BasicFields.Password)} />
         </FormControl>
 
         <Button classes={auth.button} aria-label="Continue">
