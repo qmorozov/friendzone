@@ -11,19 +11,26 @@ export class AuthService {
 
     async validateUser(email: string, password: string): Promise<any>{
 
-        const user = await this.userService.getByEmail(email);
+        const user = await this.userService.getByEmail(email,  "+password");
 
         if(user && await bcrypt.compare(password, user.password)){
-            const { password, ...result } = user;
 
-            return result;
+            user.password = undefined;
+
+            return user;
         }
 
         return null;
     }
 
     async login(user: any){
-        return this.generateToken(user);
+
+        const access_token = await this.generateToken(user);
+
+        return {
+            user,
+            access_token
+        }
     }
 
     async register(dto: CreateUserDto){
@@ -34,22 +41,28 @@ export class AuthService {
             throw new UnprocessableEntityException("This e-mail already registered")
         }
 
-        const user = await this.userService.create(dto);
+        await this.userService.create(dto);
 
-        return this.generateToken(user);
-    }
+        const user = await this.userService.getByEmail(dto.email);
 
-    generateToken(user: any){
+        delete user.password;
+
+        const access_token = await this.generateToken(user);
+
         return {
-            access_token: this.jwtService.sign({
-                id: user._id,
-                email: user.email
-            })
+            user,
+            access_token
         }
     }
 
-    verifyToken(token: string){
-        return this.jwtService.verify(token)
+    async generateToken(user: any){
+        return this.jwtService.sign({
+            id: user._id,
+            email: user.email
+        });
     }
 
+    async getProfile(reqUser: any){
+        return await this.userService.getByEmail(reqUser.email);
+    }
 }

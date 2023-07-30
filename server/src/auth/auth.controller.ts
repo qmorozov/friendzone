@@ -35,10 +35,10 @@ export class AuthController {
         return await this.authService.register(dto)
     }
 
-    @ApiOperation({summary: "Get User Profile by JWT Token"})
     @UseGuards(JwtAuthGuard)
+    @ApiOperation({summary: "Get User Profile by JWT Token"})
     @Get('/profile')
-    getProfile(@Request() req) {
-        return req.user;
+    async getProfile(@Request() req) {
+        return await this.authService.getProfile(req.user);
     }
 }
