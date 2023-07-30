@@ -1,7 +1,8 @@
 import {Controller, Get} from '@nestjs/common';
 import {HobbyService} from "./hobby.service";
-import {ApiOkResponse, ApiOperation} from "@nestjs/swagger";
+import {ApiOkResponse, ApiOperation, ApiTags} from "@nestjs/swagger";
 
+@ApiTags("Hobbies")
 @Controller('/hobby')
 export class HobbyController {
 

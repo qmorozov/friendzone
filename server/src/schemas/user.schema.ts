@@ -75,6 +75,7 @@ export class User {
         description: "User Social Media Links Array",
         example: ['https://www.instagram.com/', 'https://facebook.com/']
     })
+
     @Prop()
     socialMedia: String[]
 
@@ -82,6 +83,7 @@ export class User {
         description: "User Description",
         example: "My name is John. I am from Kyiv, Ukraine"
     })
+
     @Prop()
     description: String;
 
@@ -89,6 +91,7 @@ export class User {
         description: "User Settings",
         example: {isDarkModeForced: true}
     })
+
     @Prop()
     settings: [{
         isDarkModeForced: Boolean

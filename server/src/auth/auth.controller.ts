@@ -1,6 +1,6 @@
 import {Body, Controller, Get, Headers, Post, Request, UseGuards} from '@nestjs/common';
 import {LocalAuthGuard} from "./local-auth.guard";
-import {ApiOkResponse, ApiOperation, ApiTags} from "@nestjs/swagger";
+import {ApiBody, ApiOkResponse, ApiOperation, ApiTags} from "@nestjs/swagger";
 import {AuthService} from "./auth.service";
 import {CreateUserDto} from "../user/dto/create-user.dto";
 import {JwtAuthGuard} from "./jwt-auth.guard";
@@ -14,6 +14,15 @@ export class AuthController {
     @ApiOperation({summary: "Logging In"})
     @UseGuards(LocalAuthGuard)
     @ApiOkResponse({ description: 'User successfully logged in'})
+    @ApiBody({
+        schema: {
+            type: 'object',
+            properties: {
+                email: {description: "User Email", example: "example@mail.com"},
+                password: {description: "User Password", example: "12345"},
+            },
+        },
+    })
     @Post('/login')
     async login(@Request() req){
         return this.authService.login(req.user)

@@ -4,9 +4,9 @@ export abstract class ApiService {
   protected static readonly baseUrl =
     'https://friendzone-server-production.up.railway.app/api/v1';
 
-  protected static async get<T>(endpoint: string): Promise<T> {
+  protected static async get<T>(endpoint: string, params?: any): Promise<T> {
     const url = this.buildUrl(endpoint);
-    const response = await axios.get<T>(url);
+    const response = await axios.get<T>(url, { params });
     return this.handleResponse<T>(response);
   }
 

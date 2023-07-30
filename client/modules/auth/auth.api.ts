@@ -16,4 +16,11 @@ export abstract class AuthApi extends ApiService {
   static async editUser(userData: any, token: string) {
     return this.putWithToken('user/update', userData, token);
   }
+
+  static async checkUserName(username: string) {
+    const params = {
+      username,
+    };
+    return this.get('user/checkUsername', params);
+  }
 }

@@ -77,12 +77,14 @@ const ForgotPassword = () => {
           <input type="email" {...register(Field.Email)} />
         </FormControl>
 
-        <Button classes={auth.button}>CONTINUE</Button>
+        <Button classes={auth.button} aria-label="Continue">
+          CONTINUE
+        </Button>
       </form>
 
       <div className={auth.auth__footer}>
         <p>Go back to login screen</p>
-        <Link href="/auth/login">login screen</Link>
+        <Link href="/auth/login">Login</Link>
       </div>
     </motion.div>
   );
