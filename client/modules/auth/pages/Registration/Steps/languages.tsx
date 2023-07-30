@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, MouseEvent } from 'react';
 import { motion } from 'framer-motion';
 import {
   useAppDispatch,
@@ -15,10 +15,11 @@ import MultiSelect, {
 import auth from '../../../styles/index.module.scss';
 
 interface ILanguages {
+  registerUser: () => void;
   languages: IMultiSelectItem[];
 }
 
-const Languages: FC<ILanguages> = ({ languages }) => {
+const Languages: FC<ILanguages> = ({ languages, registerUser }) => {
   const dispatch = useAppDispatch();
 
   const { languages: languagesState } = useAppSelector(
@@ -27,19 +28,16 @@ const Languages: FC<ILanguages> = ({ languages }) => {
 
   const [hasSelection, setHasSelection] = useState<boolean>(true);
 
-  const handleLanguages = (selectedLanguages: IMultiSelectItem[]): void => {
+  const handleLanguages = (selectedLanguages: string[]): void => {
     setHasSelection(selectedLanguages.length > 0);
+
     dispatch(updateProfile({ languages: selectedLanguages }));
   };
 
-  const handleContinue = (event: any): void => {
+  const handleContinue = (event: MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
 
-    if (languagesState.length > 0) {
-      console.log('SIGN UP!');
-    } else {
-      setHasSelection(false);
-    }
+    languagesState.length > 0 ? registerUser() : setHasSelection(false);
   };
 
   return (
@@ -58,7 +56,7 @@ const Languages: FC<ILanguages> = ({ languages }) => {
           <MultiSelect
             options={languages}
             onSelect={handleLanguages}
-            selectedItems={languagesState}
+            selectedIds={languagesState}
           />
 
           {!hasSelection && (

@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, MouseEvent } from 'react';
 import { motion } from 'framer-motion';
 import {
   useAppDispatch,
@@ -31,12 +31,13 @@ const Interests: FC<IInterests> = ({ hobbies }) => {
 
   const [hasSelection, setHasSelection] = useState<boolean>(true);
 
-  const handleHobbies = (selectedHobbies: IMultiSelectItem[]): void => {
+  const handleHobbies = (selectedHobbies: string[]): void => {
     setHasSelection(selectedHobbies.length > 0);
+
     dispatch(updateProfile({ hobbies: selectedHobbies }));
   };
 
-  const handleContinue = (event: any): void => {
+  const handleContinue = (event: MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
 
     if (hobbiesState.length > 0) {
@@ -66,7 +67,7 @@ const Interests: FC<IInterests> = ({ hobbies }) => {
           <MultiSelect
             options={hobbies}
             onSelect={handleHobbies}
-            selectedItems={hobbiesState}
+            selectedIds={hobbiesState}
           />
 
           {!hasSelection && (

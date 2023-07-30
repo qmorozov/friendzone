@@ -17,6 +17,11 @@ import FormControl from '../../../../../UI/components/FormControl';
 
 import auth from '../../../styles/index.module.scss';
 
+type AdditionalFormData = {
+  description: string;
+  socialMediaUrls: string[];
+};
+
 const Additional = () => {
   const { setStep, setVisibleTabs } = useRegistrationData();
 

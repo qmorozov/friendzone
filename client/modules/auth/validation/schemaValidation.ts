@@ -61,7 +61,9 @@ export const registrationValidationSchema = yup.object().shape({
 export const additionalValidationSchema = yup.object().shape({
   [additionalField.Description]: yup
     .string()
-    .required('Description is required'),
+    .required('Description is required')
+    .min(15, 'Description must be at least 15 characters')
+    .max(150, 'Description can be at most 150 characters'),
   [additionalField.SocialMediaUrls]: yup
     .array()
     .of(yup.string().url('Invalid URL format')),

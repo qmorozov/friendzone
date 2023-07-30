@@ -10,32 +10,34 @@ export interface IMultiSelectItem {
 }
 
 export interface IMultiSelect {
+  selectedIds?: string[];
   options: IMultiSelectItem[];
-  selectedItems?: IMultiSelectItem[];
-  onSelect: (selectedItems: IMultiSelectItem[]) => void;
+  onSelect: (selectedItems: string[]) => void;
 }
 
 const MultiSelect: FC<IMultiSelect> = ({
   options,
   onSelect,
-  selectedItems: initialSelectedItems,
+  selectedIds: initialSelectedIds,
 }) => {
   const defaultSelectedItems: IMultiSelectItem[] = [];
 
-  const [selectedItems, setSelectedItems] = useState<IMultiSelectItem[]>(
-    initialSelectedItems || defaultSelectedItems
-  );
+  const [selectedItems, setSelectedItems] =
+    useState<IMultiSelectItem[]>(defaultSelectedItems);
 
   useEffect(() => {
-    if (initialSelectedItems) {
+    if (initialSelectedIds) {
+      const initialSelectedItems = options.filter(({ id }) =>
+        initialSelectedIds.includes(id)
+      );
       setSelectedItems(initialSelectedItems);
     }
-  }, [initialSelectedItems]);
+  }, [initialSelectedIds, options]);
 
   const handleCheckboxChange = (
     event: ChangeEvent<HTMLInputElement>,
     option: IMultiSelectItem
-  ) => {
+  ): void => {
     const isChecked = event.target.checked;
     let updatedSelectedItems: IMultiSelectItem[];
 
@@ -46,7 +48,9 @@ const MultiSelect: FC<IMultiSelect> = ({
     }
 
     setSelectedItems(updatedSelectedItems);
-    onSelect(updatedSelectedItems);
+
+    const selectedIds = updatedSelectedItems.map(({ id }) => id);
+    onSelect(selectedIds);
   };
 
   return (
@@ -66,9 +70,7 @@ const MultiSelect: FC<IMultiSelect> = ({
             onChange={(event: ChangeEvent<HTMLInputElement>) =>
               handleCheckboxChange(event, option)
             }
-            checked={selectedItems.some(
-              ({ id }: IMultiSelectItem) => id === option.id
-            )}
+            checked={selectedItems.some(({ id }) => id === option.id)}
           />
         </FormControl>
       ))}
