@@ -39,6 +39,8 @@ export class UserService {
 
         const hobbyItems = await this.hobbyService.findManyById(hobbies);
 
+        console.log(languageItems, '------------------------------------', hobbyItems)
+
         return this.userModel.findOneAndUpdate({_id: userId}, {
             ...dto,
             languages: languageItems,
