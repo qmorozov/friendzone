@@ -6,6 +6,7 @@ export interface IUserLocation {
   country: string;
   latitude: number;
   longitude: number;
+  accuracy: string;
 }
 
 export interface IAuthState {
@@ -15,12 +16,12 @@ export interface IAuthState {
     phone: string;
     email: string;
     lastName: string;
-    images: string[];
-    hobbies: IMultiSelectItem[];
+    pictures: string[];
+    hobbies: string[];
     username: string;
     firstName: string;
     likesCount: number;
-    languages: IMultiSelectItem[];
+    languages: string[];
     description: string;
     socialMedia: string[];
     location: IUserLocation;
@@ -36,7 +37,7 @@ const initialState: IAuthState = {
   user: {
     phone: '',
     email: '',
-    images: [],
+    pictures: [],
     hobbies: [],
     lastName: '',
     username: '',
@@ -46,6 +47,7 @@ const initialState: IAuthState = {
       country: '',
       latitude: 0,
       longitude: 0,
+      accuracy: '',
     },
     languages: [],
     firstName: '',

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { AuthApi } from '../../auth.api';
@@ -6,6 +6,7 @@ import { registrationSteps } from '../../dto/auth.dto';
 import { useAppSelector } from '../../../../hooks/useAppRedux';
 import { RootState } from '../../../../services/app-store';
 import { RegistrationData } from './registrationContext';
+import { getCookie } from '../../../../services/helper';
 
 import Tabs, { ITab } from '../../../../UI/components/Tabs';
 import { IMultiSelectItem } from '../../../../UI/components/MultiSelect';
@@ -18,9 +19,7 @@ import auth from '../../styles/index.module.scss';
 import styles from '../../styles/pages/registration.module.scss';
 
 const Registration = () => {
-  const { email, firstName } = useAppSelector(
-    ({ auth }: RootState) => auth.user
-  );
+  const user = useAppSelector(({ auth }: RootState) => auth.user);
 
   const [hobbies, setHobbies] = useState<IMultiSelectItem[]>([]);
   const [languages, setLanguages] = useState<IMultiSelectItem[]>([]);
@@ -34,6 +33,41 @@ const Registration = () => {
     [registrationSteps.interests]: true,
     [registrationSteps.languages]: true,
   });
+
+  const token: string | null = getCookie('access_token');
+
+  const registerUser = async () => {
+    try {
+      if (token) {
+        const removeEmptyFields = (obj: any) => {
+          const newObj: any = {};
+          for (const key in obj) {
+            if (
+              obj[key] !== null &&
+              obj[key] !== undefined &&
+              obj[key] !== ''
+            ) {
+              newObj[key] = obj[key];
+            }
+          }
+          return newObj;
+        };
+
+        const filteredUser = {
+          ...user,
+          hobbies: user.hobbies.filter((hobby) => hobby !== ''),
+          languages: user.languages.filter((language) => language !== ''),
+        };
+
+        const userData = await AuthApi.editUser(
+          removeEmptyFields(filteredUser),
+          token
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const steps: ITab[] = [
     {
@@ -65,7 +99,7 @@ const Registration = () => {
     {
       id: registrationSteps.languages,
       disabled: visibleTabs[registrationSteps.languages],
-      content: <Languages languages={languages} />,
+      content: <Languages languages={languages} registerUser={registerUser} />,
       title: 4,
       className: styles.step,
       onClick: () => setStep(registrationSteps.languages),
@@ -118,7 +152,7 @@ const Registration = () => {
         />
 
         <AnimatePresence>
-          {email && firstName && (
+          {user.email && user.firstName && (
             <motion.div
               className={auth.auth__footer}
               initial={{ opacity: 0, y: -20 }}

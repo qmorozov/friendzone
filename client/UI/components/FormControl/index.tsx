@@ -1,9 +1,9 @@
 import React, {
   FC,
+  memo,
   useRef,
   useState,
   ChangeEvent,
-  cloneElement,
   ReactElement,
   JSXElementConstructor,
 } from 'react';
@@ -75,7 +75,7 @@ const FormControl: FC<IFormControl> = ({
   });
 
   const renderTextarea = (): JSX.Element =>
-    cloneElement(children as ReactElement<HTMLFormElement>, {
+    React.cloneElement(children, {
       onInput: (event: ChangeEvent<HTMLTextAreaElement>): void => {
         handleChange(event);
       },
@@ -83,7 +83,7 @@ const FormControl: FC<IFormControl> = ({
 
   const renderRadioCheckbox = (): JSX.Element => (
     <>
-      {cloneElement(children as ReactElement<HTMLFormElement>, {
+      {React.cloneElement(children, {
         type: isCheckbox ? 'checkbox' : 'radio',
       })}
       <span></span>
@@ -100,7 +100,7 @@ const FormControl: FC<IFormControl> = ({
         ? {
             paddingRight: `${iconRef.current.clientWidth + 10}px`,
           }
-        : ({} as any),
+        : {},
     };
 
     return (
@@ -131,8 +131,8 @@ const FormControl: FC<IFormControl> = ({
         )}
         {icon &&
           type !== 'password' &&
-          cloneElement(icon, { className: styles.icon, ref: iconRef })}
-        {cloneElement(children as ReactElement<HTMLInputElement>, inputProps)}
+          React.cloneElement(icon, { className: styles.icon, ref: iconRef })}
+        {React.cloneElement(children, inputProps)}
       </>
     );
   };
@@ -172,4 +172,4 @@ const FormControl: FC<IFormControl> = ({
   );
 };
 
-export default FormControl;
+export default memo(FormControl);

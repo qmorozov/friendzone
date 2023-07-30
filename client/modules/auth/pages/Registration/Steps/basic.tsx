@@ -1,8 +1,7 @@
-import { motion } from 'framer-motion';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import React, { FC, memo, useEffect, ChangeEvent } from 'react';
+import { useForm, SubmitHandler, FieldError } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { AuthApi } from '../../../auth.api';
-import { ChangeEvent, FC, useEffect } from 'react';
 import {
   useAppDispatch,
   useAppSelector,
@@ -17,6 +16,7 @@ import Button from '../../../../../UI/components/Button';
 import FormControl from '../../../../../UI/components/FormControl';
 
 import auth from '../../../styles/index.module.scss';
+import { motion } from 'framer-motion';
 
 type RegistrationFormData = {
   email: string;
@@ -54,8 +54,6 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
       [basicFields.FirstName]: firstName,
     },
   });
-
-  const pastDate: Date = new Date(0);
 
   const dispatch = useAppDispatch();
 
@@ -123,7 +121,9 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
 
       dispatch(updateProfile(editData));
 
-      document.cookie = `accessToken=${access_token}; expires=${pastDate.toUTCString()}; path=/`;
+      document.cookie = `access_token=${encodeURIComponent(
+        access_token
+      )}; path=/`;
 
       if (isValid) {
         setStep(registrationSteps.additional);
@@ -158,7 +158,7 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
         <FormControl
           label="Login"
           defaultValue={username}
-          error={errors[basicFields.Username]}
+          error={errors[basicFields.Username] as FieldError}
         >
           <input
             {...register(basicFields.Username)}
@@ -169,7 +169,7 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
         <FormControl
           label="Email"
           defaultValue={email}
-          error={errors[basicFields.Email]}
+          error={errors[basicFields.Email] as FieldError}
         >
           <input {...register(basicFields.Email)} />
         </FormControl>
@@ -178,7 +178,7 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
           <FormControl
             label="First name"
             defaultValue={firstName}
-            error={errors[basicFields.FirstName]}
+            error={errors[basicFields.FirstName] as FieldError}
           >
             <input {...register(basicFields.FirstName)} />
           </FormControl>
@@ -186,7 +186,7 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
           <FormControl
             label="Last name"
             defaultValue={lastName}
-            error={errors[basicFields.LastName]}
+            error={errors[basicFields.LastName] as FieldError}
           >
             <input {...register(basicFields.LastName)} />
           </FormControl>
@@ -196,7 +196,7 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
           type="password"
           label="Password"
           defaultValue={userPassword}
-          error={errors[basicFields.Password]}
+          error={errors[basicFields.Password] as FieldError}
         >
           <input type="password" {...register(basicFields.Password)} />
         </FormControl>
@@ -209,4 +209,4 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
   );
 };
 
-export default Basic;
+export default memo(Basic);
