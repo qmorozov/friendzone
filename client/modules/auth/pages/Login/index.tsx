@@ -2,7 +2,11 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
+import { AuthApi } from '../../auth.api';
+import { useAppDispatch } from '../../../../hooks/useAppRedux';
+import { updateProfile } from '../../store/auth';
+import { LoginField } from '../../dto/auth.dto';
+import { loginValidationSchema } from '../../validation/schemaValidation';
 
 import Button from '../../../../UI/components/Button';
 import FormControl from '../../../../UI/components/FormControl';
@@ -10,55 +14,77 @@ import FormControl from '../../../../UI/components/FormControl';
 import styles from '../../styles/pages/login.module.scss';
 import auth from '../../styles/index.module.scss';
 
-enum Field {
-  Email = 'email',
-  Password = 'password',
+export interface LoginData {
+  email: string;
+  password: string;
+  rememberMe?: boolean;
 }
-
-const loginValidationSchema = yup.object().shape({
-  [Field.Email]: yup
-    .string()
-    .required('Email address is required')
-    .email('Email address is invalid')
-    .test('emailFormat', 'Email address is invalid', (value) => {
-      const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-      return emailRegex.test(value) && value.includes('.');
-    }),
-  [Field.Password]: yup
-    .string()
-    .required('Password is required')
-    .min(8, 'Password must be at least 8 characters long')
-    .test(
-      'uppercase',
-      'Password must contain at least one uppercase letter (A-Z)',
-      (value) => /[A-Z]/.test(value)
-    )
-    .test(
-      'lowercase',
-      'Password must contain at least one lowercase letter (a-z)',
-      (value) => /[a-z]/.test(value)
-    )
-    .test('number', 'Password must contain at least one digit (0-9)', (value) =>
-      /\d/.test(value)
-    )
-    .test(
-      'specialChar',
-      'Password must contain at least one special character (!@#$%^&*())',
-      (value) => /[!@#$%^&*()]/.test(value)
-    ),
-});
 
 const Login = () => {
   const {
     register,
+    setError,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(loginValidationSchema),
   });
 
-  const handleLoginData = (data: any): void => {
-    console.log(data);
+  const dispatch = useAppDispatch();
+
+  const handleLoginData = async ({
+    email,
+    password,
+    rememberMe,
+  }: LoginData): Promise<void> => {
+    try {
+      const { access_token }: any = await AuthApi.loginUserGetToken({
+        email,
+        password,
+      });
+
+      if (rememberMe) {
+        document.cookie = `access_token=${encodeURIComponent(
+          access_token
+        )}; path=/;`;
+      }
+
+      try {
+        const {
+          firstName,
+          lastName,
+          location,
+          hobbies,
+          languages,
+          settings,
+          pictures,
+          socialMedia,
+          username,
+        }: any = await AuthApi.loginUserByToken(access_token);
+
+        dispatch(
+          updateProfile({
+            firstName,
+            lastName,
+            email,
+            location,
+            hobbies,
+            languages,
+            settings,
+            pictures,
+            socialMedia,
+            username,
+          })
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    } catch (error: any) {
+      setError(LoginField.Email, {
+        type: 'manual',
+        message: error?.response?.data?.message,
+      });
+    }
   };
 
   return (
@@ -75,27 +101,27 @@ const Login = () => {
         autoComplete="off"
         onSubmit={handleSubmit(handleLoginData)}
       >
-        <FormControl label="Email" error={errors[Field.Email]}>
-          <input type="email" {...register(Field.Email)} />
+        <FormControl label="Email" error={errors[LoginField.Email]}>
+          <input type="email" {...register(LoginField.Email)} />
         </FormControl>
 
         <FormControl
           type="password"
           label="Password"
-          error={errors[Field.Password]}
+          error={errors[LoginField.Password]}
         >
-          <input type="password" {...register(Field.Password)} />
+          <input type="password" {...register(LoginField.Password)} />
         </FormControl>
 
         <div className={styles.remember_forgot}>
           <FormControl type="checkbox" label="Remember me">
-            <input type="checkbox" />
+            <input type="checkbox" {...register(LoginField.RememberMe)} />
           </FormControl>
 
           <Link href="/auth/forgot-password">Forgot password</Link>
         </div>
 
-        <Button classes={auth.button} aria-label="Login now">
+        <Button classes={auth.button} aria-label="Login now" type="submit">
           Login now
         </Button>
       </form>

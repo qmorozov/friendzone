@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { AuthApi } from '../../auth.api';
-import { registrationSteps } from '../../dto/auth.dto';
+import { RegistrationSteps } from '../../dto/auth.dto';
 import { useAppSelector } from '../../../../hooks/useAppRedux';
 import { RootState } from '../../../../services/app-store';
 import { RegistrationData } from './registrationContext';
@@ -26,12 +26,12 @@ const Registration = () => {
 
   const [userPassword, setUserPassword] = useState<string>('');
 
-  const [step, setStep] = useState<ITab['id']>(registrationSteps.basic);
+  const [step, setStep] = useState<ITab['id']>(RegistrationSteps.basic);
   const [visibleTabs, setVisibleTabs] = useState({
-    [registrationSteps.basic]: false,
-    [registrationSteps.additional]: true,
-    [registrationSteps.interests]: true,
-    [registrationSteps.languages]: true,
+    [RegistrationSteps.basic]: false,
+    [RegistrationSteps.additional]: true,
+    [RegistrationSteps.interests]: true,
+    [RegistrationSteps.languages]: true,
   });
 
   const token: string | null = getCookie('access_token');
@@ -65,44 +65,44 @@ const Registration = () => {
         );
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
   const steps: ITab[] = [
     {
-      id: registrationSteps.basic,
-      disabled: visibleTabs[registrationSteps.basic],
+      id: RegistrationSteps.basic,
+      disabled: visibleTabs[RegistrationSteps.basic],
       content: (
         <Basic userPassword={userPassword} setUserPassword={setUserPassword} />
       ),
       title: 1,
       className: styles.step,
-      onClick: () => setStep(registrationSteps.basic),
+      onClick: () => setStep(RegistrationSteps.basic),
     },
     {
-      id: registrationSteps.additional,
-      disabled: visibleTabs[registrationSteps.additional],
+      id: RegistrationSteps.additional,
+      disabled: visibleTabs[RegistrationSteps.additional],
       content: <Additional />,
       title: 2,
       className: styles.step,
-      onClick: () => setStep(registrationSteps.additional),
+      onClick: () => setStep(RegistrationSteps.additional),
     },
     {
-      id: registrationSteps.interests,
-      disabled: visibleTabs[registrationSteps.interests],
+      id: RegistrationSteps.interests,
+      disabled: visibleTabs[RegistrationSteps.interests],
       content: <Interests hobbies={hobbies} />,
       title: 3,
       className: styles.step,
-      onClick: () => setStep(registrationSteps.interests),
+      onClick: () => setStep(RegistrationSteps.interests),
     },
     {
-      id: registrationSteps.languages,
-      disabled: visibleTabs[registrationSteps.languages],
+      id: RegistrationSteps.languages,
+      disabled: visibleTabs[RegistrationSteps.languages],
       content: <Languages languages={languages} registerUser={registerUser} />,
       title: 4,
       className: styles.step,
-      onClick: () => setStep(registrationSteps.languages),
+      onClick: () => setStep(RegistrationSteps.languages),
     },
   ];
 
@@ -161,7 +161,7 @@ const Registration = () => {
               transition={{ duration: 0.5 }}
             >
               <p>Complete Your Profile Later</p>
-              <Link href="/auth/login">Save and Finish Later</Link>
+              <button onClick={registerUser}>Save and Finish Later</button>
             </motion.div>
           )}
         </AnimatePresence>
