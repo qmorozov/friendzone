@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
-import {ValidationPipe} from "@nestjs/common";
+import {BadRequestException, ValidationPipe} from "@nestjs/common";
 
 async function bootstrap() {
   const PORT = process.env.PORT || 5000;
@@ -12,7 +12,7 @@ async function bootstrap() {
 
   app.setGlobalPrefix('/api/v1');
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({exceptionFactory: (errors) => new BadRequestException(errors)}));
 
   const config = new DocumentBuilder()
       .setTitle("FriendZone API")

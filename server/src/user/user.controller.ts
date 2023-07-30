@@ -23,19 +23,19 @@ export class UserController {
 
     @ApiOperation({summary: "Checking Username Availability"})
     @ApiParam({
-        name: "name",
+        name: "username",
         description: "<b>Username</b> which needs to check.",
         allowEmptyValue: false,
         examples: {
             a: {
                 summary: "Username is john123",
-                description: "john123 can be provided as a username",
+                description: "john123 provided as a username",
                 value: "john123"
             }
         }
     })
     @Get('/checkUsername/:username')
-    async checkUsername(@Param("username") username: string,){
+    async checkUsername(@Param("username") username: string){
         return await this.userService.checkUsername(username);
     }
 }
