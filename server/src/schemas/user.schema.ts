@@ -63,14 +63,14 @@ export class User {
             longitude: 3.3488896,
             accuracy: 7173.528443511279
     }})
-    @Prop()
-    location: [{
+    @Prop({type: Object})
+    location: {
         country: String,
         city: String,
         latitude?: Number,
         longitude?: Number,
         accuracy?: Number,
-    }]
+    }
 
     @ApiProperty({
         description: "User Pictures Array",
@@ -83,7 +83,6 @@ export class User {
         description: "User Social Media Links Array",
         example: ['https://www.instagram.com/', 'https://facebook.com/']
     })
-
     @Prop()
     socialMedia: String[]
 
@@ -99,19 +98,18 @@ export class User {
         description: "User Settings",
         example: {isDarkModeForced: true}
     })
-
-    @Prop()
-    settings: [{
+    @Prop({type: Object})
+    settings: {
         isDarkModeForced: Boolean
-    }];
+    };
 
     @Prop({ default: Date.now })
     createdAt: Date;
 
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Language' })
+    @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Language' })
     languages: Language[];
 
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Hobby' })
+    @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Hobby' })
     hobbies: Hobby[];
 }
 
