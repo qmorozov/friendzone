@@ -46,7 +46,7 @@
 
     cursor: pointer;
     transition: color variables.$transition,
-      background-color variables.$transition, border-color variables.$transition;
+      background-color variables.$transition, border-color variables.$transition, opacity variables.$transition;
 
     &:hover:not([disabled]),
     &.completed:not([disabled]),
@@ -57,8 +57,9 @@
 
     &:disabled {
       cursor: auto;
-      border-color: rgba(variables.$primary, .5);
-      color: rgba(#fff, .5);
+      border-width: variables.rem(1px);
+      border-color: rgba(variables.$primary, .2);
+      color: rgba(#fff, .2);
     }
   }
 
@@ -74,6 +75,10 @@
     z-index: -1;
     background-color: variables.$primary;
     transform: translate(-50%, -50%);
+
+    &:global.--disabled {
+      opacity: .5;
+    }
   }
 
   @include media.for-mobile {

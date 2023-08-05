@@ -118,11 +118,15 @@ const Additional = () => {
 
       <motion.form
         noValidate
+        key="additional"
         autoComplete="off"
         className={auth.form}
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{
+          duration: 0.75,
+        }}
         onSubmit={handleSubmit(handleAdditionalData)}
       >
         <FormControl
@@ -134,44 +138,42 @@ const Additional = () => {
           <textarea {...register(AdditionalField.Description)} />
         </FormControl>
 
-        <AnimatePresence>
-          {socialMediaFields.map((field: number, index: number) => (
-            <FormControl
-              key={index}
-              icon={
-                index > 0 ? (
-                  <button
-                    type="button"
-                    aria-label="Remove field for social media url"
-                    onClick={() => handleDeleteSocialMediaField(index)}
+        {socialMediaFields.map((field: number, index: number) => (
+          <FormControl
+            key={index}
+            icon={
+              index > 0 ? (
+                <button
+                  type="button"
+                  aria-label="Remove field for social media url"
+                  onClick={() => handleDeleteSocialMediaField(index)}
+                >
+                  <svg
+                    fill="none"
+                    viewBox="0 0 26 26"
+                    className={auth.remove_field}
                   >
-                    <svg
-                      fill="none"
-                      viewBox="0 0 26 26"
-                      className={auth.remove_field}
-                    >
-                      <path
-                        d="M6.11621 19.1165h18v1.5h-18v-1.5z"
-                        transform="rotate(-45 6.11621 19.1165)"
-                      />
-                      <path
-                        d="M18.8447 19.6111h18v1.5h-18v-1.5z"
-                        transform="rotate(-135 18.8447 19.6111)"
-                      />
-                    </svg>
-                  </button>
-                ) : null
-              }
-              defaultValue={socialMedia[index]}
-              label={`Social Media URL #${field}`}
-              error={errors[AdditionalField.SocialMediaUrls]?.[index]}
-            >
-              <input
-                {...register(`${AdditionalField.SocialMediaUrls}.${index}`)}
-              />
-            </FormControl>
-          ))}
-        </AnimatePresence>
+                    <path
+                      d="M6.11621 19.1165h18v1.5h-18v-1.5z"
+                      transform="rotate(-45 6.11621 19.1165)"
+                    />
+                    <path
+                      d="M18.8447 19.6111h18v1.5h-18v-1.5z"
+                      transform="rotate(-135 18.8447 19.6111)"
+                    />
+                  </svg>
+                </button>
+              ) : null
+            }
+            defaultValue={socialMedia[index]}
+            label={`Social Media URL #${field}`}
+            error={errors[AdditionalField.SocialMediaUrls]?.[index]}
+          >
+            <input
+              {...register(`${AdditionalField.SocialMediaUrls}.${index}`)}
+            />
+          </FormControl>
+        ))}
 
         {socialMediaFields.length < 4 && (
           <button

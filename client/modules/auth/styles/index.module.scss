@@ -28,10 +28,6 @@
     flex-wrap: wrap;
     margin-top: variables.rem(20px);
 
-    &:nth-child(3) {
-      margin-top: 6px;
-    }
-
     p,
     a,
     button {
@@ -43,13 +39,9 @@
   @include media.for-tablet {
     margin-top: variables.rem(26px);
 
-    &:nth-child(3) {
-      margin-top: 10px;
-    }
-
     p,
     a,
-    button{
+    button {
       font-size: variables.rem(16px);
       line-height: variables.rem(19px);
     }
@@ -70,7 +62,7 @@
 
     p,
     a,
-    button{
+    button {
       font-size: variables.rem(18px);
       line-height: variables.rem(21px);
     }

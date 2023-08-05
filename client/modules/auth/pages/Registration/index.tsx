@@ -136,12 +136,7 @@ const Registration = () => {
 
   return (
     <RegistrationData.Provider value={{ setStep, setVisibleTabs }}>
-      <motion.div
-        className={styles.tab}
-        initial={{ x: -20 }}
-        animate={{ x: 0 }}
-        transition={{ duration: 0.5 }}
-      >
+      <div className={styles.tab}>
         <Tabs
           options={steps}
           selectedTabId={step}
@@ -170,7 +165,7 @@ const Registration = () => {
           <p>You already have an account?</p>
           <Link href="/auth/login">Log in!</Link>
         </div>
-      </motion.div>
+      </div>
     </RegistrationData.Provider>
   );
 };

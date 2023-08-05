@@ -45,9 +45,11 @@ const Languages: FC<ILanguages> = ({ languages, registerUser }) => {
       <h1 className={auth.title}>Languages</h1>
 
       <motion.form
+        key="languages"
         className={auth.form}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
         transition={{
           duration: 0.75,
         }}

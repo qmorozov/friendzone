@@ -1,6 +1,7 @@
-import { FC, ReactNode, useContext, useEffect, useState } from 'react';
+import React, { FC, ReactNode, useContext, useEffect, useState } from 'react';
 import { Tab } from '@headlessui/react';
 import { RegistrationData } from '../../../modules/auth/pages/Registration/registrationContext';
+import { classNames } from '@headlessui/react/dist/utils/class-names';
 
 export interface ITab {
   id: string;
@@ -17,7 +18,7 @@ export interface ITabs {
   tabsPanel?: string;
   bodyClasses?: string;
   listClasses?: string;
-  headerContent?: ReactNode;
+  headerContent?: JSX.Element;
   selectedTabId?: ITab['id'];
 }
 
@@ -31,12 +32,18 @@ const Tabs: FC<ITabs> = ({
 }) => {
   const [selectedTab, setSelectedTab] = useState(selectedTabId);
   const [previousTabStack, setPreviousTabStack] = useState<string[]>([]);
+  const [isAnyTabDisabled, setIsAnyTabDisabled] = useState<boolean>(false);
 
   useEffect(() => {
     if (selectedTabId !== selectedTab) {
       setSelectedTab(selectedTabId);
     }
   }, [selectedTabId]);
+
+  useEffect(() => {
+    const hasDisabledTab = options.some((tab) => tab.disabled);
+    setIsAnyTabDisabled(hasDisabledTab);
+  }, [options]);
 
   const handleTabChange = (index: number) => {
     const selectedTabId = options[index].id;
@@ -66,7 +73,11 @@ const Tabs: FC<ITabs> = ({
         onChange={handleTabChange}
       >
         <Tab.List className={listClasses ?? listClasses}>
-          {headerContent}
+          {React.cloneElement(headerContent as JSX.Element, {
+            className: `${headerContent?.props.className ?? ''} ${
+              isAnyTabDisabled ? '--disabled' : ''
+            }`,
+          })}
           {options.map(
             ({ title, id, disabled = false, onClick, className }, index) => (
               <Tab

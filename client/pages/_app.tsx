@@ -10,9 +10,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   return (
-    <AnimatePresence>
-      <Provider store={store}>
-        <AuthenticatedRoute>
+    <Provider store={store}>
+      <AuthenticatedRoute>
+        <AnimatePresence mode="wait">
           <motion.div
             key={router.route}
             initial="initialState"
@@ -23,20 +23,21 @@ function MyApp({ Component, pageProps }: AppProps) {
                 opacity: 0,
                 clipPath: 'polygon(0 0, 0 0, 0 100%, 0% 100%)',
                 transition: {
-                  duration: 1.2,
+                  duration: 1.4,
                 },
               },
               animateState: {
                 opacity: 1,
                 clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)',
                 transition: {
-                  duration: 0.45,
+                  duration: 0.5,
                 },
               },
               exitState: {
-                clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)',
+                opacity: 0,
+                clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)',
                 transition: {
-                  duration: 0.45,
+                  duration: 0.6,
                 },
               },
             }}
@@ -44,9 +45,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           >
             <Component {...pageProps} />
           </motion.div>
-        </AuthenticatedRoute>
-      </Provider>
-    </AnimatePresence>
+        </AnimatePresence>
+      </AuthenticatedRoute>
+    </Provider>
   );
 }
 

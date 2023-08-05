@@ -88,12 +88,7 @@ const Login = () => {
   };
 
   return (
-    <motion.div
-      className={styles.wrapper}
-      animate={{ x: 0 }}
-      initial={{ x: -20 }}
-      transition={{ duration: 0.5 }}
-    >
+    <div className={styles.wrapper}>
       <h1 className={auth.title}>Welcome, login to your account!</h1>
 
       <form
@@ -130,7 +125,7 @@ const Login = () => {
         <p>Don’t have an account yet?</p>
         <Link href="/auth/registration">Sign up!</Link>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
