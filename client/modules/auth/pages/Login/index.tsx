@@ -13,8 +13,7 @@ import FormControl from '../../../../UI/components/FormControl';
 
 import styles from '../../styles/pages/login.module.scss';
 import auth from '../../styles/index.module.scss';
-import { useEffect } from 'react';
-import { setIsComponentMounted } from '../../../store/global';
+import authLayouts from '../../../../styles/parts/authLayouts.module.scss';
 
 export interface LoginData {
   email: string;
@@ -33,14 +32,6 @@ const Login = () => {
   });
 
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(setIsComponentMounted(true));
-
-    return () => {
-      dispatch(setIsComponentMounted(false));
-    };
-  }, []);
 
   const handleLoginData = async ({
     email,
@@ -106,7 +97,7 @@ const Login = () => {
         duration: 0.75,
       }}
     >
-      <div className={styles.auth__content_image}>
+      <div className={authLayouts.auth__content_image}>
         <img src="/images/big-logo.svg" alt="logo" />
       </div>
       <div className={styles.wrapper}>

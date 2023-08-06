@@ -53,23 +53,33 @@
   }
 
   @include media.for-mobile {
-    &__content_container {
-      gap: variables.rem(20px);
+    &__content {
+      &_container {
+        gap: variables.rem(20px);
+      }
+
+      &_image {
+        margin-bottom: variables.rem(20px);
+      }
     }
   }
 
   @media screen and (max-width: variables.rem(1300px)) and (orientation: landscape) {
     &__content_container {
-      //padding-top: variables.rem(40px);
-      //padding-bottom: variables.rem(40px);
       overflow-y: auto;
       height: 100%;
     }
   }
 
   @include media.for-tablet {
-    &__content_container {
-      gap: variables.rem(24px);
+    &__content {
+      &_container {
+        gap: variables.rem(24px);
+      }
+
+      &_image {
+        margin-bottom: variables.rem(26px);
+      }
     }
   }
 
@@ -90,6 +100,10 @@
       &_container {
         gap: variables.rem(26px);
         max-width: variables.rem(470px);
+      }
+
+      &_image {
+        margin-bottom: variables.rem(34px);
       }
     }
   }

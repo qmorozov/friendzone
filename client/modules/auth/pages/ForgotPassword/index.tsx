@@ -9,9 +9,7 @@ import FormControl from '../../../../UI/components/FormControl';
 
 import auth from '../../styles/index.module.scss';
 import styles from '../../styles/pages/login.module.scss';
-import { useAppDispatch } from '../../../../hooks/useAppRedux';
-import { useEffect } from 'react';
-import { setIsComponentMounted } from '../../../store/global';
+import authLayouts from '../../../../styles/parts/authLayouts.module.scss';
 
 enum Field {
   Login = 'login',
@@ -58,16 +56,6 @@ const ForgotPassword = () => {
     console.log(data);
   };
 
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(setIsComponentMounted(true));
-
-    return () => {
-      dispatch(setIsComponentMounted(false));
-    };
-  }, []);
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -77,7 +65,7 @@ const ForgotPassword = () => {
         duration: 0.75,
       }}
     >
-      <div className={styles.auth__content_image}>
+      <div className={authLayouts.auth__content_image}>
         <img src="/images/big-logo.svg" alt="logo" />
       </div>
       <div className={styles.wrapper}>

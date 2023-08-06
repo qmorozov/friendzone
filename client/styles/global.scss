@@ -39,6 +39,10 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   overflow: hidden;
+
+  @include media.for-mobile {
+    background-size: 90%;
+  }
 }
 
 .sb-show-main.sb-main-padded {

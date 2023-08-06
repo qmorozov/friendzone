@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { AuthApi } from '../../auth.api';
 import { RegistrationSteps } from '../../dto/auth.dto';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/useAppRedux';
+import { useAppSelector } from '../../../../hooks/useAppRedux';
 import { RootState } from '../../../../services/app-store';
 import { RegistrationData } from './registrationContext';
 import { getCookie } from '../../../../services/helper';
@@ -17,20 +17,10 @@ import Languages from './Steps/languages';
 
 import auth from '../../styles/index.module.scss';
 import styles from '../../styles/pages/registration.module.scss';
-import { setIsComponentMounted } from '../../../store/global';
+import authLayouts from '../../../../styles/parts/authLayouts.module.scss';
 
 const Registration = () => {
   const user = useAppSelector(({ auth }: RootState) => auth.user);
-
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(setIsComponentMounted(true));
-
-    return () => {
-      dispatch(setIsComponentMounted(false));
-    };
-  }, []);
 
   const [hobbies, setHobbies] = useState<IMultiSelectItem[]>([]);
   const [languages, setLanguages] = useState<IMultiSelectItem[]>([]);
@@ -155,7 +145,7 @@ const Registration = () => {
           duration: 0.75,
         }}
       >
-        <div className={styles.auth__content_image}>
+        <div className={authLayouts.auth__content_image}>
           <img src="/images/big-logo.svg" alt="logo" />
         </div>
         <div className={styles.tab}>
