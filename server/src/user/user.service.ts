@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {Inject, Injectable} from '@nestjs/common';
 import {CreateUserDto} from "./dto/create-user.dto";
 import * as bcrypt from 'bcrypt'
 import {User} from "../schemas/user.schema";
@@ -7,6 +7,7 @@ import {InjectModel} from "@nestjs/mongoose";
 import {UpdateUserDto} from "./dto/update-user.dto";
 import {HobbyService} from "../hobby/hobby.service";
 import {LanguageService} from "../language/language.service";
+import {UserInterface} from "./interfaces/user.interface";
 
 @Injectable()
 export class UserService {
@@ -23,9 +24,9 @@ export class UserService {
         return this.userModel.create({email: dto.email, password});
     }
 
-    async getByEmail(email: string, select = ""){
+    async findOneByField(field: UserInterface, select = ""){
         return this.userModel
-            .findOne({email})
+            .findOne(field)
             .select(select)
             .populate(["hobbies", "languages"])
             .exec();
@@ -38,8 +39,6 @@ export class UserService {
         const languageItems = await this.languageService.findManyById(languages);
 
         const hobbyItems = await this.hobbyService.findManyById(hobbies);
-
-        console.log(languageItems, '------------------------------------', hobbyItems)
 
         return this.userModel.findOneAndUpdate({_id: userId}, {
             ...dto,
@@ -55,5 +54,12 @@ export class UserService {
         return {
             exists: Boolean(user)
         }
+    }
+
+    async updateUserPassword(userId: string, password: string){
+
+        password = await bcrypt.hash(password, 5)
+
+        return this.userModel.updateOne({_id: userId}, {password}).exec()
     }
 }
