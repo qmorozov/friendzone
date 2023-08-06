@@ -28,7 +28,7 @@ export class PasswordController {
 
     @ApiOperation({summary: "Sending User Reset Password Code"})
     @ApiBody({
-        type: UpdateUserDto,
+        type: ForgotPasswordDto,
         description: "Update information for user profile."
     })
     @Post("/forgot")
@@ -48,9 +48,6 @@ export class PasswordController {
     }
 
     @ApiOperation({summary: "Resetting User Password"})
-    @ApiBody({
-        type: ResetPasswordDto,
-    })
     @Get("/reset/:token")
     async resetPasswordPage(@Param("token") token: string){
 
