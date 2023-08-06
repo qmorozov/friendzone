@@ -11,7 +11,7 @@ export class AuthService {
 
     async validateUser(email: string, password: string): Promise<any>{
 
-        const user = await this.userService.getByEmail(email,  "+password");
+        const user = await this.userService.findOneByField({email},  "+password");
 
         if(user && await bcrypt.compare(password, user.password)){
 
@@ -35,7 +35,7 @@ export class AuthService {
 
     async register(dto: CreateUserDto){
 
-        const candidate = await this.userService.getByEmail(dto.email);
+        const candidate = await this.userService.findOneByField({email: dto.email});
 
         if(candidate){
             throw new UnprocessableEntityException("This e-mail already registered")
@@ -43,7 +43,7 @@ export class AuthService {
 
         await this.userService.create(dto);
 
-        const user = await this.userService.getByEmail(dto.email);
+        const user = await this.userService.findOneByField({email: dto.email});
 
         delete user.password;
 
@@ -63,6 +63,6 @@ export class AuthService {
     }
 
     async getProfile(reqUser: any){
-        return await this.userService.getByEmail(reqUser.email);
+        return await this.userService.findOneByField({email: reqUser.email});
     }
 }
