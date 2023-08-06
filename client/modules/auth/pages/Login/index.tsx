@@ -13,6 +13,8 @@ import FormControl from '../../../../UI/components/FormControl';
 
 import styles from '../../styles/pages/login.module.scss';
 import auth from '../../styles/index.module.scss';
+import { useEffect } from 'react';
+import { setIsComponentMounted } from '../../../store/global';
 
 export interface LoginData {
   email: string;
@@ -31,6 +33,14 @@ const Login = () => {
   });
 
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setIsComponentMounted(true));
+
+    return () => {
+      dispatch(setIsComponentMounted(false));
+    };
+  }, []);
 
   const handleLoginData = async ({
     email,
@@ -88,44 +98,56 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <h1 className={auth.title}>Welcome, login to your account!</h1>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{
+        duration: 0.75,
+      }}
+    >
+      <div className={styles.auth__content_image}>
+        <img src="/images/big-logo.svg" alt="logo" />
+      </div>
+      <div className={styles.wrapper}>
+        <h1 className={auth.title}>Welcome, login to your account!</h1>
 
-      <form
-        noValidate
-        autoComplete="off"
-        onSubmit={handleSubmit(handleLoginData)}
-      >
-        <FormControl label="Email" error={errors[LoginField.Email]}>
-          <input type="email" {...register(LoginField.Email)} />
-        </FormControl>
-
-        <FormControl
-          type="password"
-          label="Password"
-          error={errors[LoginField.Password]}
+        <form
+          noValidate
+          autoComplete="off"
+          onSubmit={handleSubmit(handleLoginData)}
         >
-          <input type="password" {...register(LoginField.Password)} />
-        </FormControl>
-
-        <div className={styles.remember_forgot}>
-          <FormControl type="checkbox" label="Remember me">
-            <input type="checkbox" {...register(LoginField.RememberMe)} />
+          <FormControl label="Email" error={errors[LoginField.Email]}>
+            <input type="email" {...register(LoginField.Email)} />
           </FormControl>
 
-          <Link href="/auth/forgot-password">Forgot password</Link>
+          <FormControl
+            type="password"
+            label="Password"
+            error={errors[LoginField.Password]}
+          >
+            <input type="password" {...register(LoginField.Password)} />
+          </FormControl>
+
+          <div className={styles.remember_forgot}>
+            <FormControl type="checkbox" label="Remember me">
+              <input type="checkbox" {...register(LoginField.RememberMe)} />
+            </FormControl>
+
+            <Link href="/auth/forgot-password">Forgot password</Link>
+          </div>
+
+          <Button classes={auth.button} aria-label="Login now" type="submit">
+            Login now
+          </Button>
+        </form>
+
+        <div className={auth.auth__footer}>
+          <p>Don’t have an account yet?</p>
+          <Link href="/auth/registration">Sign up!</Link>
         </div>
-
-        <Button classes={auth.button} aria-label="Login now" type="submit">
-          Login now
-        </Button>
-      </form>
-
-      <div className={auth.auth__footer}>
-        <p>Don’t have an account yet?</p>
-        <Link href="/auth/registration">Sign up!</Link>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

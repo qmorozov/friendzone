@@ -116,17 +116,10 @@ const Additional = () => {
     <>
       <h1 className={auth.title}>Additional information</h1>
 
-      <motion.form
+      <form
         noValidate
-        key="additional"
         autoComplete="off"
         className={auth.form}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{
-          duration: 0.75,
-        }}
         onSubmit={handleSubmit(handleAdditionalData)}
       >
         <FormControl
@@ -196,7 +189,7 @@ const Additional = () => {
         <Button classes={auth.button} type="submit" aria-label="Continue">
           CONTINUE
         </Button>
-      </motion.form>
+      </form>
     </>
   );
 };

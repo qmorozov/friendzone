@@ -9,6 +9,9 @@ import FormControl from '../../../../UI/components/FormControl';
 
 import auth from '../../styles/index.module.scss';
 import styles from '../../styles/pages/login.module.scss';
+import { useAppDispatch } from '../../../../hooks/useAppRedux';
+import { useEffect } from 'react';
+import { setIsComponentMounted } from '../../../store/global';
 
 enum Field {
   Login = 'login',
@@ -55,33 +58,55 @@ const ForgotPassword = () => {
     console.log(data);
   };
 
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setIsComponentMounted(true));
+
+    return () => {
+      dispatch(setIsComponentMounted(false));
+    };
+  }, []);
+
   return (
-    <div className={styles.wrapper}>
-      <h1 className={auth.title}>Reset your password</h1>
-
-      <form
-        noValidate
-        autoComplete="off"
-        onSubmit={handleSubmit(handleForgotPasswordData)}
-      >
-        <FormControl label="Login" error={errors[Field.Login]}>
-          <input {...register(Field.Login)} />
-        </FormControl>
-
-        <FormControl label="Email" type="email" error={errors[Field.Email]}>
-          <input type="email" {...register(Field.Email)} />
-        </FormControl>
-
-        <Button classes={auth.button} aria-label="Continue">
-          CONTINUE
-        </Button>
-      </form>
-
-      <div className={auth.auth__footer}>
-        <p>Go back to login screen</p>
-        <Link href="/auth/login">Login</Link>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{
+        duration: 0.75,
+      }}
+    >
+      <div className={styles.auth__content_image}>
+        <img src="/images/big-logo.svg" alt="logo" />
       </div>
-    </div>
+      <div className={styles.wrapper}>
+        <h1 className={auth.title}>Reset your password</h1>
+
+        <form
+          noValidate
+          autoComplete="off"
+          onSubmit={handleSubmit(handleForgotPasswordData)}
+        >
+          <FormControl label="Login" error={errors[Field.Login]}>
+            <input {...register(Field.Login)} />
+          </FormControl>
+
+          <FormControl label="Email" type="email" error={errors[Field.Email]}>
+            <input type="email" {...register(Field.Email)} />
+          </FormControl>
+
+          <Button classes={auth.button} aria-label="Continue">
+            CONTINUE
+          </Button>
+        </form>
+
+        <div className={auth.auth__footer}>
+          <p>Go back to login screen</p>
+          <Link href="/auth/login">Login</Link>
+        </div>
+      </div>
+    </motion.div>
   );
 };
 
