@@ -6,10 +6,6 @@ import {LanguageModule} from "./language/language.module";
 import {AuthModule} from "./auth/auth.module";
 import {MongooseModule} from "@nestjs/mongoose";
 import { PictureModule } from './picture/picture.module';
-import { PasswordModule } from './password/password.module';
-import { EmailModule } from './email/email.module';
-import {MailerModule} from "@nestjs-modules/mailer";
-import {HandlebarsAdapter} from "@nestjs-modules/mailer/dist/adapters/handlebars.adapter";
 
 @Module({
   imports: [
@@ -18,17 +14,6 @@ import {HandlebarsAdapter} from "@nestjs-modules/mailer/dist/adapters/handlebars
       }),
 
       MongooseModule.forRoot(process.env.MONGO_URL),
-
-      MailerModule.forRoot({
-          transport: `smtps://${process.env.MAIL_USERNAME}:${process.env.MAIL_PASSWORD}@smtp.gmail.com`,
-          template: {
-              dir: process.cwd() + '/src/email/templates/',
-              adapter: new HandlebarsAdapter(),
-              options: {
-                  strict: true,
-              },
-          },
-      }),
 
       UserModule,
 
@@ -39,10 +24,6 @@ import {HandlebarsAdapter} from "@nestjs-modules/mailer/dist/adapters/handlebars
       AuthModule,
 
       PictureModule,
-
-      PasswordModule,
-
-      EmailModule
   ],
   controllers: [],
   providers: [],
