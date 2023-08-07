@@ -12,7 +12,7 @@ const AuthenticatedRoute = ({ children }: AuthenticatedRouteProps) => {
   const allowedPaths = [
     '/auth/login',
     '/auth/registration',
-    '/auth/forgot-password',
+    '/auth/forgot-password/[[...token]]',
   ];
 
   useEffect(() => {

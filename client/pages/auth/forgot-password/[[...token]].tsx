@@ -1,8 +1,8 @@
 import dynamic from 'next/dynamic';
-import AuthLayout from '../../layouts/auth';
+import AuthLayout from '../../../layouts/auth';
 
 const AuthForgotPasswordPageContent = dynamic(
-  () => import('../../modules/auth/pages/ForgotPassword'),
+  () => import('../../../modules/auth/pages/ForgotPassword'),
   {
     ssr: false,
   }
