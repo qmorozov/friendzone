@@ -1,3 +1,5 @@
+import { forgotPasswordWithTokenValidationSchema } from '../validation/schemaValidation';
+
 export enum RegistrationSteps {
   basic = 'Basic',
   additional = 'Additional',
@@ -22,4 +24,13 @@ export enum LoginField {
   Email = 'email',
   Password = 'password',
   RememberMe = 'rememberMe',
+}
+
+export enum ForgotPasswordWithToken {
+  Password = 'password',
+  ConfirmPassword = 'confirmPassword',
+}
+
+export enum ForgotPassword {
+  Email = 'email',
 }

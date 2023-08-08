@@ -1,12 +1,18 @@
 import * as yup from 'yup';
-import { AdditionalField, BasicFields, LoginField } from '../dto/auth.dto';
+import {
+  AdditionalField,
+  BasicFields,
+  ForgotPassword,
+  ForgotPasswordWithToken,
+  LoginField,
+} from '../dto/auth.dto';
 
 export const registrationValidationSchema = yup.object().shape({
   [BasicFields.Email]: yup
     .string()
     .required('Email address is required')
     .email('Email address is invalid')
-    .test('emailFormat', 'Email address is invalid', (value) => {
+    .test('emailFormat', 'Email address is invalid', (value: string) => {
       const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
       return emailRegex.test(value) && value.includes('.');
     }),
@@ -41,20 +47,22 @@ export const registrationValidationSchema = yup.object().shape({
     .test(
       'uppercase',
       'Password must contain at least one uppercase letter (A-Z)',
-      (value) => /[A-Z]/.test(value)
+      (value: string) => /[A-Z]/.test(value)
     )
     .test(
       'lowercase',
       'Password must contain at least one lowercase letter (a-z)',
-      (value) => /[a-z]/.test(value)
+      (value: string) => /[a-z]/.test(value)
     )
-    .test('number', 'Password must contain at least one digit (0-9)', (value) =>
-      /\d/.test(value)
+    .test(
+      'number',
+      'Password must contain at least one digit (0-9)',
+      (value: string) => /\d/.test(value)
     )
     .test(
       'specialChar',
       'Password must contain at least one special character (!@#$%^&*())',
-      (value) => /[!@#$%^&*()]/.test(value)
+      (value: string) => /[!@#$%^&*()]/.test(value)
     ),
 });
 
@@ -74,7 +82,7 @@ export const loginValidationSchema = yup.object().shape({
     .string()
     .required('Email address is required')
     .email('Email address is invalid')
-    .test('emailFormat', 'Email address is invalid', (value) => {
+    .test('emailFormat', 'Email address is invalid', (value: string) => {
       const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
       return emailRegex.test(value) && value.includes('.');
     }),
@@ -85,15 +93,17 @@ export const loginValidationSchema = yup.object().shape({
     .test(
       'uppercase',
       'Password must contain at least one uppercase letter (A-Z)',
-      (value) => /[A-Z]/.test(value)
+      (value: string) => /[A-Z]/.test(value)
     )
     .test(
       'lowercase',
       'Password must contain at least one lowercase letter (a-z)',
-      (value) => /[a-z]/.test(value)
+      (value: string) => /[a-z]/.test(value)
     )
-    .test('number', 'Password must contain at least one digit (0-9)', (value) =>
-      /\d/.test(value)
+    .test(
+      'number',
+      'Password must contain at least one digit (0-9)',
+      (value: string) => /\d/.test(value)
     )
     .test(
       'specialChar',
@@ -101,4 +111,49 @@ export const loginValidationSchema = yup.object().shape({
       (value) => /[!@#$%^&*()]/.test(value)
     ),
   [LoginField.RememberMe]: yup.boolean(),
+});
+
+export const forgotPasswordWithTokenValidationSchema = yup.object().shape({
+  [ForgotPasswordWithToken.Password]: yup
+    .string()
+    .required('Password is required')
+    .min(8, 'Password must be at least 8 characters long')
+    .test(
+      'uppercase',
+      'Password must contain at least one uppercase letter (A-Z)',
+      (value: string) => /[A-Z]/.test(value)
+    )
+    .test(
+      'lowercase',
+      'Password must contain at least one lowercase letter (a-z)',
+      (value: string) => /[a-z]/.test(value)
+    )
+    .test(
+      'number',
+      'Password must contain at least one digit (0-9)',
+      (value: string) => /\d/.test(value)
+    )
+    .test(
+      'specialChar',
+      'Password must contain at least one special character (!@#$%^&*())',
+      (value) => /[!@#$%^&*()]/.test(value)
+    ),
+  [ForgotPasswordWithToken.ConfirmPassword]: yup
+    .string()
+    .required('Confirm password is required')
+    .oneOf(
+      [yup.ref(ForgotPasswordWithToken.Password)],
+      'Passwords do not match'
+    ),
+});
+
+export const forgotPasswordValidationSchema = yup.object().shape({
+  [ForgotPassword.Email]: yup
+    .string()
+    .required('Email address is required')
+    .email('Email address is invalid')
+    .test('emailFormat', 'Email address is invalid', (value: string) => {
+      const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+      return emailRegex.test(value) && value.includes('.');
+    }),
 });
