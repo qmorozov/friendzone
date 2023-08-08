@@ -28,4 +28,8 @@ export abstract class AuthApi extends ApiService {
   static async loginUserByToken(token: string) {
     return this.getWithToken('auth/profile', token);
   }
+
+  static async sendRequestToResetPassword(email: string) {
+    return this.post('password/forgot', { email });
+  }
 }

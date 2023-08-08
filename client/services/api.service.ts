@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 
 export abstract class ApiService {
   protected static readonly baseUrl =
-    'https://friendzone-server-production.up.railway.app/api/v1';
+    'https://friendzone-production.up.railway.app/api/v1';
 
   protected static async get<T>(endpoint: string): Promise<T> {
     const url = this.buildUrl(endpoint);

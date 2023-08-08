@@ -144,15 +144,8 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
     <>
       <h1 className={auth.title}>Basic information</h1>
 
-      <motion.form
-        key="basic"
+      <form
         className={auth.form}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{
-          duration: 0.75,
-        }}
         noValidate
         autoComplete="off"
         onSubmit={handleSubmit(handleRegistrationData)}
@@ -206,7 +199,7 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
         <Button classes={auth.button} aria-label="Continue">
           CONTINUE
         </Button>
-      </motion.form>
+      </form>
     </>
   );
 };
