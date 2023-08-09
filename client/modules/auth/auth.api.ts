@@ -32,4 +32,16 @@ export abstract class AuthApi extends ApiService {
   static async sendRequestToResetPassword(email: string) {
     return this.post('password/forgot', { email });
   }
+
+  static async getUserUUIDForResetPassword(token: string) {
+    return this.get(`password/reset/${token}`);
+  }
+
+  static async changeUserPassword(newUserData: {
+    userId: string;
+    password: string;
+    token: string;
+  }) {
+    return this.post('password/reset', newUserData);
+  }
 }
