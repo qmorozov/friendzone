@@ -15,42 +15,40 @@ type NotificationType = keyof typeof INotificationType;
 interface INotification {
   text: string;
   show?: boolean;
-  duration?: number;
+  delay?: number;
   type: NotificationType;
+  onClose?: () => void;
 }
 
 const Notification: FC<INotification> = ({
   text,
   type,
-  duration = 5000,
+  delay = 3,
   show = false,
+  onClose,
 }) => {
-  const [isVisible, setIsVisible] = useState<boolean>(show);
-  const [progress, setProgress] = useState<number>(100);
-  const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [notificationVisible, setNotificationVisible] = useState(show);
 
   useEffect(() => {
     if (show) {
-      setIsVisible(true);
+      setNotificationVisible(true);
 
-      const timer = setInterval(() => {
-        if (!isHovered) {
-          setProgress((prevProgress: number) => {
-            if (prevProgress <= 0) {
-              clearInterval(timer);
-              setIsVisible(false);
-              return 0;
-            }
-            return prevProgress - (100 / duration) * 1000;
-          });
-        }
-      }, 1000);
+      const timeout = setTimeout(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 280));
+        setNotificationVisible(false);
+      }, delay);
 
-      return () => {
-        clearInterval(timer);
-      };
+      return () => clearTimeout(timeout);
+    } else {
+      setNotificationVisible(false);
     }
-  }, [show, duration, isHovered]);
+  }, [show, delay]);
+
+  const onAnimationComplete = () => {
+    if (onClose) {
+      onClose();
+    }
+  };
 
   const getNotificationTitle = (): string => {
     switch (type) {
@@ -68,16 +66,19 @@ const Notification: FC<INotification> = ({
   };
 
   return (
-    <AnimatePresence>
-      {isVisible && (
+    <AnimatePresence onExitComplete={onAnimationComplete}>
+      {notificationVisible && (
         <motion.div
           initial={{ opacity: 0, x: '100%', filter: 'blur(4px)' }}
           animate={{ opacity: 1, x: 0, filter: 'blur(0)' }}
-          exit={{ opacity: 0, x: '100%', filter: 'blur(4px)' }}
+          exit={{
+            opacity: 0,
+            x: '100%',
+            filter: 'blur(4px)',
+            transition: { delay },
+          }}
           transition={{ duration: 0.28 }}
           className={`${style[type]} ${style.notificationWrapper}`}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
         >
           <span>{getNotificationTitle()}</span>
           <p>{text}</p>
@@ -86,14 +87,7 @@ const Notification: FC<INotification> = ({
               <path d="M43.8055 67.6794C44.1344 67.4706 44.4934 67.3124 44.8665 67.2006C59.0118 62.9621 69.32 49.8448 69.32 34.32C69.32 15.3656 53.9544 0 35 0C16.0456 0 0.679993 15.3656 0.679993 34.32C0.679993 47.8227 8.4778 59.5042 19.8158 65.1068C19.8287 65.1132 19.8234 65.1326 19.8092 65.1315C19.8 65.1308 19.793 65.1396 19.7958 65.1483L22.9038 74.9903C23.6947 77.4949 26.6438 78.5705 28.8614 77.1631L43.8055 67.6794Z" />
             </svg>
           </div>
-
-          <motion.div
-            className={style.progressBar}
-            initial={{ width: '100%' }}
-            animate={{ width: `${progress}%` }}
-          ></motion.div>
-
-          <button onClick={() => setIsVisible(false)}>
+          <button aria-label="close notification">
             <span></span>
           </button>
         </motion.div>

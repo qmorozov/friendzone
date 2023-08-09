@@ -24,7 +24,7 @@ const ForgotPassword = () => {
         <img src="/images/big-logo.svg" alt="logo" />
       </div>
       <div className={styles.wrapper}>
-        {token ? <FormWithToken /> : <FormWithOutToken />}
+        {token ? <FormWithToken token={token} /> : <FormWithOutToken />}
 
         <div className={auth.auth__footer}>
           <p>Go back to the login screen</p>

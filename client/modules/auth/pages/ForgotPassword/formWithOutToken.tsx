@@ -7,6 +7,7 @@ import { AuthApi } from '../../auth.api';
 
 import FormControl from '../../../../UI/components/FormControl';
 import Button from '../../../../UI/components/Button';
+import Notification from '../../../../UI/components/Notification/Notification';
 
 import auth from '../../styles/index.module.scss';
 
@@ -17,9 +18,11 @@ interface IForgotPasswordFormData {
 const FormWithOutToken = () => {
   const [isTimerActive, setIsTimerActive] = useState<boolean>(false);
   const [timerCount, setTimerCount] = useState<number>(60);
+  const [isEmailSent, setIsEmailSent] = useState<boolean>(false);
 
   const {
     register,
+    setError,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -29,21 +32,33 @@ const FormWithOutToken = () => {
   const handleForgotPasswordData = async ({
     email,
   }: IForgotPasswordFormData): Promise<void> => {
-    try {
-      await AuthApi.sendRequestToResetPassword(email);
+    if (!isTimerActive) {
+      try {
+        setIsTimerActive(true);
+        await AuthApi.sendRequestToResetPassword(email);
 
-      setIsTimerActive(true);
-      const interval = setInterval(() => {
-        setTimerCount((prevCount: number) => prevCount - 1);
-      }, 1000);
+        setIsEmailSent(true);
 
-      setTimeout(() => {
-        clearInterval(interval);
+        const interval = setInterval(() => {
+          setTimerCount((prevCount: number) => prevCount - 1);
+        }, 1000);
+
+        setTimeout(() => {
+          clearInterval(interval);
+          setIsTimerActive(false);
+          setTimerCount(60);
+          setIsEmailSent(false);
+        }, 60000);
+      } catch (error: any) {
         setIsTimerActive(false);
         setTimerCount(60);
-      }, 60000);
-    } catch (error) {
-      console.log(error);
+        setIsEmailSent(false);
+
+        setError(ForgotPassword.Email, {
+          type: 'manual',
+          message: error?.response?.data?.username,
+        });
+      }
     }
   };
 
@@ -77,6 +92,12 @@ const FormWithOutToken = () => {
             : 'Send reset e-mail'}
         </Button>
       </form>
+
+      <Notification
+        type="success"
+        show={isEmailSent}
+        text="Password reset instructions sent. Check your email"
+      />
     </>
   );
 };

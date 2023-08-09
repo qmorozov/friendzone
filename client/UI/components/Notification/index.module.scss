@@ -170,7 +170,7 @@
   left: 0;
   height: variables.rem(3px);
   width: 100%;
-  transition: width 1s linear;
+  transition: width 1s ease-in-out;
 }
 
 .fail {
