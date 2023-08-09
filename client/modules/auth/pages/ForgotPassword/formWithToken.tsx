@@ -38,6 +38,8 @@ const FormWithToken = () => {
         autoComplete="off"
         onSubmit={handleSubmit(handleResetPassword)}
       >
+        <button onClick={() => {}}>show notification</button>
+
         <FormControl
           label="Password"
           type="password"
@@ -48,7 +50,6 @@ const FormWithToken = () => {
             {...register(ForgotPasswordWithToken.Password)}
           />
         </FormControl>
-
         <FormControl
           type="password"
           label="Confirm password"
@@ -59,7 +60,6 @@ const FormWithToken = () => {
             {...register(ForgotPasswordWithToken.ConfirmPassword)}
           />
         </FormControl>
-
         <Button classes={auth.button} aria-label="Create a new password">
           Create a new password
         </Button>

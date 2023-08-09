@@ -1,0 +1,266 @@
+@use 'styles/variables' as variables;
+@use 'styles/mixin/media' as media;
+
+.notificationWrapper {
+  position: absolute;
+
+  border-radius: variables.rem(5px);
+
+  overflow: hidden;
+
+  background: rgba(81, 81, 81, 0.7);
+
+  span {
+    font-weight: 500;
+    letter-spacing: -1.19px;
+  }
+
+  p {
+    letter-spacing: 0.28px;
+  }
+
+  button {
+    position: absolute;
+    top: variables.rem(24px);
+    right: variables.rem(24px);
+    cursor: pointer;
+
+    span {
+      display: inline-block;
+      width: variables.rem(24px);
+      height: variables.rem(24px);
+      position: relative;
+
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        width: variables.rem(2px);
+        height: variables.rem(24px);
+        background-color: white;
+      }
+
+      &::before {
+        transform: rotate(45deg);
+      }
+
+      &::after {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+
+  @include media.for-mobile {
+    top: variables.rem(14px);
+    right: variables.rem(14px);
+    left: variables.rem(14px);
+
+    padding: variables.rem(14px) variables.rem(50px) variables.rem(16px) variables.rem(90px);
+    min-height: variables.rem(70px);
+    max-width: 100%;
+
+    span {
+      font-size: variables.rem(22px);
+      line-height: variables.rem(34px);
+    }
+
+    p {
+      font-size: variables.rem(12px);
+      line-height: variables.rem(16px);
+    }
+  }
+
+  @include media.for-tablet {
+    top: variables.rem(20px);
+    right: variables.rem(20px);
+
+    padding: variables.rem(14px) variables.rem(58px) variables.rem(16px) variables.rem(108px);
+    min-height: variables.rem(100px);
+    max-width: variables.rem(430px);
+
+    span {
+      font-size: variables.rem(24px);
+      line-height: variables.rem(36px);
+    }
+
+    p {
+      font-size: variables.rem(14px);
+      line-height: variables.rem(17px);
+    }
+  }
+
+  @include media.for-laptop {
+    padding: variables.rem(14px) variables.rem(58px) variables.rem(16px) variables.rem(112px);
+
+    span {
+      font-size: variables.rem(28px);
+      line-height: variables.rem(38px);
+    }
+
+    p {
+      line-height: variables.rem(18px);
+    }
+  }
+
+  @include media.for-desktop {
+    padding: variables.rem(14px) variables.rem(58px) variables.rem(16px) variables.rem(118px);
+
+    span {
+      font-size: variables.rem(34px);
+      line-height: variables.rem(52px);
+    }
+  }
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-44%);
+
+  &::before {
+    position: absolute;
+    content: '';
+    top: 50%;
+    right: 50%;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  @include media.for-mobile {
+    left: variables.rem(16px);
+
+    svg {
+      width: variables.rem(60px);
+      height: variables.rem(60px);
+    }
+  }
+
+  @include media.for-tablet {
+    left: variables.rem(24px);
+
+    svg {
+      width: variables.rem(66px);
+      height: variables.rem(66px);
+    }
+  }
+
+  @include media.for-laptop {
+    left: variables.rem(26px);
+
+    svg {
+      width: variables.rem(72px);
+      height: variables.rem(72px);
+    }
+  }
+
+  @include media.for-desktop {
+    svg {
+      width: variables.rem(78px);
+      height: variables.rem(78px);
+    }
+  }
+}
+
+.progressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: variables.rem(3px);
+  width: 100%;
+  transition: width 1s linear;
+}
+
+.fail {
+  .icon {
+    path {
+      fill: #b41111;
+    }
+
+    &::before {
+      width: variables.rem(22px);
+      height: variables.rem(32px);
+      background-image: url('data:image/svg+xml,<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.8137 4.6379C21.6421 3.8095 21.6421 2.46638 20.8137 1.63797L20.3622 1.18649C19.5338 0.358083 18.1907 0.358084 17.3623 1.18649L11.0002 7.54856L4.63815 1.18649C3.80974 0.358086 2.46662 0.358084 1.63822 1.18649L1.18673 1.63797C0.358328 2.46638 0.358328 3.80949 1.18674 4.6379L7.5488 11L1.18674 17.362C0.35833 18.1904 0.358328 19.5336 1.18674 20.362L1.63822 20.8134C2.46662 21.6419 3.80974 21.6419 4.63814 20.8134L11.0002 14.4514L17.3623 20.8134C18.1907 21.6418 19.5338 21.6419 20.3622 20.8134L20.8137 20.362C21.6421 19.5336 21.6421 18.1904 20.8137 17.362L14.4516 11L20.8137 4.6379Z" fill="white"/></svg>');
+
+      @include media.for-mobile {
+        width: variables.rem(18px);
+        height: variables.rem(28px);
+      }
+    }
+  }
+
+  .progressBar {
+    background-color: #b41111;
+  }
+}
+
+.success {
+  .icon {
+    path {
+      fill: #267150;
+    }
+
+    &::before {
+      width: variables.rem(26px);
+      height: variables.rem(28px);
+      background-image: url('data:image/svg+xml,<svg width="26" height="22" viewBox="0 0 26 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M24.3011 1.34639C25.3602 2.15845 25.5623 3.6745 24.753 4.7357L12.7426 20.4829C12.3191 21.0382 11.6773 21.3832 10.9816 21.4295C10.286 21.4758 9.60424 21.2189 9.11127 20.7246L1.48826 13.0815C0.545521 12.1363 0.545521 10.6064 1.48826 9.66117C2.43452 8.71242 3.97135 8.71242 4.9176 9.66117L10.5783 15.3368L20.9031 1.79944C21.7154 0.734431 23.2381 0.531405 24.3011 1.34639Z" fill="white"/></svg>');
+
+      @include media.for-mobile {
+        width: variables.rem(24px);
+        height: variables.rem(26px);
+      }
+    }
+  }
+
+  .progressBar {
+    background-color: #267150;
+  }
+}
+
+.help {
+  .icon {
+    path {
+      fill: #4a7687;
+    }
+
+    &::before {
+      width: variables.rem(32px);
+      height: variables.rem(40px);
+      background-image: url('data:image/svg+xml,<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="15.8213" cy="28.8696" rx="2.43478" ry="2.43478" fill="white"/><path d="M20.6305 2.43161C18.8412 1.54923 16.8305 1.21726 14.8525 1.47766C12.8746 1.73806 11.0183 2.57914 9.51833 3.89455C8.54452 4.74856 7.74932 5.7776 7.16998 6.92178C6.64931 7.95007 7.3284 9.10945 8.44172 9.40777L9.11367 9.58782C10.227 9.88613 11.3449 9.18129 12.0532 8.27202C12.2544 8.01367 12.4805 7.77365 12.7291 7.55568C13.5049 6.8753 14.465 6.44026 15.4881 6.30557C16.5112 6.17088 17.5512 6.34259 18.4767 6.79899C19.4022 7.25538 20.1716 7.97597 20.6875 8.86963C21.2035 9.76328 21.4428 10.7899 21.3753 11.8196C21.3079 12.8492 20.9365 13.8358 20.3084 14.6545C19.6802 15.4731 18.8233 16.0871 17.8462 16.4188C17.0434 16.6957 16.8273 16.6957 15.9999 16.6957L15.3042 16.6957C14.1516 16.6957 13.2173 17.6301 13.2173 18.7827V22.2609C13.2173 23.4135 14.1516 24.3479 15.3042 24.3479H15.9999C17.1525 24.3479 18.0868 23.4135 18.0868 22.2609C18.0868 21.7503 18.4569 21.3184 18.9474 21.1763C19.0975 21.1329 19.2518 21.0841 19.4115 21.03C21.3006 20.3887 22.9572 19.2016 24.1716 17.6189C25.3861 16.0361 26.104 14.1288 26.2345 12.138C26.365 10.1473 25.9022 8.16257 24.9047 6.43484C23.9072 4.70711 22.4197 3.31398 20.6305 2.43161Z" fill="white"/></svg>');
+
+      @include media.for-mobile {
+        width: variables.rem(30px);
+        height: variables.rem(38px);
+      }
+    }
+  }
+
+  .progressBar {
+    background-color: #4a7687;
+  }
+}
+
+.warning {
+  .icon {
+    path {
+      fill: #d46e41;
+    }
+
+    &::before {
+      width: variables.rem(32px);
+      height: variables.rem(40px);
+      background-image: url('data:image/svg+xml,<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.8696 18.5652C12.8696 20.222 14.2127 21.5652 15.8696 21.5652H16.1304C17.7873 21.5652 19.1304 20.222 19.1304 18.5652L19.1304 5.08691C19.1304 3.43006 17.7873 2.08691 16.1304 2.08691H15.8696C14.2127 2.08691 12.8696 3.43006 12.8696 5.08691V18.5652ZM16 29.913C17.7289 29.913 19.1304 28.5115 19.1304 26.7826C19.1304 25.0537 17.7289 23.6521 16 23.6521C14.2711 23.6521 12.8696 25.0537 12.8696 26.7826C12.8696 28.5115 14.2711 29.913 16 29.913Z" fill="white"/></svg>');
+
+      @include media.for-mobile {
+        width: variables.rem(30px);
+        height: variables.rem(38px);
+      }
+    }
+  }
+
+  .progressBar {
+    background-color: #d46e41;
+  }
+}
