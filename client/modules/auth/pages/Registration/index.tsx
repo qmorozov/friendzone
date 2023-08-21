@@ -70,6 +70,12 @@ const Registration = () => {
     }
   };
 
+  useEffect(() => {
+    if (user.email && user.firstName) {
+      registerUser();
+    }
+  }, [user]);
+
   const steps: ITab[] = [
     {
       id: RegistrationSteps.basic,

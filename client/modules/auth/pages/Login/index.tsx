@@ -1,10 +1,11 @@
+import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { AuthApi } from '../../auth.api';
 import { useAppDispatch } from '../../../../hooks/useAppRedux';
-import { updateProfile } from '../../store/auth';
+import { signIn, signOut, updateProfile } from '../../store/auth';
 import { LoginField } from '../../dto/auth.dto';
 import { loginValidationSchema } from '../../validation/schemaValidation';
 
@@ -31,6 +32,8 @@ const Login = () => {
     resolver: yupResolver(loginValidationSchema),
   });
 
+  const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
+
   const dispatch = useAppDispatch();
 
   const handleLoginData = async ({
@@ -39,6 +42,8 @@ const Login = () => {
     rememberMe,
   }: LoginData): Promise<void> => {
     try {
+      setIsLoggingIn(true);
+
       const { access_token }: any = await AuthApi.loginUserGetToken({
         email,
         password,
@@ -63,20 +68,23 @@ const Login = () => {
           username,
         }: any = await AuthApi.loginUserByToken(access_token);
 
-        dispatch(
-          updateProfile({
-            firstName,
-            lastName,
-            email,
-            location,
-            hobbies,
-            languages,
-            settings,
-            pictures,
-            socialMedia,
-            username,
-          })
-        );
+        await Promise.all([
+          dispatch(
+            updateProfile({
+              firstName,
+              lastName,
+              email,
+              location,
+              hobbies,
+              languages,
+              settings,
+              pictures,
+              socialMedia,
+              username,
+            })
+          ),
+          dispatch(signIn()),
+        ]);
       } catch (error) {
         console.error(error);
       }
@@ -85,6 +93,9 @@ const Login = () => {
         type: 'manual',
         message: error?.response?.data?.message,
       });
+
+      dispatch(signOut());
+      setIsLoggingIn(false);
     }
   };
 
@@ -128,8 +139,13 @@ const Login = () => {
             <Link href="/auth/forgot-password">Forgot password</Link>
           </div>
 
-          <Button classes={auth.button} aria-label="Login now" type="submit">
-            Login now
+          <Button
+            type="submit"
+            classes={auth.button}
+            aria-label="Login now"
+            disabled={isLoggingIn}
+          >
+            {isLoggingIn ? 'Logging in...' : 'Login now'}
           </Button>
         </form>
 
