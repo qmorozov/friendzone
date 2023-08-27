@@ -75,7 +75,7 @@ const FormWithOutToken = () => {
           label="Email"
           error={errors[ForgotPassword.Email]}
         >
-          <input type="email" {...register(ForgotPassword.Email)} />
+          <input type="email" autoFocus {...register(ForgotPassword.Email)} />
         </FormControl>
 
         <Button

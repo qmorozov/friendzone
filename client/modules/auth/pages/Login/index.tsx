@@ -120,7 +120,7 @@ const Login = () => {
           onSubmit={handleSubmit(handleLoginData)}
         >
           <FormControl label="Email" error={errors[LoginField.Email]}>
-            <input type="email" {...register(LoginField.Email)} />
+            <input type="email" autoFocus {...register(LoginField.Email)} />
           </FormControl>
 
           <FormControl

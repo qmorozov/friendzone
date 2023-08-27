@@ -1,5 +1,3 @@
-import { forgotPasswordWithTokenValidationSchema } from '../validation/schemaValidation';
-
 export enum RegistrationSteps {
   basic = 'Basic',
   additional = 'Additional',

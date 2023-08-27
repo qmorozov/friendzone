@@ -16,7 +16,6 @@ import Button from '../../../../../UI/components/Button';
 import FormControl from '../../../../../UI/components/FormControl';
 
 import auth from '../../../styles/index.module.scss';
-import { motion } from 'framer-motion';
 
 type RegistrationFormData = {
   email: string;
@@ -156,6 +155,7 @@ const Basic: FC<IBasic> = ({ userPassword, setUserPassword }) => {
           error={errors[BasicFields.Username] as FieldError}
         >
           <input
+            autoFocus
             {...register(BasicFields.Username)}
             onChange={debouncedHandleUsername}
           />

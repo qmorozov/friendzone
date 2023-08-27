@@ -128,7 +128,7 @@ const Additional = () => {
           defaultValue={description}
           error={errors[AdditionalField.Description]}
         >
-          <textarea {...register(AdditionalField.Description)} />
+          <textarea autoFocus {...register(AdditionalField.Description)} />
         </FormControl>
 
         {socialMediaFields.map((field: number, index: number) => (

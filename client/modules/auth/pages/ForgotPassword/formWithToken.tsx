@@ -93,6 +93,7 @@ const FormWithToken: FC<IFormWithToken> = ({ token }) => {
           error={errors[ForgotPasswordWithToken.Password]}
         >
           <input
+            autoFocus
             type="password"
             {...register(ForgotPasswordWithToken.Password)}
           />

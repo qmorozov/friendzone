@@ -29,6 +29,7 @@
     }
 
     &:focus {
+      transform: scale(0.98);
       border-color: lighten(variables.$primary, 40%)
     }
   }
@@ -40,10 +41,6 @@
     &:hover {
       color: variables.$dark-50;
       background-color: variables.$primary;
-    }
-
-    &:focus {
-      border-color: darken(variables.$primary, 15%)
     }
   }
 
