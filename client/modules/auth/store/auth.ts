@@ -34,7 +34,7 @@ export interface IAuthState {
 
 const initialState: IAuthState = {
   signed: false,
-  loading: false,
+  loading: true,
   user: {
     phone: '',
     email: '',
@@ -66,11 +66,11 @@ const authSlice = createSlice({
   reducers: {
     signIn: (state: IAuthState) => {
       state.signed = true;
+      state.loading = false;
     },
 
     signOut: (state: IAuthState) => {
       state.signed = false;
-      state.loading = false;
       state.user = initialState.user;
     },
 

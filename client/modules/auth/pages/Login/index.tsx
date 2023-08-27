@@ -8,6 +8,8 @@ import { useAppDispatch } from '../../../../hooks/useAppRedux';
 import { signIn, signOut, updateProfile } from '../../store/auth';
 import { LoginField } from '../../dto/auth.dto';
 import { loginValidationSchema } from '../../validation/schemaValidation';
+import { router } from 'next/client';
+import { setCookie } from 'cookies-next';
 
 import Button from '../../../../UI/components/Button';
 import FormControl from '../../../../UI/components/FormControl';
@@ -50,9 +52,7 @@ const Login = () => {
       });
 
       if (rememberMe) {
-        document.cookie = `access_token=${encodeURIComponent(
-          access_token
-        )}; path=/;`;
+        setCookie('access_token', access_token);
       }
 
       try {
@@ -83,7 +83,8 @@ const Login = () => {
               username,
             })
           ),
-          dispatch(signIn()),
+
+          router.push('/'),
         ]);
       } catch (error) {
         console.error(error);

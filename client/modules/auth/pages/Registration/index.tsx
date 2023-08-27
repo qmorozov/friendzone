@@ -6,7 +6,7 @@ import { RegistrationSteps } from '../../dto/auth.dto';
 import { useAppSelector } from '../../../../hooks/useAppRedux';
 import { RootState } from '../../../../services/app-store';
 import { RegistrationData } from './registrationContext';
-import { getCookie } from '../../../../services/helper';
+import { CookieValueTypes, getCookie } from 'cookies-next';
 
 import Tabs, { ITab } from '../../../../UI/components/Tabs';
 import { IMultiSelectItem } from '../../../../UI/components/MultiSelect';
@@ -35,9 +35,9 @@ const Registration = () => {
     [RegistrationSteps.languages]: true,
   });
 
-  const token: string | null = getCookie('access_token');
+  const token: CookieValueTypes = getCookie('access_token');
 
-  const registerUser = async () => {
+  const registerUser = async (): Promise<void> => {
     try {
       if (token) {
         const removeEmptyFields = (obj: any) => {

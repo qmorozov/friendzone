@@ -68,5 +68,42 @@ body {
     font-size: variables.rem(14px);
     line-height: variables.rem(22px);
   }
+}
 
+.loader {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: variables.$dark-50;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-repeat: no-repeat;
+    background-image: url('/images/big-logo.svg');
+    background-position: center;
+    opacity: 0;
+    animation: blinking 2s infinite;
+
+    @include media.for-mobile {
+      background-size: 90%;
+    }
+  }
+}
+
+@keyframes blinking {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
 }

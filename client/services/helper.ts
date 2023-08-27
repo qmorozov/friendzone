@@ -6,15 +6,3 @@ export function classnames(classCondition: {
     .map(([key]) => key)
     .join(' ');
 }
-
-export function getCookie(name: string) {
-  const cookieValue = document.cookie
-    .split('; ')
-    .find((row) => row.startsWith(name + '='));
-
-  if (cookieValue) {
-    return decodeURIComponent(cookieValue.split('=')[1]);
-  }
-
-  return null;
-}
